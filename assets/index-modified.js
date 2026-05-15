@@ -10118,13 +10118,22 @@ function ce() {
         streak: 0,
         lastStreakDate: ``,
         studyHours: {},
-        examDate: `2027-02-01`
-    }), [n, r] = (0, x.useState)(`roadmap`), [i, a] = (0, x.useState)(null), [o, s] = (0, x.useState)(`os`), [c, l] = (0, x.useState)(0), [u, d] = (0, x.useState)(``), [f, p] = (0, x.useState)(new Date().toISOString().split(`T`)[0]), [m, h] = (0, x.useState)(!0), [g, _] = (0, x.useState)(null), [J, Q] = (0, x.useState)(``), [mockName, setMockName] = (0, x.useState)(``), [mockLink, setMockLink] = (0, x.useState)(``), [hoursInput, setHoursInput] = (0, x.useState)(``);
+        examDate: `2027-02-01`,
+        weeklyPlan: {},
+        weeklySnapshots: [],
+        revisionHistory: {},
+        customRevDate: {},
+        weeklyPlan: {},
+        weeklySnapshots: []
+    }), [n, r] = (0, x.useState)(`roadmap`), [i, a] = (0, x.useState)(null), [o, s] = (0, x.useState)(`os`), [c, l] = (0, x.useState)(0), [u, d] = (0, x.useState)(``), [f, p] = (0, x.useState)(new Date().toISOString().split(`T`)[0]), [m, h] = (0, x.useState)(!0), [g, _] = (0, x.useState)(null), [J, Q] = (0, x.useState)(``), [mockName, setMockName] = (0, x.useState)(``), [mockLink, setMockLink] = (0, x.useState)(``), [hoursInput, setHoursInput] = (0, x.useState)(``), [mockWeakSubs, setMockWeakSubs] = (0, x.useState)([]);
     (0, x.useRef)({}), (0, x.useEffect)(() => {
         (async () => {
             try {
                 let e = await window.storage.get(ie);
-                e && t(JSON.parse(e.value))
+                e && t(function(loaded){
+                    var defaults = { completedTopics:{}, notes:{}, mockScores:[], subjectScores:{}, revisedTopics:{}, lastStudied:{}, streak:0, lastStreakDate:'', studyHours:{}, examDate:'2027-02-01', weeklyPlan:{}, weeklySnapshots:[], revisionHistory:{}, customRevDate:{}, weeklyHrsTarget:0 };
+                    return Object.assign({}, defaults, JSON.parse(e.value));
+                }(undefined))
             } catch {}
         })();
         let e = setInterval(() => l(e => (e + 1) % ee.length), 5e3);
@@ -10156,12 +10165,13 @@ function ce() {
                     score: t,
                     date: f,
                     name: mockName,
-                    link: mockLink
+                    link: mockLink,
+                    weakSubs: mockWeakSubs
                 }].sort((e, t) => new Date(e.date) - new Date(t.date))
-            }), d(``), setMockName(``), setMockLink(``))
+            }), d(``), setMockName(``), setMockLink(``), setMockWeakSubs([]))
         },
         le = t => {
-            let n = t.topics.filter(n => e.completedTopics[`${t.id}::${n}`]).length;
+            let n = t.topics.filter(n => (e.completedTopics||{})[`${t.id}::${n}`]).length;
             return {
                 done: n,
                 total: t.topics.length,
@@ -10217,6 +10227,8 @@ function ce() {
             [`Resources`, `resources`, `M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253`],
             [`Mocks`, `mocks`, `M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z`],
             [`Scores`, `scores`, `M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z`],
+            [`Plan`, `plan`, `M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z`],
+            [`Weekly`, `weekly`, `M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z`],
             [`Tips`, `tips`, `M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z`],
             [`Notes`, `notes`, `M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z`]
         ],
@@ -10450,7 +10462,7 @@ function ce() {
                     }, t))
                 })]
             }), n === `roadmap` && (() => {
-                let t = g ? C.find(e => e.id === g) : null,
+                let t = g ? C.find(subj2 => subj2.id === g) : null,
                     n = t ? le(t) : null,
                     i = t ? w[t.phase] : null,
                     a = g ? te[g] : null;
@@ -10481,7 +10493,7 @@ function ce() {
                                 justifyContent: `center`,
                                 marginTop: 10
                             },
-                            children: [1, 2, 3].map(e => (0, b.jsxs)(`div`, {
+                            children: [1, 2, 3].map(ph => (0, b.jsxs)(`div`, {
                                 style: {
                                     display: `flex`,
                                     alignItems: `center`,
@@ -10494,40 +10506,40 @@ function ce() {
                                         width: 10,
                                         height: 10,
                                         borderRadius: 3,
-                                        background: w[e].gradient
+                                        background: w[ph].gradient
                                     }
-                                }), w[e].label]
-                            }, e))
+                                }), w[ph].label]
+                            }, ph))
                         })]
-                    }), ae.map((e, t) => {
-                        let n = w[e.phase];
+                    }), ae.map((row, rowIdx) => {
+                        let rowPhase = w[row.phase];
                         return (0, b.jsxs)(`div`, {
-                            children: [(t === 0 || ae[t - 1].phase !== e.phase) && (0, b.jsxs)(`div`, {
+                            children: [(rowIdx === 0 || ae[rowIdx - 1].phase !== row.phase) && (0, b.jsxs)(`div`, {
                                 style: {
                                     display: `flex`,
                                     alignItems: `center`,
                                     gap: 12,
-                                    margin: t === 0 ? `0 0 14px` : `8px 0 14px`
+                                    margin: rowIdx === 0 ? `0 0 14px` : `8px 0 14px`
                                 },
                                 children: [(0, b.jsx)(`div`, {
                                     style: {
                                         height: 1,
                                         flex: 1,
-                                        background: `${n.color}30`
+                                        background: `${rowPhase.color}30`
                                     }
                                 }), (0, b.jsxs)(`span`, {
                                     style: {
                                         fontSize: 11,
                                         fontWeight: 600,
-                                        color: n.color,
+                                        color: rowPhase.color,
                                         whiteSpace: `nowrap`
                                     },
-                                    children: [n.label, ` · `, n.months]
+                                    children: [rowPhase.label, ` · `, rowPhase.months]
                                 }), (0, b.jsx)(`div`, {
                                     style: {
                                         height: 1,
                                         flex: 1,
-                                        background: `${n.color}30`
+                                        background: `${rowPhase.color}30`
                                     }
                                 })]
                             }), (0, b.jsx)(`div`, {
@@ -10537,24 +10549,24 @@ function ce() {
                                     gap: 16,
                                     flexWrap: `wrap`
                                 },
-                                children: e.subjects.map(e => {
-                                    let t = C.find(t => t.id === e),
-                                        n = le(t).pct,
-                                        r = w[t.phase],
-                                        i = n === 100,
-                                        a = g === e;
+                                children: row.subjects.map(sid => {
+                                    let subj = C.find(s => s.id === sid),
+                                        pct2 = le(subj).pct,
+                                        ph2 = w[subj.phase],
+                                        done2 = pct2 === 100,
+                                        isActive = g === sid;
                                     return (0, b.jsxs)(`div`, {
-                                        onClick: () => _(g === e ? null : e),
+                                        onClick: () => _(g === sid ? null : sid),
                                         style: {
                                             width: 160,
                                             padding: `12px 14px`,
                                             borderRadius: 14,
                                             cursor: `pointer`,
                                             background: A.card,
-                                            border: a ? `2px solid ${r.color}` : `1px solid ${A.border}`,
-                                            boxShadow: a ? `0 0 20px ${r.color}30` : A.shadow,
+                                            border: isActive ? `2px solid ${ph2.color}` : `1px solid ${A.border}`,
+                                            boxShadow: isActive ? `0 0 20px ${ph2.color}30` : A.shadow,
                                             transition: `all 0.2s`,
-                                            transform: a ? `scale(1.04)` : `scale(1)`
+                                            transform: isActive ? `scale(1.04)` : `scale(1)`
                                         },
                                         children: [(0, b.jsxs)(`div`, {
                                             style: {
@@ -10568,13 +10580,13 @@ function ce() {
                                                     width: 28,
                                                     height: 28,
                                                     borderRadius: 8,
-                                                    background: i ? `linear-gradient(135deg, #059669, #34D399)` : r.gradient,
+                                                    background: done2 ? `linear-gradient(135deg, #059669, #34D399)` : ph2.gradient,
                                                     display: `flex`,
                                                     alignItems: `center`,
                                                     justifyContent: `center`,
                                                     flexShrink: 0
                                                 },
-                                                children: i ? (0, b.jsx)(`svg`, {
+                                                children: done2 ? (0, b.jsx)(`svg`, {
                                                     width: `14`,
                                                     height: `14`,
                                                     viewBox: `0 0 14 14`,
@@ -10592,7 +10604,7 @@ function ce() {
                                                         fontWeight: 700,
                                                         color: `#fff`
                                                     },
-                                                    children: t.icon
+                                                    children: subj.icon
                                                 })
                                             }), (0, b.jsxs)(`div`, {
                                                 style: {
@@ -10607,13 +10619,13 @@ function ce() {
                                                         overflow: `hidden`,
                                                         textOverflow: `ellipsis`
                                                     },
-                                                    children: t.name
+                                                    children: subj.name
                                                 }), (0, b.jsxs)(`div`, {
                                                     style: {
                                                         fontSize: 10,
                                                         color: A.textT
                                                     },
-                                                    children: [t.month, ` · ~`, t.weight, `%`]
+                                                    children: [subj.month, ` · ~`, subj.weight, `%`]
                                                 })]
                                             })]
                                         }), (0, b.jsx)(`div`, {
@@ -10627,8 +10639,8 @@ function ce() {
                                                 className: `progress-bar`,
                                                 style: {
                                                     height: 5,
-                                                    width: `${n}%`,
-                                                    background: i ? `linear-gradient(135deg, #059669, #34D399)` : r.gradient,
+                                                    width: `${pct2}%`,
+                                                    background: done2 ? `linear-gradient(135deg, #059669, #34D399)` : ph2.gradient,
                                                     borderRadius: 99
                                                 }
                                             })
@@ -10640,11 +10652,11 @@ function ce() {
                                                 textAlign: `right`,
                                                 fontWeight: 600
                                             },
-                                            children: [n, `%`]
+                                            children: [pct2, `%`]
                                         })]
-                                    }, e)
+                                    }, sid)
                                 })
-                            }), t < ae.length - 1 && (0, b.jsxs)(`div`, {
+                            }), rowIdx < ae.length - 1 && (0, b.jsxs)(`div`, {
                                 style: {
                                     display: `flex`,
                                     justifyContent: `center`,
@@ -10675,7 +10687,7 @@ function ce() {
                                     }
                                 })]
                             })]
-                        }, t)
+                        }, rowIdx)
                     }), (0, b.jsx)(`div`, {
                         style: {
                             display: `flex`,
@@ -10693,7 +10705,7 @@ function ce() {
                                 textAlign: `center`,
                                 boxShadow: `0 4px 20px rgba(5,150,105,0.3)`
                             },
-                            children: [`🎯 GATE 2027 — Feb 1`, (0, b.jsxs)(`div`, {
+                            children: [(function(){ var d=new Date(e.examDate||'2027-02-01'); return '🎯 GATE 2027 — '+d.toLocaleDateString('en-GB',{day:'numeric',month:'short'}); })(), (0, b.jsxs)(`div`, {
                                 style: {
                                     fontSize: 11,
                                     fontWeight: 400,
@@ -10776,16 +10788,16 @@ function ce() {
                                 })]
                             })]
                         }), (() => {
-                            let e = oe.filter(([e, t]) => t === g).map(([e]) => C.find(t => t.id === e)).filter(Boolean),
-                                t = oe.filter(([e]) => e === g).map(([, e]) => C.find(t => t.id === e)).filter(Boolean);
-                            return !e.length && !t.length ? null : (0, b.jsxs)(`div`, {
+                            let prereqList = oe.filter(([pid, uid]) => uid === g).map(([pid]) => C.find(s => s.id === pid)).filter(Boolean),
+                                unlockList = oe.filter(([, uid]) => uid === g).map(([, uid]) => C.find(s => s.id === uid)).filter(Boolean);
+                            return !prereqList.length && !unlockList.length ? null : (0, b.jsxs)(`div`, {
                                 style: {
                                     display: `flex`,
                                     gap: 20,
                                     marginBottom: 16,
                                     flexWrap: `wrap`
                                 },
-                                children: [e.length > 0 && (0, b.jsxs)(`div`, {
+                                children: [prereqList.length > 0 && (0, b.jsxs)(`div`, {
                                     children: [(0, b.jsx)(`div`, {
                                         style: {
                                             fontSize: 10,
@@ -10802,24 +10814,24 @@ function ce() {
                                             gap: 6,
                                             flexWrap: `wrap`
                                         },
-                                        children: e.map(e => {
-                                            let t = le(e);
+                                        children: prereqList.map(prereq => {
+                                            let prereqPct = le(prereq);
                                             return (0, b.jsxs)(`span`, {
-                                                onClick: () => _(e.id),
+                                                onClick: () => _(prereq.id),
                                                 style: {
                                                     fontSize: 11,
                                                     padding: `3px 10px`,
                                                     borderRadius: 99,
-                                                    background: t.pct === 100 ? A.greenBg : m ? `rgba(255,255,255,0.05)` : `rgba(0,0,0,0.04)`,
-                                                    color: t.pct === 100 ? A.green : A.textS,
+                                                    background: prereqPct.pct === 100 ? A.greenBg : m ? `rgba(255,255,255,0.05)` : `rgba(0,0,0,0.04)`,
+                                                    color: prereqPct.pct === 100 ? A.green : A.textS,
                                                     cursor: `pointer`,
                                                     fontWeight: 500
                                                 },
-                                                children: [t.pct === 100 ? `✓ ` : ``, e.name]
-                                            }, e.id)
+                                                children: [prereqPct.pct === 100 ? `✓ ` : ``, prereq.name]
+                                        }, prereq.id)
                                         })
                                     })]
-                                }), t.length > 0 && (0, b.jsxs)(`div`, {
+                                }), unlockList.length > 0 && (0, b.jsxs)(`div`, {
                                     children: [(0, b.jsx)(`div`, {
                                         style: {
                                             fontSize: 10,
@@ -10836,8 +10848,8 @@ function ce() {
                                             gap: 6,
                                             flexWrap: `wrap`
                                         },
-                                        children: t.map(e => (0, b.jsx)(`span`, {
-                                            onClick: () => _(e.id),
+                                        children: unlockList.map(unlk => (0, b.jsx)(`span`, {
+                                            onClick: () => _(unlk.id),
                                             style: {
                                                 fontSize: 11,
                                                 padding: `3px 10px`,
@@ -10846,8 +10858,8 @@ function ce() {
                                                 color: A.textS,
                                                 cursor: `pointer`
                                             },
-                                            children: e.name
-                                        }, e.id))
+                                            children: unlk.name
+                                        }, unlk.id))
                                     })]
                                 })]
                             })
@@ -10861,14 +10873,14 @@ function ce() {
                                 marginBottom: 10
                             },
                             children: `Topics`
-                        }), t.topics.map(n => {
-                            let r = `${t.id}::${n}`,
+                        }), t.topics.map(tp => {
+                            let r = `${t.id}::${tp}`,
                                 a = !!e.completedTopics[r],
-                                revKey = `rev::${t.id}::${n}`,
+                                revKey = `rev::${t.id}::${tp}`,
                                 isRev = !!e.revisedTopics[revKey];
                             return (0, b.jsxs)(`div`, {
                                 className: `check-pop`,
-                                onClick: () => y(t.id, n),
+                                onClick: () => y(t.id, tp),
                                 style: {
                                     display: `flex`,
                                     alignItems: `center`,
@@ -10909,9 +10921,9 @@ function ce() {
                                         textDecoration: a ? `line-through` : `none`,
                                         flex: 1
                                     },
-                                    children: n
+                                    children: tp
                                 })]
-                            }, n)
+                            }, tp)
                         }), (0, b.jsxs)(`div`, {
                             style: {
                                 display: `flex`,
@@ -11076,6 +11088,19 @@ function ce() {
                                         }),
                                         (0, b.jsx)(`button`, {
                                             onClick: function(){
+                                                var h = parseFloat(hoursInput);
+                                                if(isNaN(h)||h<=0) return;
+                                                var today = new Date().toISOString().split('T')[0];
+                                                var prevH = e.studyHours||{};
+                                                var newVal = Math.max(0, (prevH[today]||0) - h);
+                                                v(Object.assign({},e,{ studyHours: Object.assign({},prevH,{[today]:newVal}) }));
+                                                setHoursInput('');
+                                            },
+                                            style:{ fontSize:12, padding:`7px 14px`, borderRadius:99, border:`1px solid #F97316`, background:`transparent`, color:`#F97316`, cursor:`pointer`, fontWeight:600, whiteSpace:`nowrap` },
+                                            children:`− Subtract`
+                                        }),
+                                        (0, b.jsx)(`button`, {
+                                            onClick: function(){
                                                 var rows = ['Test Name,Score,Max,Date,Link'];
                                                 (e.mockScores||[]).forEach(function(m){ rows.push([(m.name||'Mock'),m.score,100,m.date,(m.link||'')].join(',')); });
                                                 var subRows = ['Subject,Test Name,Score,Max,Pct,Date,Link'];
@@ -11085,6 +11110,44 @@ function ce() {
                                             },
                                             style:{ fontSize:12, padding:`7px 14px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textS, cursor:`pointer`, whiteSpace:`nowrap` },
                                             children:`↓ Export CSV`
+                                        }),
+                                        (0, b.jsxs)(`label`, {
+                                            style:{ fontSize:12, padding:`7px 14px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textS, cursor:`pointer`, whiteSpace:`nowrap`, display:`inline-flex`, alignItems:`center`, gap:4 },
+                                            children:[
+                                                `↑ Import CSV`,
+                                                (0, b.jsx)(`input`, {
+                                                    type:`file`, accept:`.csv`,
+                                                    style:{ display:`none` },
+                                                    onChange: function(ev){
+                                                        var file = ev.target.files[0]; if(!file) return;
+                                                        var reader = new FileReader();
+                                                        reader.onload = function(evt){
+                                                            try {
+                                                                var lines = evt.target.result.split('\n');
+                                                                var mockScores = []; var subjectScores = {};
+                                                                var section = '';
+                                                                lines.forEach(function(line){
+                                                                    line = line.trim(); if(!line) return;
+                                                                    if(line==='MOCK SCORES'){ section='mock'; return; }
+                                                                    if(line==='SUBJECT SCORES'){ section='subject'; return; }
+                                                                    if(line.startsWith('Test Name') || line.startsWith('Subject')) return;
+                                                                    var parts = line.split(',');
+                                                                    if(section==='mock' && parts.length>=4){
+                                                                        mockScores.push({ name:parts[0], score:parseFloat(parts[1])||0, max:100, date:parts[3]||'', link:parts[4]||'' });
+                                                                    } else if(section==='subject' && parts.length>=6){
+                                                                        var sid=parts[0]; if(!subjectScores[sid]) subjectScores[sid]=[];
+                                                                        subjectScores[sid].push({ name:parts[1], score:parseFloat(parts[2])||0, max:parseFloat(parts[3])||100, date:parts[5]||'', link:parts[6]||'' });
+                                                                    }
+                                                                });
+                                                                v(Object.assign({},e,{ mockScores:[...( e.mockScores||[]),...mockScores], subjectScores: Object.assign({},e.subjectScores||{}) }));
+                                                                alert('Imported ' + mockScores.length + ' mock scores successfully!');
+                                                            } catch(err){ alert('Import failed: ' + err.message); }
+                                                        };
+                                                        reader.readAsText(file);
+                                                        ev.target.value='';
+                                                    }
+                                                })
+                                            ]
                                         })
                                     ]
                                 })
@@ -11576,7 +11639,7 @@ function ce() {
                                         let i = `${t.id}::${r}`,
                                             a = !!e.completedTopics[i],
                                             revKey = `rev::${t.id}::${r}`,
-                                            isRev = !!(e.revisedTopics||{})[revKey];
+                                            isRev = !!((e.revisedTopics)||{})[revKey];
                                         return (0, b.jsxs)(`div`, {
                                             className: `check-pop`,
                                             onClick: () => y(t.id, r),
@@ -12084,7 +12147,22 @@ function ce() {
                                 color: A.text,
                                 outline: `none`
                             }
-                        }), (0, b.jsx)(`button`, {
+                        }), (0, b.jsxs)(`div`, {
+                            style: { display:`flex`, flexWrap:`wrap`, gap:6, alignItems:`center`, marginTop:8, width:`100%` },
+                            children: [
+                                (0, b.jsx)(`span`, { style:{ fontSize:11, color:A.textT, marginRight:2 }, children:`Weak in:` }),
+                                C.map(function(sub){
+                                    var active = mockWeakSubs.includes(sub.id);
+                                    var ph2 = w[sub.phase];
+                                    return (0, b.jsx)(`button`, {
+                                        onClick: function(){ setMockWeakSubs(active ? mockWeakSubs.filter(function(x){ return x!==sub.id; }) : [...mockWeakSubs, sub.id]); },
+                                        style:{ fontSize:10, padding:`3px 9px`, borderRadius:99, border:`1px solid ${active?ph2.color:A.border}`, background:active?ph2.bg:`transparent`, color:active?ph2.color:A.textT, cursor:`pointer`, fontWeight:active?600:400 },
+                                        children: sub.name
+                                    }, sub.id)
+                                })
+                            ]
+                        }),
+                        (0, b.jsx)(`button`, {
                             onClick: ce,
                             style: {
                                 fontSize: 13,
@@ -12094,7 +12172,8 @@ function ce() {
                                 background: `linear-gradient(135deg, #8B5CF6, #A78BFA)`,
                                 color: `#fff`,
                                 cursor: `pointer`,
-                                fontWeight: 600
+                                fontWeight: 600,
+                                marginTop: 8
                             },
                             children: `Add`
                         })]
@@ -12199,7 +12278,7 @@ function ce() {
                                         },
                                         children: e.mockScores.map((ms, t) => {
                                             let n = Math.max(14, Math.round(ms.score / 100 * 130)),
-                                                r = ms.score >= 55 ? `linear-gradient(to top, #059669, #34D399)` : ms.score >= 45 ? `linear-gradient(to top, #3B82F6, #60A5FA)` : `linear-gradient(to top, #F97316, #FB923C)`;
+                                                r = ms.score >= 80 ? `linear-gradient(to top, #059669, #34D399)` : ms.score >= 50 ? `linear-gradient(to top, #3B82F6, #60A5FA)` : `linear-gradient(to top, #EF4444, #F87171)`;
                                             return (0, b.jsxs)(`div`, {
                                                 style: {
                                                     width: 44,
@@ -12237,7 +12316,66 @@ function ce() {
                                 })
                             ]
                         })]
-                    }), (0, b.jsxs)(T, {
+                    }), (function(){
+                        // Build weak area frequency map
+                        var weakFreq = {};
+                        (e.mockScores||[]).forEach(function(ms){
+                            (ms.weakSubs||[]).forEach(function(sid){
+                                weakFreq[sid] = (weakFreq[sid]||0) + 1;
+                            });
+                        });
+                        var hasWeak = Object.keys(weakFreq).length > 0;
+                        if(!hasWeak) return null;
+                        var sorted = Object.entries(weakFreq).sort(function(a,b){ return b[1]-a[1]; });
+                        var maxFreq = sorted[0][1];
+                        return (0, b.jsxs)(T, {
+                            T: A,
+                            style: { padding: `16px 20px`, marginBottom: 10 },
+                            children: [
+                                (0, b.jsxs)(`div`, {
+                                    style:{ display:`flex`, alignItems:`center`, justifyContent:`space-between`, marginBottom:14 },
+                                    children:[
+                                        (0, b.jsx)(`div`, { style:{ fontSize:11, fontWeight:700 }, children:`🔥 Weak Area Trend` }),
+                                        (0, b.jsx)(`div`, { style:{ fontSize:10, color:A.textT }, children:`across ${(e.mockScores||[]).filter(function(m){ return m.weakSubs&&m.weakSubs.length; }).length} analysed mocks` })
+                                    ]
+                                }),
+                                sorted.map(function(kv){
+                                    var sid = kv[0], freq = kv[1];
+                                    var sub = C.find(function(s){ return s.id===sid; });
+                                    if(!sub) return null;
+                                    var ph3 = w[sub.phase];
+                                    var pct = Math.round(freq/maxFreq*100);
+                                    var danger = freq >= 3 ? `#EF4444` : freq === 2 ? `#F97316` : `#60A5FA`;
+                                    return (0, b.jsxs)(`div`, {
+                                        style:{ marginBottom:10 },
+                                        children:[
+                                            (0, b.jsxs)(`div`, {
+                                                style:{ display:`flex`, alignItems:`center`, justifyContent:`space-between`, marginBottom:4 },
+                                                children:[
+                                                    (0, b.jsxs)(`div`, {
+                                                        style:{ display:`flex`, alignItems:`center`, gap:8 },
+                                                        children:[
+                                                            (0, b.jsx)(`div`, { style:{ width:20, height:20, borderRadius:6, background:ph3.gradient, display:`flex`, alignItems:`center`, justifyContent:`center`, fontSize:8, fontWeight:700, color:`#fff` }, children:sub.icon }),
+                                                            (0, b.jsx)(`span`, { style:{ fontSize:12, fontWeight:600 }, children:sub.name }),
+                                                            freq >= 3 ? (0, b.jsx)(`span`, { style:{ fontSize:9, padding:`1px 7px`, borderRadius:99, background:`rgba(239,68,68,0.12)`, color:`#F87171`, fontWeight:700 }, children:`⚠ Recurring` }) : null
+                                                        ]
+                                                    }),
+                                                    (0, b.jsxs)(`span`, { style:{ fontSize:12, fontWeight:700, color:danger }, children:[freq, ` mock`, freq!==1?`s`:``] })
+                                                ]
+                                            }),
+                                            (0, b.jsx)(`div`, {
+                                                style:{ height:6, background:m?`rgba(255,255,255,0.06)`:`rgba(0,0,0,0.04)`, borderRadius:99 },
+                                                children: (0, b.jsx)(`div`, {
+                                                    style:{ height:6, width:`${pct}%`, background: freq>=3?`linear-gradient(135deg,#EF4444,#F87171)`:freq===2?`linear-gradient(135deg,#F97316,#FB923C)`:`linear-gradient(135deg,#3B82F6,#60A5FA)`, borderRadius:99, transition:`width 0.4s` }
+                                                })
+                                            })
+                                        ]
+                                    }, sid)
+                                })
+                            ]
+                        });
+                    })(),
+                    (0, b.jsxs)(T, {
                         T: A,
                         style: { padding: `16px 20px` },
                         children: [(0, b.jsx)(`div`, {
@@ -12246,8 +12384,17 @@ function ce() {
                         }), e.mockScores.map((ms, midx) => (0, b.jsxs)(`div`, {
                             style: { display: `flex`, alignItems: `center`, gap: 10, padding: `7px 0`, borderBottom: midx < e.mockScores.length - 1 ? `1px solid ${A.border}` : `none` },
                             children: [
-                                (0, b.jsx)(`div`, { style: { flex: 1 }, children: ms.link ? (0, b.jsx)(`a`, { href: ms.link, target: `_blank`, rel: `noopener`, style: { fontSize: 12, color: `#A78BFA`, textDecoration: `none` }, children: ms.name || `Mock ${midx+1}` }) : (0, b.jsx)(`span`, { style: { fontSize: 12, color: A.text }, children: ms.name || `Mock ${midx+1}` }) }),
-                                (0, b.jsx)(`span`, { style: { fontSize: 12, fontWeight: 600, color: ms.score >= 55 ? `#34D399` : ms.score >= 45 ? `#60A5FA` : `#F97316` }, children: ms.score + ` / 100` }),
+                                (0, b.jsx)(`div`, { style: { minWidth:120, flex:1 }, children: ms.link ? (0, b.jsx)(`a`, { href: ms.link, target: `_blank`, rel: `noopener`, style: { fontSize: 12, color: `#A78BFA`, textDecoration: `none`, fontWeight:600 }, children: ms.name || `Mock ${midx+1}` }) : (0, b.jsx)(`span`, { style: { fontSize: 12, color: A.text, fontWeight:600 }, children: ms.name || `Mock ${midx+1}` }) }),
+                                ms.weakSubs && ms.weakSubs.length > 0 ? (0, b.jsx)(`div`, {
+                                    style:{ display:`flex`, gap:4, flexWrap:`wrap`, flex:2 },
+                                    children: ms.weakSubs.map(function(sid){
+                                        var sub = C.find(function(s){ return s.id===sid; });
+                                        if(!sub) return null;
+                                        var ph3 = w[sub.phase];
+                                        return (0, b.jsx)(`span`, { style:{ fontSize:9, padding:`2px 8px`, borderRadius:99, background:ph3.bg, color:ph3.color, fontWeight:600, border:`1px solid ${ph3.color}40` }, children:sub.name }, sid);
+                                    })
+                                }) : (0, b.jsx)(`span`, { style:{ fontSize:10, color:A.textT, flex:2 }, children:`—` }),
+                                (0, b.jsx)(`span`, { style: { fontSize: 12, fontWeight: 700, color: ms.score >= 80 ? `#34D399` : ms.score >= 50 ? `#60A5FA` : `#EF4444`, minWidth:60, textAlign:`right` }, children: ms.score + ` / 100` }),
                                 (0, b.jsx)(`span`, { style: { fontSize: 10, color: A.textT }, children: ms.date.slice(5) }),
                                 (0, b.jsx)(`button`, {
                                     onClick: () => {
@@ -12462,7 +12609,7 @@ function ce() {
                                 children: [
                                     (0, b.jsx)(`div`, { style: { width: 24, height: 24, borderRadius: 7, background: ph.gradient, display: `flex`, alignItems: `center`, justifyContent: `center`, fontSize: 9, fontWeight: 700, color: '#fff' }, children: sub.icon }),
                                     (0, b.jsxs)(`span`, { style: { fontSize: 13, fontWeight: 600, flex: 1, display:`flex`, alignItems:`center`, gap:6 }, children: [sub.name, isWeak ? (0, b.jsx)(`span`, { style:{ fontSize:9, padding:`2px 7px`, borderRadius:5, background:`rgba(239,68,68,0.15)`, color:`#F87171`, fontWeight:700 }, children:`⚠ Weak <50%` }) : null] }),
-                                    (0, b.jsxs)(`span`, { style: { fontSize: 11, color: A.textT }, children: ['Best: ', (0, b.jsx)(`span`, { style: { color: '#34D399', fontWeight: 700 }, children: best.toFixed(1) + '%' })] }),
+                                    (0, b.jsxs)(`span`, { style: { fontSize: 11, color: A.textT }, children: ['Best: ', (0, b.jsx)(`span`, { style: { color: best>=80?'#34D399':best>=50?'#60A5FA':'#EF4444', fontWeight: 700 }, children: best.toFixed(1) + '%' })] }),
                                     (0, b.jsxs)(`span`, { style: { fontSize: 11, color: A.textT, marginLeft: 12 }, children: ['Avg: ', avg.toFixed(1) + '%'] })
                                 ]
                             }),
@@ -12470,7 +12617,7 @@ function ce() {
                                 style: { padding: `10px 18px` },
                                 children: entries.map(function(en, idx) {
                                     var pct = en.score/en.max;
-                                    var col = pct >= 0.7 ? '#34D399' : pct >= 0.5 ? '#60A5FA' : '#F97316';
+                                    var col = pct >= 0.8 ? '#34D399' : pct >= 0.5 ? '#60A5FA' : '#EF4444';
                                     return (0, b.jsxs)(`div`, {
                                         style: { display: `flex`, alignItems: `center`, gap: 10, padding: `7px 0`, borderBottom: idx < entries.length-1 ? `1px solid ${A.border}` : 'none' },
                                         children: [
@@ -12501,6 +12648,250 @@ function ce() {
                         (0, b.jsx)(`div`, { style: { fontSize: 12, color: A.textT }, children: 'Add subject test scores to track your progress per topic' })
                     ]
                 })]
+            }), n === `plan` && (0, b.jsx)(`div`, {
+                className: `fade-in`,
+                children: (function(){
+                    var today = new Date().toISOString().split('T')[0];
+                    return [
+                        (0, b.jsxs)(T, {
+                            T: A,
+                            style: { padding: `16px 20px`, marginBottom: 12 },
+                            children: [
+                                (0, b.jsx)(`div`, { style:{ fontSize:13, fontWeight:700, marginBottom:4 }, children:`📖 Revision Tracker` }),
+                                (0, b.jsx)(`div`, { style:{ fontSize:11, color:A.textT }, children:`Track revision count and schedule for each subject. Hit "Done Today" after revising.` })
+                            ]
+                        }),
+                        C.map(function(sub){
+                            var ph = w[sub.phase];
+                            var revHistory = (e.revisionHistory||{})[sub.id] || [];
+                            var count = revHistory.length;
+                            var lastRev = count > 0 ? revHistory[revHistory.length-1] : null;
+                            var daysSince = lastRev ? Math.floor((new Date() - new Date(lastRev)) / 864e5) : null;
+                            var autoRevDate = lastRev ? (function(){ var d=new Date(lastRev); d.setDate(d.getDate()+7); return d.toISOString().split('T')[0]; })() : null;
+                            var nextRevDate = (e.customRevDate||{})[sub.id] || autoRevDate;
+                            var isOverdue = nextRevDate && today > nextRevDate;
+                            var isDueToday = nextRevDate && nextRevDate === today;
+                            var doneToday = lastRev === today;
+                            var completedCount = sub.topics.filter(function(tp){ return (e.completedTopics||{})[`${sub.id}::${tp}`]; }).length;
+
+                            return (0, b.jsxs)(T, {
+                                T: A,
+                                style: { marginBottom: 8, border: isOverdue ? `1px solid rgba(239,68,68,0.35)` : isDueToday ? `1px solid rgba(52,211,153,0.35)` : `1px solid ${A.border}` },
+                                children: [
+                                    (0, b.jsxs)(`div`, {
+                                        style: { padding: `14px 18px`, display:`flex`, alignItems:`center`, gap:12, flexWrap:`wrap` },
+                                        children: [
+                                            // Subject icon + name
+                                            (0, b.jsxs)(`div`, {
+                                                style: { display:`flex`, alignItems:`center`, gap:10, minWidth:160, flex:1 },
+                                                children: [
+                                                    (0, b.jsx)(`div`, {
+                                                        style: { width:36, height:36, borderRadius:10, background:ph.gradient, display:`flex`, alignItems:`center`, justifyContent:`center`, fontSize:11, fontWeight:700, color:`#fff`, flexShrink:0 },
+                                                        children: sub.icon
+                                                    }),
+                                                    (0, b.jsxs)(`div`, {
+                                                        children: [
+                                                            (0, b.jsx)(`div`, { style:{ fontSize:13, fontWeight:700 }, children: sub.name }),
+                                                            (0, b.jsxs)(`div`, { style:{ fontSize:10, color:A.textT, marginTop:2 }, children:[`Phase ${sub.phase} · ${completedCount}/${sub.topics.length} topics done`] })
+                                                        ]
+                                                    })
+                                                ]
+                                            }),
+                                            // 4 info cards
+                                            (0, b.jsxs)(`div`, {
+                                                style: { display:`grid`, gridTemplateColumns:`repeat(4,1fr)`, gap:8, flex:2, minWidth:300 },
+                                                children: [
+                                                    // Card 1: Revision count
+                                                    (0, b.jsxs)(`div`, {
+                                                        style: { padding:`8px 10px`, borderRadius:10, background: m?`rgba(255,255,255,0.04)`:`rgba(0,0,0,0.03)`, border:`1px solid ${A.border}`, textAlign:`center` },
+                                                        children: [
+                                                            (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:4 }, children:`Revisions` }),
+                                                            (0, b.jsxs)(`div`, { style:{ fontSize:22, fontWeight:700, backgroundImage:ph.gradient, WebkitBackgroundClip:`text`, WebkitTextFillColor:`transparent` }, children:[count] }),
+                                                            (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, marginTop:2 }, children:`times` })
+                                                        ]
+                                                    }),
+                                                    // Card 2: Last revision
+                                                    (0, b.jsxs)(`div`, {
+                                                        style: { padding:`8px 10px`, borderRadius:10, background: m?`rgba(255,255,255,0.04)`:`rgba(0,0,0,0.03)`, border:`1px solid ${A.border}`, textAlign:`center` },
+                                                        children: [
+                                                            (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:4 }, children:`Last Revision` }),
+                                                            (0, b.jsx)(`div`, { style:{ fontSize:12, fontWeight:600, color: doneToday?`#34D399`:lastRev?A.text:A.textT }, children: doneToday?`Today ✓`:lastRev?lastRev:`—` }),
+                                                            daysSince !== null && !doneToday ? (0, b.jsxs)(`div`, { style:{ fontSize:9, color:A.textT, marginTop:2 }, children:[daysSince,`d ago`] }) : null
+                                                        ]
+                                                    }),
+                                                    // Card 3: Next revision
+                                                    (0, b.jsxs)(`div`, {
+                                                        style: { padding:`8px 10px`, borderRadius:10, background: isOverdue?`rgba(239,68,68,0.08)`:isDueToday?`rgba(52,211,153,0.08)`:m?`rgba(255,255,255,0.04)`:`rgba(0,0,0,0.03)`, border:`1px solid ${isOverdue?'rgba(239,68,68,0.3)':isDueToday?'rgba(52,211,153,0.3)':A.border}`, textAlign:`center` },
+                                                        children: [
+                                                            (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:4 }, children:`Next Revision` }),
+                                                            (0, b.jsx)(`div`, { style:{ fontSize:11, fontWeight:600, color: isOverdue?`#F87171`:isDueToday?`#34D399`:nextRevDate?A.text:A.textT, marginBottom:4 }, children: isOverdue?`Overdue!`:isDueToday?`Today!`:nextRevDate?nextRevDate:`Not set` }),
+                                                            nextRevDate && !isOverdue && !isDueToday ? (0, b.jsxs)(`div`, { style:{ fontSize:9, color:A.textT, marginBottom:4 }, children:[`in ${Math.ceil((new Date(nextRevDate)-new Date())/864e5)}d`] }) : null,
+                                                            (0, b.jsx)(`input`, {
+                                                                type:`date`,
+                                                                value: (e.customRevDate||{})[sub.id] || nextRevDate || ``,
+                                                                onChange: function(ev){
+                                                                    v(Object.assign({},e,{ customRevDate: Object.assign({},e.customRevDate||{},{[sub.id]:ev.target.value}) }));
+                                                                },
+                                                                style:{ fontSize:9, padding:`3px 6px`, borderRadius:6, border:`1px solid ${A.inputBorder}`, background:A.inputBg, color:A.text, outline:`none`, width:`100%`, boxSizing:`border-box`, cursor:`pointer` }
+                                                            })
+                                                        ]
+                                                    }),
+                                                    // Card 4: Done Today button
+                                                    (0, b.jsxs)(`div`, {
+                                                        style: { padding:`8px 10px`, borderRadius:10, background: doneToday?`rgba(52,211,153,0.1)`:m?`rgba(255,255,255,0.04)`:`rgba(0,0,0,0.03)`, border:`1px solid ${doneToday?'rgba(52,211,153,0.4)':A.border}`, textAlign:`center`, display:`flex`, flexDirection:`column`, alignItems:`center`, justifyContent:`center`, gap:6 },
+                                                        children: [
+                                                            (0, b.jsx)(`button`, {
+                                                                onClick: function(){
+                                                                    if(doneToday) return;
+                                                                    var prev = (e.revisionHistory||{});
+                                                                    var arr = prev[sub.id] || [];
+                                                                    v(Object.assign({},e,{
+                                                                        revisionHistory: Object.assign({},prev,{ [sub.id]: [...arr, today] }),
+                                                                        lastStudied: Object.assign({},e.lastStudied||{},{ [sub.id]: today })
+                                                                    }));
+                                                                },
+                                                                style: { fontSize:11, padding:`6px 12px`, borderRadius:99, border:`none`, background: doneToday?`rgba(52,211,153,0.2)`:`linear-gradient(135deg,#8B5CF6,#A78BFA)`, color: doneToday?`#34D399`:`#fff`, cursor: doneToday?`default`:`pointer`, fontWeight:600, whiteSpace:`nowrap` },
+                                                                children: doneToday ? `✓ Done!` : `✓ Done Today`
+                                                            }),
+                                                            count > 0 ? (0, b.jsx)(`button`, {
+                                                                onClick: function(){
+                                                                    var prev = (e.revisionHistory||{});
+                                                                    var arr = (prev[sub.id]||[]).slice(0,-1);
+                                                                    v(Object.assign({},e,{ revisionHistory: Object.assign({},prev,{ [sub.id]: arr }) }));
+                                                                },
+                                                                style: { fontSize:9, padding:`2px 8px`, borderRadius:6, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer` },
+                                                                children:`undo last`
+                                                            }) : null
+                                                        ]
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    })
+                                ]
+                            }, sub.id)
+                        })
+                    ];
+                })()
+            }), n === `weekly` && (0, b.jsxs)(`div`, {
+                className: `fade-in`,
+                children: (function(){
+                    var snapshots = e.weeklySnapshots || [];
+                    var sh = e.studyHours||{};
+                    var today = new Date();
+                    var dayOfWeek = today.getDay();
+                    var isSunday = dayOfWeek === 0;
+                    // compute this week (Mon-Sun) dates
+                    var weekStart = new Date(today); weekStart.setDate(today.getDate() - (dayOfWeek===0?6:dayOfWeek-1));
+                    var thisWeekDates = [];
+                    for(var i=0;i<7;i++){ var d=new Date(weekStart); d.setDate(weekStart.getDate()+i); thisWeekDates.push(d.toISOString().split('T')[0]); }
+                    var thisWeekHrs = thisWeekDates.reduce(function(a,d){return a+(sh[d]||0);},0);
+                    var thisWeekMocks = (e.mockScores||[]).filter(function(m){ return thisWeekDates.includes(m.date); });
+                    var thisWeekTopics = Object.entries(e.completedTopics||{}).filter(function(kv){ return kv[1]; }).length;
+                    var thisWeekRevised = Object.entries(e.revisedTopics||{}).filter(function(kv){ return kv[1]; }).length;
+                    
+                    var canGenerate = isSunday || snapshots.length === 0;
+                    
+                    var generateSnapshot = function(){
+                        var snap = {
+                            weekOf: thisWeekDates[0],
+                            weekEnd: thisWeekDates[6],
+                            hours: parseFloat(thisWeekHrs.toFixed(1)),
+                            mocks: thisWeekMocks.length,
+                            avgMock: (function(){ var last7 = (e.mockScores||[]).slice(-7); return last7.length ? parseFloat((last7.reduce(function(a,m){return a+m.score;},0)/last7.length).toFixed(1)) : null; })(),
+                            topicsTotal: thisWeekTopics,
+                            revised: thisWeekRevised,
+                            streak: e.streak||0
+                        };
+                        v(Object.assign({},e,{ weeklySnapshots: [...snapshots, snap] }));
+                    };
+                    
+                    return [
+                        (0, b.jsxs)(T, {
+                            T: A,
+                            style:{ padding:`16px 20px`, marginBottom:12 },
+                            children:[
+                                (0, b.jsxs)(`div`, {
+                                    style:{ display:`flex`, alignItems:`center`, justifyContent:`space-between`, flexWrap:`wrap`, gap:10 },
+                                    children:[
+                                        (0, b.jsxs)(`div`, {
+                                            children:[
+                                                (0, b.jsx)(`div`, { style:{ fontSize:13, fontWeight:700, marginBottom:4 }, children:`📊 Weekly Review Summary` }),
+                                                (0, b.jsx)(`div`, { style:{ fontSize:11, color:A.textT }, children: isSunday ? `Today is Sunday — generate this week's snapshot!` : `Snapshots are generated on Sundays. Current week preview below.` })
+                                            ]
+                                        }),
+                                        (0, b.jsx)(`button`, {
+                                            onClick: generateSnapshot,
+                                            style:{ fontSize:12, padding:`8px 18px`, borderRadius:99, border:`none`, background:`linear-gradient(135deg,#8B5CF6,#A78BFA)`, color:`#fff`, cursor:`pointer`, fontWeight:600 },
+                                            children: isSunday ? `📸 Save this week` : `📸 Preview snapshot`
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        (0, b.jsxs)(T, {
+                            T: A,
+                            style:{ padding:`16px 20px`, marginBottom:12 },
+                            children:[
+                                (0, b.jsx)(`div`, { style:{ fontSize:11, fontWeight:600, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:12 }, children:`This Week Preview (${thisWeekDates[0]} → ${thisWeekDates[6]})` }),
+                                (0, b.jsx)(`div`, {
+                                    style:{ display:`grid`, gridTemplateColumns:`repeat(4,1fr)`, gap:10 },
+                                    children: [
+                                        {label:`Hours`, val:thisWeekHrs.toFixed(1), unit:`hrs`, grad:`linear-gradient(135deg,#8B5CF6,#A78BFA)`},
+                                        {label:`Mocks`, val:thisWeekMocks.length, unit:`taken`, grad:`linear-gradient(135deg,#F97316,#FB923C)`},
+                                        {label:`Avg L7`, val: (function(){ var l7=(e.mockScores||[]).slice(-7); return l7.length?(l7.reduce(function(a,m){return a+m.score;},0)/l7.length).toFixed(1):`—`; })(), unit:`/100`, grad:`linear-gradient(135deg,#3B82F6,#60A5FA)`},
+                                        {label:`Streak`, val:(e.streak||0), unit:`days 🔥`, grad:`linear-gradient(135deg,#EC4899,#F9A8D4)`}
+                                    ].map(function(card){
+                                        return (0, b.jsxs)(T, {
+                                            T: A,
+                                            style:{ padding:0, overflow:`hidden` },
+                                            children:[
+                                                (0, b.jsx)(`div`, { style:{ height:3, background:card.grad } }),
+                                                (0, b.jsxs)(`div`, {
+                                                    style:{ padding:`10px 12px` },
+                                                    children:[
+                                                        (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, fontWeight:600, marginBottom:6 }, children:card.label }),
+                                                        (0, b.jsxs)(`div`, { style:{ display:`flex`, alignItems:`baseline`, gap:3 }, children:[
+                                                            (0, b.jsx)(`span`, { style:{ fontSize:20, fontWeight:700, backgroundImage:card.grad, WebkitBackgroundClip:`text`, WebkitTextFillColor:`transparent` }, children:card.val }),
+                                                            (0, b.jsx)(`span`, { style:{ fontSize:9, color:A.textT }, children:card.unit })
+                                                        ]})
+                                                    ]
+                                                })
+                                            ]
+                                        }, card.label)
+                                    })
+                                })
+                            ]
+                        }),
+                        snapshots.length > 0 ? (0, b.jsxs)(T, {
+                            T: A,
+                            style:{ padding:`16px 20px` },
+                            children:[
+                                (0, b.jsx)(`div`, { style:{ fontSize:11, fontWeight:600, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:12 }, children:`Past Snapshots` }),
+                                [...snapshots].reverse().map(function(snap, idx){
+                                    return (0, b.jsxs)(`div`, {
+                                        style:{ padding:`12px 0`, borderBottom: idx < snapshots.length-1 ? `1px solid ${A.border}` : `none`, display:`flex`, flexWrap:`wrap`, gap:16, alignItems:`center` },
+                                        children:[
+                                            (0, b.jsxs)(`div`, { style:{ minWidth:140 }, children:[
+                                                (0, b.jsxs)(`div`, { style:{ fontSize:12, fontWeight:600 }, children:[`Week of ${snap.weekOf}`] }),
+                                                (0, b.jsxs)(`div`, { style:{ fontSize:10, color:A.textT, marginTop:2 }, children:[snap.weekOf, ` → `, snap.weekEnd] })
+                                            ]}),
+                                            (0, b.jsxs)(`span`, { style:{ fontSize:11, color:`#A78BFA` }, children:[`⏱ `, snap.hours, `h`] }),
+                                            (0, b.jsxs)(`span`, { style:{ fontSize:11, color:`#60A5FA` }, children:[`📝 `, snap.mocks, ` mock${snap.mocks!==1?'s':''}`] }),
+                                            snap.avgMock !== null ? (0, b.jsxs)(`span`, { style:{ fontSize:11, color: snap.avgMock>=80?`#34D399`:snap.avgMock>=50?`#60A5FA`:`#EF4444` }, children:[`avg `, snap.avgMock] }) : null,
+                                            (0, b.jsxs)(`span`, { style:{ fontSize:11, color:`#FB923C` }, children:[`🔥 `, snap.streak, `d streak`] }),
+                                            (0, b.jsx)(`button`, {
+                                                onClick: function(){ v(Object.assign({},e,{ weeklySnapshots: snapshots.filter(function(_,i){ return i !== (snapshots.length-1-idx); }) })); },
+                                                style:{ fontSize:10, padding:`2px 8px`, borderRadius:6, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer`, marginLeft:`auto` },
+                                                children:`✕`
+                                            })
+                                        ]
+                                    }, snap.weekOf)
+                                })
+                            ]
+                        }) : null
+                    ];
+                })()
             }), n === `notes` && (0, b.jsxs)(`div`, {
                 className: `fade-in`,
                 children: [(0, b.jsx)(`div`, {
