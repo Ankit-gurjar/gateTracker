@@ -11102,10 +11102,52 @@ function ce() {
                                         (0, b.jsx)(`button`, {
                                             onClick: function(){
                                                 var rows = ['Test Name,Score,Max,Date,Link'];
-                                                (e.mockScores||[]).forEach(function(m){ rows.push([(m.name||'Mock'),m.score,100,m.date,(m.link||'')].join(',')); });
+                                                // MOCK SCORES
+                                                (e.mockScores||[]).forEach(function(m){ rows.push([ JSON.stringify(m.name||'Mock'), m.score, 100, m.date, JSON.stringify(m.link||''), JSON.stringify((m.weakSubs||[]).join(';')) ].join(',')); });
+
+                                                // SUBJECT SCORES
                                                 var subRows = ['Subject,Test Name,Score,Max,Pct,Date,Link'];
-                                                Object.entries(e.subjectScores||{}).forEach(function(kv){ kv[1].forEach(function(s){ subRows.push([kv[0],(s.name||''),s.score,s.max,(s.score/s.max*100).toFixed(1),s.date,(s.link||'')].join(',')); }); });
-                                                var csv = 'MOCK SCORES\n'+rows.join('\n')+'\n\nSUBJECT SCORES\n'+subRows.join('\n');
+                                                Object.entries(e.subjectScores||{}).forEach(function(kv){ kv[1].forEach(function(s){ subRows.push([kv[0], JSON.stringify(s.name||''), s.score, s.max, (s.score/s.max*100).toFixed(1), s.date, (s.link||'')].join(',')); }); });
+
+                                                // COMPLETED TOPICS
+                                                var topicRows = ['Subject,Topic,Completed'];
+                                                Object.entries(e.completedTopics||{}).forEach(function(kv){ if(kv[1]){ var parts=kv[0].split('::'); topicRows.push([parts[0], JSON.stringify(parts.slice(1).join('::')),'true'].join(',')); } });
+
+                                                // REVISED TOPICS
+                                                var revTopicRows = ['Subject,Topic,Revised'];
+                                                Object.entries(e.revisedTopics||{}).forEach(function(kv){ if(kv[1]){ var parts=kv[0].replace('rev::','').split('::'); revTopicRows.push([parts[0], JSON.stringify(parts.slice(1).join('::')),'true'].join(',')); } });
+
+                                                // REVISION HISTORY
+                                                var revRows = ['Subject,Date'];
+                                                Object.entries(e.revisionHistory||{}).forEach(function(kv){ kv[1].forEach(function(d){ revRows.push([kv[0],d].join(',')); }); });
+
+                                                // STUDY HOURS
+                                                var hoursRows = ['Date,Hours'];
+                                                Object.entries(e.studyHours||{}).sort().forEach(function(kv){ hoursRows.push([kv[0],kv[1].toFixed(2)].join(',')); });
+
+                                                // STREAK & SETTINGS
+                                                var settingsRows = ['Key,Value',
+                                                    'streak,'+(e.streak||0),
+                                                    'lastStreakDate,'+(e.lastStreakDate||''),
+                                                    'examDate,'+(e.examDate||'2027-02-01'),
+                                                    'weeklyHrsTarget,'+(e.weeklyHrsTarget||0)
+                                                ];
+
+                                                // NOTES
+                                                var notesRows = ['Subject,Note'];
+                                                Object.entries(e.notes||{}).forEach(function(kv){ if(kv[1]) notesRows.push([kv[0], JSON.stringify(kv[1])].join(',')); });
+
+                                                var sections = [
+                                                    'MOCK SCORES', rows.join('\n'),
+                                                    '', 'SUBJECT SCORES', subRows.join('\n'),
+                                                    '', 'COMPLETED TOPICS', topicRows.join('\n'),
+                                                    '', 'REVISED TOPICS', revTopicRows.join('\n'),
+                                                    '', 'REVISION HISTORY', revRows.join('\n'),
+                                                    '', 'STUDY HOURS', hoursRows.join('\n'),
+                                                    '', 'SETTINGS', settingsRows.join('\n'),
+                                                    '', 'NOTES', notesRows.join('\n')
+                                                ];
+                                                var csv = sections.join('\n');
                                                 var a=document.createElement('a'); a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv); a.download='gate_tracker_export.csv'; a.click();
                                             },
                                             style:{ fontSize:12, padding:`7px 14px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textS, cursor:`pointer`, whiteSpace:`nowrap` },
@@ -11123,25 +11165,102 @@ function ce() {
                                                         var reader = new FileReader();
                                                         reader.onload = function(evt){
                                                             try {
-                                                                var lines = evt.target.result.split('\n');
-                                                                var mockScores = []; var subjectScores = {};
-                                                                var section = '';
-                                                                lines.forEach(function(line){
-                                                                    line = line.trim(); if(!line) return;
-                                                                    if(line==='MOCK SCORES'){ section='mock'; return; }
-                                                                    if(line==='SUBJECT SCORES'){ section='subject'; return; }
-                                                                    if(line.startsWith('Test Name') || line.startsWith('Subject')) return;
-                                                                    var parts = line.split(',');
-                                                                    if(section==='mock' && parts.length>=4){
-                                                                        mockScores.push({ name:parts[0], score:parseFloat(parts[1])||0, max:100, date:parts[3]||'', link:parts[4]||'' });
-                                                                    } else if(section==='subject' && parts.length>=6){
-                                                                        var sid=parts[0]; if(!subjectScores[sid]) subjectScores[sid]=[];
-                                                                        subjectScores[sid].push({ name:parts[1], score:parseFloat(parts[2])||0, max:parseFloat(parts[3])||100, date:parts[5]||'', link:parts[6]||'' });
+                                                                // Proper CSV line parser - handles quoted fields with commas
+                                                                function parseCSVLine(line) {
+                                                                    var result=[], cur='', inQ=false;
+                                                                    for(var i=0;i<line.length;i++){
+                                                                        var c=line[i];
+                                                                        if(c==='"'){ inQ=!inQ; }
+                                                                        else if(c===','&&!inQ){ result.push(cur.trim()); cur=''; }
+                                                                        else{ cur+=c; }
                                                                     }
+                                                                    result.push(cur.trim());
+                                                                    return result;
+                                                                }
+                                                                function clean(s){ return (s||'').replace(/^"|"$/g,'').trim(); }
+                                                                function cleanWeak(s){ var v=clean(s); return v?v.split(';').map(function(x){return x.trim();}).filter(Boolean):[]; }
+
+                                                                var lines = evt.target.result.split('\n').map(function(l){return l.trim();});
+                                                                var mode=null;
+                                                                var mockScores=[],subjectScores={},completedTopics={},revisedTopics={},revisionHistory={},studyHours={},settings={},notes={};
+
+                                                                lines.forEach(function(line){
+                                                                    if(!line) return;
+                                                                    if(line==='MOCK SCORES'){mode='mock';return;}
+                                                                    if(line==='SUBJECT SCORES'){mode='sub';return;}
+                                                                    if(line==='COMPLETED TOPICS'){mode='ctopic';return;}
+                                                                    if(line==='REVISED TOPICS'){mode='rtopic';return;}
+                                                                    if(line==='REVISION HISTORY'){mode='revhist';return;}
+                                                                    if(line==='STUDY HOURS'){mode='hours';return;}
+                                                                    if(line==='SETTINGS'){mode='settings';return;}
+                                                                    if(line==='NOTES'){mode='notes';return;}
+                                                                    // Skip header rows
+                                                                    if(/^(Test Name,Score|Subject,Test|Subject,Topic|Date,Hours|Key,Value|Subject,Note|Subject,Date)/.test(line)) return;
+                                                                    var p=parseCSVLine(line);
+
+                                                                    if(mode==='mock'&&p.length>=4){
+                                                                        // Format: "name",score,100,date,link,"weakSubs"
+                                                                        var sc=parseFloat(p[1]);
+                                                                        if(isNaN(sc)) return;
+                                                                        mockScores.push({
+                                                                            name: clean(p[0])||'Mock',
+                                                                            score: sc,
+                                                                            date: clean(p[3])||'',
+                                                                            link: clean(p[4])||'',
+                                                                            weakSubs: cleanWeak(p[5])
+                                                                        });
+                                                                    }
+                                                                    if(mode==='sub'&&p.length>=5){
+                                                                        // Format: subject,"name",score,max,pct,date,link
+                                                                        var sid=clean(p[0]); if(!sid) return;
+                                                                        if(!subjectScores[sid]) subjectScores[sid]=[];
+                                                                        var sc2=parseFloat(p[2]), mx=parseFloat(p[3]);
+                                                                        if(isNaN(sc2)||isNaN(mx)) return;
+                                                                        subjectScores[sid].push({
+                                                                            name: clean(p[1])||'',
+                                                                            score: sc2,
+                                                                            max: mx,
+                                                                            date: clean(p[5])||'',
+                                                                            link: clean(p[6])||''
+                                                                        });
+                                                                    }
+                                                                    if(mode==='ctopic'&&p.length>=3&&clean(p[2])==='true'){
+                                                                        var subId=clean(p[0]), tp=clean(p[1]);
+                                                                        if(subId&&tp) completedTopics[subId+'::'+tp]=true;
+                                                                    }
+                                                                    if(mode==='rtopic'&&p.length>=3&&clean(p[2])==='true'){
+                                                                        var subId2=clean(p[0]), tp2=clean(p[1]);
+                                                                        if(subId2&&tp2) revisedTopics['rev::'+subId2+'::'+tp2]=true;
+                                                                    }
+                                                                    if(mode==='revhist'&&p.length>=2){
+                                                                        var sid3=clean(p[0]), dt=clean(p[1]);
+                                                                        if(sid3&&dt){ if(!revisionHistory[sid3]) revisionHistory[sid3]=[]; revisionHistory[sid3].push(dt); }
+                                                                    }
+                                                                    if(mode==='hours'&&p.length>=2){
+                                                                        var dt2=clean(p[0]), h=parseFloat(p[1]);
+                                                                        if(dt2&&!isNaN(h)) studyHours[dt2]=h;
+                                                                    }
+                                                                    if(mode==='settings'&&p.length>=2){ settings[clean(p[0])]=clean(p[1]); }
+                                                                    if(mode==='notes'&&p.length>=2){ var nk=clean(p[0]); if(nk) notes[nk]=clean(p[1]); }
                                                                 });
-                                                                v(Object.assign({},e,{ mockScores:[...( e.mockScores||[]),...mockScores], subjectScores: Object.assign({},e.subjectScores||{}) }));
-                                                                alert('Imported ' + mockScores.length + ' mock scores successfully!');
-                                                            } catch(err){ alert('Import failed: ' + err.message); }
+
+                                                                // Merge with existing state (don't overwrite if section was empty in CSV)
+                                                                var newState = Object.assign({}, e, {
+                                                                    mockScores: mockScores.length ? mockScores : (e.mockScores||[]),
+                                                                    subjectScores: Object.keys(subjectScores).length ? subjectScores : (e.subjectScores||{}),
+                                                                    completedTopics: Object.keys(completedTopics).length ? completedTopics : (e.completedTopics||{}),
+                                                                    revisedTopics: Object.keys(revisedTopics).length ? revisedTopics : (e.revisedTopics||{}),
+                                                                    revisionHistory: Object.keys(revisionHistory).length ? revisionHistory : (e.revisionHistory||{}),
+                                                                    studyHours: Object.keys(studyHours).length ? studyHours : (e.studyHours||{}),
+                                                                    notes: Object.keys(notes).length ? notes : (e.notes||{})
+                                                                });
+                                                                if(settings.streak) newState.streak = parseInt(settings.streak)||0;
+                                                                if(settings.lastStreakDate) newState.lastStreakDate = settings.lastStreakDate;
+                                                                if(settings.examDate) newState.examDate = settings.examDate;
+                                                                if(settings.weeklyHrsTarget)newState.weeklyHrsTarget=parseFloat(settings.weeklyHrsTarget)||0;
+                                                                v(newState);
+                                                                alert('✅ Imported:\n'+mockScores.length+' mock scores\n'+Object.keys(subjectScores).length+' subjects\n'+Object.keys(completedTopics).length+' completed topics\n'+Object.keys(revisedTopics).length+' revised topics\n'+Object.keys(revisionHistory).length+' revision histories\n'+Object.keys(studyHours).length+' days of study hours');
+                                                            } catch(err){alert('Import failed: '+err.message);}
                                                         };
                                                         reader.readAsText(file);
                                                         ev.target.value='';
