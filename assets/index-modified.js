@@ -10123,6 +10123,7 @@ function ce() {
         weeklySnapshots: [],
         revisionHistory: {},
         customRevDate: {},
+        tomorrowPlan: { subjects: [], note: '' },
         weeklyPlan: {},
         weeklySnapshots: []
     }), [n, r] = (0, x.useState)(`roadmap`), [i, a] = (0, x.useState)(null), [o, s] = (0, x.useState)(`os`), [c, l] = (0, x.useState)(0), [u, d] = (0, x.useState)(``), [f, p] = (0, x.useState)(new Date().toISOString().split(`T`)[0]), [m, h] = (0, x.useState)(!0), [g, _] = (0, x.useState)(null), [J, Q] = (0, x.useState)(``), [mockName, setMockName] = (0, x.useState)(``), [mockLink, setMockLink] = (0, x.useState)(``), [hoursInput, setHoursInput] = (0, x.useState)(``), [mockWeakSubs, setMockWeakSubs] = (0, x.useState)([]);
@@ -11385,6 +11386,35 @@ function ce() {
                                     })()
                                 })
                             ]
+                        })
+                    ]
+                }), (0, b.jsxs)(T, {
+                    T: A,
+                    style: { padding: `16px 20px`, marginBottom: 12 },
+                    children: [
+                        (0, b.jsxs)(`div`, {
+                            style: { display:`flex`, alignItems:`center`, justifyContent:`space-between`, marginBottom:12 },
+                            children: [
+                                (0, b.jsxs)(`div`, {
+                                    children: [
+                                        (0, b.jsx)(`div`, { style:{ fontSize:13, fontWeight:700 }, children:`📋 Tomorrow's Plan` }),
+                                        (0, b.jsx)(`div`, { style:{ fontSize:10, color:A.textT, marginTop:2 }, children: (function(){ var d=new Date(); d.setDate(d.getDate()+1); return d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'}); })() })
+                                    ]
+                                }),
+                                (0, b.jsx)(`button`, {
+                                    onClick: function(){ v(Object.assign({},e,{ tomorrowPlan:{ note:'' } })); },
+                                    style:{ fontSize:10, padding:`3px 10px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer` },
+                                    children:`Clear`
+                                })
+                            ]
+                        }),
+                        (0, b.jsx)(`textarea`, {
+                            placeholder:`What will you do tomorrow? Write your plan, subjects, topics, goals...`,
+                            value: (e.tomorrowPlan||{}).note||'',
+                            onChange: function(ev){
+                                v(Object.assign({},e,{ tomorrowPlan: Object.assign({},e.tomorrowPlan||{},{note:ev.target.value}) }));
+                            },
+                            style:{ width:`100%`, fontSize:13, padding:`12px 14px`, borderRadius:10, border:`1px solid ${A.inputBorder}`, background:A.inputBg, color:A.text, outline:`none`, resize:`none`, minHeight:160, overflowY:`auto`, boxSizing:`border-box`, fontFamily:`inherit`, lineHeight:`22px` }
                         })
                     ]
                 }), (0, b.jsx)(`div`, {
