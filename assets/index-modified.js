@@ -6735,7 +6735,7 @@ Error generating stack: ` + e.message + `
                     Cu(e, t)
                 }
                 while (1);
-                return t && e.shellSuspendCounter++, ea = $i = null, W = r, E.H = i, E.A = a, K === null && (G = null, q = 0, ci()), o
+            return t && e.shellSuspendCounter++, ea = $i = null, W = r, E.H = i, E.A = a, K === null && (G = null, q = 0, ci()), o
         }
 
         function ku() {
@@ -6812,7 +6812,7 @@ Error generating stack: ` + e.message + `
                     Cu(e, t)
                 }
                 while (1);
-                return ea = $i = null, E.H = r, E.A = a, W = n, K === null ? (G = null, q = 0, ci(), Y) : 0
+            return ea = $i = null, E.H = r, E.A = a, W = n, K === null ? (G = null, q = 0, ci(), Y) : 0
         }
 
         function ju() {
@@ -10123,7 +10123,9 @@ function ce() {
         weeklySnapshots: [],
         revisionHistory: {},
         customRevDate: {},
-        tomorrowPlan: { subjects: [], note: '' },
+        tomorrowPlan: {
+            note: ''
+        },
         weeklyPlan: {},
         weeklySnapshots: []
     }), [n, r] = (0, x.useState)(`roadmap`), [i, a] = (0, x.useState)(null), [o, s] = (0, x.useState)(`os`), [c, l] = (0, x.useState)(0), [u, d] = (0, x.useState)(``), [f, p] = (0, x.useState)(new Date().toISOString().split(`T`)[0]), [m, h] = (0, x.useState)(!0), [g, _] = (0, x.useState)(null), [J, Q] = (0, x.useState)(``), [mockName, setMockName] = (0, x.useState)(``), [mockLink, setMockLink] = (0, x.useState)(``), [hoursInput, setHoursInput] = (0, x.useState)(``), [mockWeakSubs, setMockWeakSubs] = (0, x.useState)([]);
@@ -10131,8 +10133,27 @@ function ce() {
         (async () => {
             try {
                 let e = await window.storage.get(ie);
-                e && t(function(loaded){
-                    var defaults = { completedTopics:{}, notes:{}, mockScores:[], subjectScores:{}, revisedTopics:{}, lastStudied:{}, streak:0, lastStreakDate:'', studyHours:{}, examDate:'2027-02-01', weeklyPlan:{}, weeklySnapshots:[], revisionHistory:{}, customRevDate:{}, weeklyHrsTarget:0 };
+                e && t(function(loaded) {
+                    var defaults = {
+                        completedTopics: {},
+                        notes: {},
+                        mockScores: [],
+                        subjectScores: {},
+                        revisedTopics: {},
+                        lastStudied: {},
+                        streak: 0,
+                        lastStreakDate: '',
+                        studyHours: {},
+                        examDate: '2027-02-01',
+                        weeklyPlan: {},
+                        weeklySnapshots: [],
+                        revisionHistory: {},
+                        customRevDate: {},
+                        weeklyHrsTarget: 0,
+                        tomorrowPlan: {
+                            note: ''
+                        }
+                    };
                     return Object.assign({}, defaults, JSON.parse(e.value));
                 }(undefined))
             } catch {}
@@ -10172,7 +10193,7 @@ function ce() {
             }), d(``), setMockName(``), setMockLink(``), setMockWeakSubs([]))
         },
         le = t => {
-            let n = t.topics.filter(n => (e.completedTopics||{})[`${t.id}::${n}`]).length;
+            let n = t.topics.filter(n => (e.completedTopics || {})[`${t.id}::${n}`]).length;
             return {
                 done: n,
                 total: t.topics.length,
@@ -10292,18 +10313,50 @@ function ce() {
                             },
                             children: `GATE 2027`
                         }), (0, b.jsxs)(`div`, {
-                            style: { display:`flex`, alignItems:`center`, gap: 8, marginTop: 2, flexWrap:`wrap` },
+                            style: {
+                                display: `flex`,
+                                alignItems: `center`,
+                                gap: 8,
+                                marginTop: 2,
+                                flexWrap: `wrap`
+                            },
                             children: [
                                 (0, b.jsxs)(`span`, {
-                                    style: { fontSize: 11, fontWeight: 600, background: `linear-gradient(135deg,#F97316,#FB923C)`, WebkitBackgroundClip:`text`, WebkitTextFillColor:`transparent` },
+                                    style: {
+                                        fontSize: 11,
+                                        fontWeight: 600,
+                                        background: `linear-gradient(135deg,#F97316,#FB923C)`,
+                                        WebkitBackgroundClip: `text`,
+                                        WebkitTextFillColor: `transparent`
+                                    },
                                     children: [`🎯 `, de, ` days to GATE 2027`]
                                 }),
-                                (0, b.jsx)(`span`, { style: { fontSize: 11, color: A.textT }, children: `·` }),
+                                (0, b.jsx)(`span`, {
+                                    style: {
+                                        fontSize: 11,
+                                        color: A.textT
+                                    },
+                                    children: `·`
+                                }),
                                 (0, b.jsx)(`input`, {
                                     type: `date`,
                                     value: e.examDate || `2027-02-01`,
-                                    onChange: function(ev) { v({ ...e, examDate: ev.target.value }); },
-                                    style: { fontSize: 10, padding: `2px 6px`, borderRadius: 6, border: `1px solid ${A.border}`, background: A.inputBg, color: A.textS, outline:`none`, cursor:`pointer` }
+                                    onChange: function(ev) {
+                                        v({
+                                            ...e,
+                                            examDate: ev.target.value
+                                        });
+                                    },
+                                    style: {
+                                        fontSize: 10,
+                                        padding: `2px 6px`,
+                                        borderRadius: 6,
+                                        border: `1px solid ${A.border}`,
+                                        background: A.inputBg,
+                                        color: A.textS,
+                                        outline: `none`,
+                                        cursor: `pointer`
+                                    }
                                 })
                             ]
                         })]
@@ -10706,7 +10759,13 @@ function ce() {
                                 textAlign: `center`,
                                 boxShadow: `0 4px 20px rgba(5,150,105,0.3)`
                             },
-                            children: [(function(){ var d=new Date(e.examDate||'2027-02-01'); return '🎯 GATE 2027 — '+d.toLocaleDateString('en-GB',{day:'numeric',month:'short'}); })(), (0, b.jsxs)(`div`, {
+                            children: [(function() {
+                                var d = new Date(e.examDate || '2027-02-01');
+                                return '🎯 GATE 2027 — ' + d.toLocaleDateString('en-GB', {
+                                    day: 'numeric',
+                                    month: 'short'
+                                });
+                            })(), (0, b.jsxs)(`div`, {
                                 style: {
                                     fontSize: 11,
                                     fontWeight: 400,
@@ -10829,7 +10888,7 @@ function ce() {
                                                     fontWeight: 500
                                                 },
                                                 children: [prereqPct.pct === 100 ? `✓ ` : ``, prereq.name]
-                                        }, prereq.id)
+                                            }, prereq.id)
                                         })
                                     })]
                                 }), unlockList.length > 0 && (0, b.jsxs)(`div`, {
@@ -11056,87 +11115,200 @@ function ce() {
                     }, e.label))
                 }), (0, b.jsxs)(T, {
                     T: A,
-                    style: { padding: `18px 20px`, marginBottom: 12 },
+                    style: {
+                        padding: `18px 20px`,
+                        marginBottom: 12
+                    },
                     children: [
                         (0, b.jsxs)(`div`, {
-                            style: { display:`flex`, alignItems:`center`, justifyContent:`space-between`, flexWrap:`wrap`, gap: 12, marginBottom: 16 },
+                            style: {
+                                display: `flex`,
+                                alignItems: `center`,
+                                justifyContent: `space-between`,
+                                flexWrap: `wrap`,
+                                gap: 12,
+                                marginBottom: 16
+                            },
                             children: [
-                                (0, b.jsx)(`div`, { style:{ fontSize:12, fontWeight:700, letterSpacing:`-0.3px` }, children:`⏱ Study Time Tracker` }),
+                                (0, b.jsx)(`div`, {
+                                    style: {
+                                        fontSize: 12,
+                                        fontWeight: 700,
+                                        letterSpacing: `-0.3px`
+                                    },
+                                    children: `⏱ Study Time Tracker`
+                                }),
                                 (0, b.jsxs)(`div`, {
-                                    style:{ display:`flex`, gap:8, alignItems:`center`, flexWrap:`wrap` },
-                                    children:[
+                                    style: {
+                                        display: `flex`,
+                                        gap: 8,
+                                        alignItems: `center`,
+                                        flexWrap: `wrap`
+                                    },
+                                    children: [
                                         (0, b.jsx)(`input`, {
-                                            type:`number`, min:`0`, max:`24`, step:`0.5`, placeholder:`Hours today`,
+                                            type: `number`,
+                                            min: `0`,
+                                            max: `24`,
+                                            step: `0.5`,
+                                            placeholder: `Hours today`,
                                             value: hoursInput,
-                                            onChange: function(ev){ setHoursInput(ev.target.value); },
-                                            style:{ width:110, fontSize:12, padding:`7px 10px`, borderRadius:9, border:`1px solid ${A.inputBorder}`, background:A.inputBg, color:A.text, outline:`none` }
+                                            onChange: function(ev) {
+                                                setHoursInput(ev.target.value);
+                                            },
+                                            style: {
+                                                width: 110,
+                                                fontSize: 12,
+                                                padding: `7px 10px`,
+                                                borderRadius: 9,
+                                                border: `1px solid ${A.inputBorder}`,
+                                                background: A.inputBg,
+                                                color: A.text,
+                                                outline: `none`
+                                            }
                                         }),
                                         (0, b.jsx)(`button`, {
-                                            onClick: function(){
+                                            onClick: function() {
                                                 var h = parseFloat(hoursInput);
-                                                if(isNaN(h)||h<=0) return;
-                                                var today = new Date().toISOString().split('T')[0];
-                                                var prevH = e.studyHours||{};
-                                                var prevStreak = e.streak||0;
-                                                var lastD = e.lastStreakDate||'';
-                                                var yesterday = new Date(Date.now()-864e5).toISOString().split('T')[0];
-                                                var newStreak = lastD===today ? prevStreak : (lastD===yesterday ? prevStreak+1 : 1);
-                                                v(Object.assign({},e,{ studyHours: Object.assign({},prevH,{[today]:(prevH[today]||0)+h}), streak:newStreak, lastStreakDate:today }));
+                                                if (isNaN(h) || h <= 0) return;
+                                                var today = (function() {
+                                                    var d = new Date();
+                                                    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                                                })();
+                                                var prevH = e.studyHours || {};
+                                                var prevStreak = e.streak || 0;
+                                                var lastD = e.lastStreakDate || '';
+                                                var yesterday = (function() {
+                                                    var d = new Date(Date.now() - 864e5);
+                                                    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                                                })();
+                                                var newStreak = lastD === today ? prevStreak : (lastD === yesterday ? prevStreak + 1 : 1);
+                                                v(Object.assign({}, e, {
+                                                    studyHours: Object.assign({}, prevH, {
+                                                        [today]: (prevH[today] || 0) + h
+                                                    }),
+                                                    streak: newStreak,
+                                                    lastStreakDate: today
+                                                }));
                                                 setHoursInput('');
                                             },
-                                            style:{ fontSize:12, padding:`7px 14px`, borderRadius:99, border:`none`, background:`linear-gradient(135deg,#059669,#34D399)`, color:`#fff`, cursor:`pointer`, fontWeight:600, whiteSpace:`nowrap` },
-                                            children:`✓ Log hours`
+                                            style: {
+                                                fontSize: 12,
+                                                padding: `7px 14px`,
+                                                borderRadius: 99,
+                                                border: `none`,
+                                                background: `linear-gradient(135deg,#059669,#34D399)`,
+                                                color: `#fff`,
+                                                cursor: `pointer`,
+                                                fontWeight: 600,
+                                                whiteSpace: `nowrap`
+                                            },
+                                            children: `✓ Log hours`
                                         }),
                                         (0, b.jsx)(`button`, {
-                                            onClick: function(){
+                                            onClick: function() {
                                                 var h = parseFloat(hoursInput);
-                                                if(isNaN(h)||h<=0) return;
-                                                var today = new Date().toISOString().split('T')[0];
-                                                var prevH = e.studyHours||{};
-                                                var newVal = Math.max(0, (prevH[today]||0) - h);
-                                                v(Object.assign({},e,{ studyHours: Object.assign({},prevH,{[today]:newVal}) }));
+                                                if (isNaN(h) || h <= 0) return;
+                                                var today = (function() {
+                                                    var d = new Date();
+                                                    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                                                })();
+                                                var prevH = e.studyHours || {};
+                                                var newVal = Math.max(0, (prevH[today] || 0) - h);
+                                                v(Object.assign({}, e, {
+                                                    studyHours: Object.assign({}, prevH, {
+                                                        [today]: newVal
+                                                    })
+                                                }));
                                                 setHoursInput('');
                                             },
-                                            style:{ fontSize:12, padding:`7px 14px`, borderRadius:99, border:`1px solid #F97316`, background:`transparent`, color:`#F97316`, cursor:`pointer`, fontWeight:600, whiteSpace:`nowrap` },
-                                            children:`− Subtract`
+                                            style: {
+                                                fontSize: 12,
+                                                padding: `7px 14px`,
+                                                borderRadius: 99,
+                                                border: `1px solid #F97316`,
+                                                background: `transparent`,
+                                                color: `#F97316`,
+                                                cursor: `pointer`,
+                                                fontWeight: 600,
+                                                whiteSpace: `nowrap`
+                                            },
+                                            children: `− Subtract`
                                         }),
                                         (0, b.jsx)(`button`, {
-                                            onClick: function(){
+                                            onClick: function() {
                                                 var rows = ['Test Name,Score,Max,Date,Link'];
                                                 // MOCK SCORES
-                                                (e.mockScores||[]).forEach(function(m){ rows.push([ JSON.stringify(m.name||'Mock'), m.score, 100, m.date, JSON.stringify(m.link||''), JSON.stringify((m.weakSubs||[]).join(';')) ].join(',')); });
+                                                (e.mockScores || []).forEach(function(m) {
+                                                    rows.push(['"' + (m.name || 'Mock').replace(/"/g, '""') + '"', m.score, 100, m.date, m.link || '', '"' + (m.weakSubs || []).join(';') + '"'].join(','));
+                                                });
 
                                                 // SUBJECT SCORES
                                                 var subRows = ['Subject,Test Name,Score,Max,Pct,Date,Link'];
-                                                Object.entries(e.subjectScores||{}).forEach(function(kv){ kv[1].forEach(function(s){ subRows.push([kv[0], JSON.stringify(s.name||''), s.score, s.max, (s.score/s.max*100).toFixed(1), s.date, (s.link||'')].join(',')); }); });
+                                                Object.entries(e.subjectScores || {}).forEach(function(kv) {
+                                                    kv[1].forEach(function(s) {
+                                                        subRows.push([kv[0], '"' + (s.name || '').replace(/"/g, '""') + '"', s.score, s.max, (s.score / s.max * 100).toFixed(1), s.date, s.link || ''].join(','));
+                                                    });
+                                                });
 
                                                 // COMPLETED TOPICS
                                                 var topicRows = ['Subject,Topic,Completed'];
-                                                Object.entries(e.completedTopics||{}).forEach(function(kv){ if(kv[1]){ var parts=kv[0].split('::'); topicRows.push([parts[0], JSON.stringify(parts.slice(1).join('::')),'true'].join(',')); } });
+                                                Object.entries(e.completedTopics || {}).forEach(function(kv) {
+                                                    if (kv[1]) {
+                                                        var parts = kv[0].split('::');
+                                                        topicRows.push([parts[0], '"' + parts.slice(1).join('::').replace(/"/g, '""') + '"', 'true'].join(','));
+                                                    }
+                                                });
 
                                                 // REVISED TOPICS
                                                 var revTopicRows = ['Subject,Topic,Revised'];
-                                                Object.entries(e.revisedTopics||{}).forEach(function(kv){ if(kv[1]){ var parts=kv[0].replace('rev::','').split('::'); revTopicRows.push([parts[0], JSON.stringify(parts.slice(1).join('::')),'true'].join(',')); } });
+                                                Object.entries(e.revisedTopics || {}).forEach(function(kv) {
+                                                    if (kv[1]) {
+                                                        var parts = kv[0].replace('rev::', '').split('::');
+                                                        revTopicRows.push([parts[0], '"' + parts.slice(1).join('::').replace(/"/g, '""') + '"', 'true'].join(','));
+                                                    }
+                                                });
 
                                                 // REVISION HISTORY
                                                 var revRows = ['Subject,Date'];
-                                                Object.entries(e.revisionHistory||{}).forEach(function(kv){ kv[1].forEach(function(d){ revRows.push([kv[0],d].join(',')); }); });
+                                                Object.entries(e.revisionHistory || {}).forEach(function(kv) {
+                                                    kv[1].forEach(function(d) {
+                                                        revRows.push([kv[0], d].join(','));
+                                                    });
+                                                });
 
                                                 // STUDY HOURS
                                                 var hoursRows = ['Date,Hours'];
-                                                Object.entries(e.studyHours||{}).sort().forEach(function(kv){ hoursRows.push([kv[0],kv[1].toFixed(2)].join(',')); });
+                                                Object.entries(e.studyHours || {}).sort().forEach(function(kv) {
+                                                    hoursRows.push([kv[0], kv[1].toFixed(2)].join(','));
+                                                });
 
                                                 // STREAK & SETTINGS
                                                 var settingsRows = ['Key,Value',
-                                                    'streak,'+(e.streak||0),
-                                                    'lastStreakDate,'+(e.lastStreakDate||''),
-                                                    'examDate,'+(e.examDate||'2027-02-01'),
-                                                    'weeklyHrsTarget,'+(e.weeklyHrsTarget||0)
+                                                    'streak,' + (e.streak || 0),
+                                                    'lastStreakDate,' + (e.lastStreakDate || ''),
+                                                    'examDate,' + (e.examDate || '2027-02-01'),
+                                                    'weeklyHrsTarget,' + (e.weeklyHrsTarget || 0)
                                                 ];
 
                                                 // NOTES
                                                 var notesRows = ['Subject,Note'];
-                                                Object.entries(e.notes||{}).forEach(function(kv){ if(kv[1]) notesRows.push([kv[0], JSON.stringify(kv[1])].join(',')); });
+                                                Object.entries(e.notes || {}).forEach(function(kv) {
+                                                    if (kv[1]) notesRows.push([kv[0], '"' + kv[1].replace(/"/g, '""') + '"'].join(','));
+                                                });
+
+                                                // WEEKLY SNAPSHOTS
+                                                var snapRows = ['weekOf,weekEnd,hours,mocks,avgMock,streak,weeklyHrsTarget,totalHrs,totalMocks,savedAt'];
+                                                (e.weeklySnapshots || []).forEach(function(s) {
+                                                    snapRows.push([
+                                                        s.weekOf || '', s.weekEnd || '',
+                                                        s.hours || 0, s.mocks || 0,
+                                                        s.avgMock != null ? s.avgMock : '',
+                                                        s.streak || 0, s.weeklyHrsTarget || 0,
+                                                        s.totalHrs || 0, s.totalMocks || 0,
+                                                        s.savedAt || ''
+                                                    ].join(','));
+                                                });
 
                                                 var sections = [
                                                     'MOCK SCORES', rows.join('\n'),
@@ -11146,125 +11318,242 @@ function ce() {
                                                     '', 'REVISION HISTORY', revRows.join('\n'),
                                                     '', 'STUDY HOURS', hoursRows.join('\n'),
                                                     '', 'SETTINGS', settingsRows.join('\n'),
-                                                    '', 'NOTES', notesRows.join('\n')
+                                                    '', 'NOTES', notesRows.join('\n'),
+                                                    '', 'WEEKLY SNAPSHOTS', snapRows.join('\n')
                                                 ];
                                                 var csv = sections.join('\n');
-                                                var a=document.createElement('a'); a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv); a.download='gate_tracker_export.csv'; a.click();
+                                                var a = document.createElement('a');
+                                                a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+                                                a.download = 'gate_tracker_export.csv';
+                                                a.click();
                                             },
-                                            style:{ fontSize:12, padding:`7px 14px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textS, cursor:`pointer`, whiteSpace:`nowrap` },
-                                            children:`↓ Export CSV`
+                                            style: {
+                                                fontSize: 12,
+                                                padding: `7px 14px`,
+                                                borderRadius: 99,
+                                                border: `1px solid ${A.border}`,
+                                                background: `transparent`,
+                                                color: A.textS,
+                                                cursor: `pointer`,
+                                                whiteSpace: `nowrap`
+                                            },
+                                            children: `↓ Export CSV`
                                         }),
                                         (0, b.jsxs)(`label`, {
-                                            style:{ fontSize:12, padding:`7px 14px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textS, cursor:`pointer`, whiteSpace:`nowrap`, display:`inline-flex`, alignItems:`center`, gap:4 },
-                                            children:[
+                                            style: {
+                                                fontSize: 12,
+                                                padding: `7px 14px`,
+                                                borderRadius: 99,
+                                                border: `1px solid ${A.border}`,
+                                                background: `transparent`,
+                                                color: A.textS,
+                                                cursor: `pointer`,
+                                                whiteSpace: `nowrap`,
+                                                display: `inline-flex`,
+                                                alignItems: `center`,
+                                                gap: 4
+                                            },
+                                            children: [
                                                 `↑ Import CSV`,
                                                 (0, b.jsx)(`input`, {
-                                                    type:`file`, accept:`.csv`,
-                                                    style:{ display:`none` },
-                                                    onChange: function(ev){
-                                                        var file = ev.target.files[0]; if(!file) return;
+                                                    type: `file`,
+                                                    accept: `.csv`,
+                                                    style: {
+                                                        display: `none`
+                                                    },
+                                                    onChange: function(ev) {
+                                                        var file = ev.target.files[0];
+                                                        if (!file) return;
                                                         var reader = new FileReader();
-                                                        reader.onload = function(evt){
+                                                        reader.onload = function(evt) {
                                                             try {
                                                                 // Proper CSV line parser - handles quoted fields with commas
                                                                 function parseCSVLine(line) {
-                                                                    var result=[], cur='', inQ=false;
-                                                                    for(var i=0;i<line.length;i++){
-                                                                        var c=line[i];
-                                                                        if(c==='"'){ inQ=!inQ; }
-                                                                        else if(c===','&&!inQ){ result.push(cur.trim()); cur=''; }
-                                                                        else{ cur+=c; }
+                                                                    var result = [],
+                                                                        cur = '',
+                                                                        inQ = false;
+                                                                    for (var i = 0; i < line.length; i++) {
+                                                                        var c = line[i];
+                                                                        if (c === '"') {
+                                                                            inQ = !inQ;
+                                                                        } else if (c === ',' && !inQ) {
+                                                                            result.push(cur.trim());
+                                                                            cur = '';
+                                                                        } else {
+                                                                            cur += c;
+                                                                        }
                                                                     }
                                                                     result.push(cur.trim());
                                                                     return result;
                                                                 }
-                                                                function clean(s){ return (s||'').replace(/^"|"$/g,'').trim(); }
-                                                                function cleanWeak(s){ var v=clean(s); return v?v.split(';').map(function(x){return x.trim();}).filter(Boolean):[]; }
 
-                                                                var lines = evt.target.result.split('\n').map(function(l){return l.trim();});
-                                                                var mode=null;
-                                                                var mockScores=[],subjectScores={},completedTopics={},revisedTopics={},revisionHistory={},studyHours={},settings={},notes={};
+                                                                function clean(s) {
+                                                                    return (s || '').replace(/^"|"$/g, '').replace(/""/g, '"').trim();
+                                                                }
 
-                                                                lines.forEach(function(line){
-                                                                    if(!line) return;
-                                                                    if(line==='MOCK SCORES'){mode='mock';return;}
-                                                                    if(line==='SUBJECT SCORES'){mode='sub';return;}
-                                                                    if(line==='COMPLETED TOPICS'){mode='ctopic';return;}
-                                                                    if(line==='REVISED TOPICS'){mode='rtopic';return;}
-                                                                    if(line==='REVISION HISTORY'){mode='revhist';return;}
-                                                                    if(line==='STUDY HOURS'){mode='hours';return;}
-                                                                    if(line==='SETTINGS'){mode='settings';return;}
-                                                                    if(line==='NOTES'){mode='notes';return;}
+                                                                function cleanWeak(s) {
+                                                                    var v = clean(s);
+                                                                    return v ? v.split(';').map(function(x) {
+                                                                        return x.trim();
+                                                                    }).filter(Boolean) : [];
+                                                                }
+
+                                                                var lines = evt.target.result.split('\n').map(function(l) {
+                                                                    return l.trim();
+                                                                });
+                                                                var mode = null;
+                                                                var mockScores = [],
+                                                                    subjectScores = {},
+                                                                    completedTopics = {},
+                                                                    revisedTopics = {},
+                                                                    revisionHistory = {},
+                                                                    studyHours = {},
+                                                                    settings = {},
+                                                                    notes = {},
+                                                                    weeklySnapshots = [];
+
+                                                                lines.forEach(function(line) {
+                                                                    if (!line) return;
+                                                                    if (line === 'MOCK SCORES') {
+                                                                        mode = 'mock';
+                                                                        return;
+                                                                    }
+                                                                    if (line === 'SUBJECT SCORES') {
+                                                                        mode = 'sub';
+                                                                        return;
+                                                                    }
+                                                                    if (line === 'COMPLETED TOPICS') {
+                                                                        mode = 'ctopic';
+                                                                        return;
+                                                                    }
+                                                                    if (line === 'REVISED TOPICS') {
+                                                                        mode = 'rtopic';
+                                                                        return;
+                                                                    }
+                                                                    if (line === 'REVISION HISTORY') {
+                                                                        mode = 'revhist';
+                                                                        return;
+                                                                    }
+                                                                    if (line === 'STUDY HOURS') {
+                                                                        mode = 'hours';
+                                                                        return;
+                                                                    }
+                                                                    if (line === 'SETTINGS') {
+                                                                        mode = 'settings';
+                                                                        return;
+                                                                    }
+                                                                    if (line === 'NOTES') {
+                                                                        mode = 'notes';
+                                                                        return;
+                                                                    }
+                                                                    if (line === 'WEEKLY SNAPSHOTS') {
+                                                                        mode = 'wsnap';
+                                                                        return;
+                                                                    }
                                                                     // Skip header rows
-                                                                    if(/^(Test Name,Score|Subject,Test|Subject,Topic|Date,Hours|Key,Value|Subject,Note|Subject,Date)/.test(line)) return;
-                                                                    var p=parseCSVLine(line);
+                                                                    if (/^(Test Name,Score|Subject,Test|Subject,Topic|Date,Hours|Key,Value|Subject,Note|Subject,Date|weekOf,weekEnd)/.test(line)) return;
+                                                                    var p = parseCSVLine(line);
 
-                                                                    if(mode==='mock'&&p.length>=4){
+                                                                    if (mode === 'mock' && p.length >= 4) {
                                                                         // Format: "name",score,100,date,link,"weakSubs"
-                                                                        var sc=parseFloat(p[1]);
-                                                                        if(isNaN(sc)) return;
+                                                                        var sc = parseFloat(p[1]);
+                                                                        if (isNaN(sc)) return;
                                                                         mockScores.push({
-                                                                            name: clean(p[0])||'Mock',
+                                                                            name: clean(p[0]) || 'Mock',
                                                                             score: sc,
-                                                                            date: clean(p[3])||'',
-                                                                            link: clean(p[4])||'',
+                                                                            date: clean(p[3]) || '',
+                                                                            link: clean(p[4]) || '',
                                                                             weakSubs: cleanWeak(p[5])
                                                                         });
                                                                     }
-                                                                    if(mode==='sub'&&p.length>=5){
+                                                                    if (mode === 'sub' && p.length >= 5) {
                                                                         // Format: subject,"name",score,max,pct,date,link
-                                                                        var sid=clean(p[0]); if(!sid) return;
-                                                                        if(!subjectScores[sid]) subjectScores[sid]=[];
-                                                                        var sc2=parseFloat(p[2]), mx=parseFloat(p[3]);
-                                                                        if(isNaN(sc2)||isNaN(mx)) return;
+                                                                        var sid = clean(p[0]);
+                                                                        if (!sid) return;
+                                                                        if (!subjectScores[sid]) subjectScores[sid] = [];
+                                                                        var sc2 = parseFloat(p[2]),
+                                                                            mx = parseFloat(p[3]);
+                                                                        if (isNaN(sc2) || isNaN(mx)) return;
                                                                         subjectScores[sid].push({
-                                                                            name: clean(p[1])||'',
+                                                                            name: clean(p[1]) || '',
                                                                             score: sc2,
                                                                             max: mx,
-                                                                            date: clean(p[5])||'',
-                                                                            link: clean(p[6])||''
+                                                                            date: clean(p[5]) || '',
+                                                                            link: clean(p[6]) || ''
                                                                         });
                                                                     }
-                                                                    if(mode==='ctopic'&&p.length>=3&&clean(p[2])==='true'){
-                                                                        var subId=clean(p[0]), tp=clean(p[1]);
-                                                                        if(subId&&tp) completedTopics[subId+'::'+tp]=true;
+                                                                    if (mode === 'ctopic' && p.length >= 3 && clean(p[2]) === 'true') {
+                                                                        var subId = clean(p[0]),
+                                                                            tp = clean(p[1]);
+                                                                        if (subId && tp) completedTopics[subId + '::' + tp] = true;
                                                                     }
-                                                                    if(mode==='rtopic'&&p.length>=3&&clean(p[2])==='true'){
-                                                                        var subId2=clean(p[0]), tp2=clean(p[1]);
-                                                                        if(subId2&&tp2) revisedTopics['rev::'+subId2+'::'+tp2]=true;
+                                                                    if (mode === 'rtopic' && p.length >= 3 && clean(p[2]) === 'true') {
+                                                                        var subId2 = clean(p[0]),
+                                                                            tp2 = clean(p[1]);
+                                                                        if (subId2 && tp2) revisedTopics['rev::' + subId2 + '::' + tp2] = true;
                                                                     }
-                                                                    if(mode==='revhist'&&p.length>=2){
-                                                                        var sid3=clean(p[0]), dt=clean(p[1]);
-                                                                        if(sid3&&dt){ if(!revisionHistory[sid3]) revisionHistory[sid3]=[]; revisionHistory[sid3].push(dt); }
+                                                                    if (mode === 'revhist' && p.length >= 2) {
+                                                                        var sid3 = clean(p[0]),
+                                                                            dt = clean(p[1]);
+                                                                        if (sid3 && dt) {
+                                                                            if (!revisionHistory[sid3]) revisionHistory[sid3] = [];
+                                                                            revisionHistory[sid3].push(dt);
+                                                                        }
                                                                     }
-                                                                    if(mode==='hours'&&p.length>=2){
-                                                                        var dt2=clean(p[0]), h=parseFloat(p[1]);
-                                                                        if(dt2&&!isNaN(h)) studyHours[dt2]=h;
+                                                                    if (mode === 'hours' && p.length >= 2) {
+                                                                        var dt2 = clean(p[0]),
+                                                                            h = parseFloat(p[1]);
+                                                                        if (dt2 && !isNaN(h)) studyHours[dt2] = h;
                                                                     }
-                                                                    if(mode==='settings'&&p.length>=2){ settings[clean(p[0])]=clean(p[1]); }
-                                                                    if(mode==='notes'&&p.length>=2){ var nk=clean(p[0]); if(nk) notes[nk]=clean(p[1]); }
+                                                                    if (mode === 'settings' && p.length >= 2) {
+                                                                        settings[clean(p[0])] = clean(p[1]);
+                                                                    }
+                                                                    if (mode === 'notes' && p.length >= 2) {
+                                                                        var nk = clean(p[0]);
+                                                                        if (nk) notes[nk] = clean(p[1]);
+                                                                    }
+                                                                    if (mode === 'wsnap' && p.length >= 6) {
+                                                                        var wOf = clean(p[0]),
+                                                                            wEnd = clean(p[1]);
+                                                                        if (!wOf) return;
+                                                                        weeklySnapshots.push({
+                                                                            weekOf: wOf,
+                                                                            weekEnd: wEnd,
+                                                                            hours: parseFloat(p[2]) || 0,
+                                                                            mocks: parseInt(p[3]) || 0,
+                                                                            avgMock: p[4] !== '' ? parseFloat(p[4]) : null,
+                                                                            streak: parseInt(p[5]) || 0,
+                                                                            weeklyHrsTarget: parseFloat(p[6]) || 0,
+                                                                            totalHrs: parseFloat(p[7]) || 0,
+                                                                            totalMocks: parseInt(p[8]) || 0,
+                                                                            savedAt: clean(p[9]) || ''
+                                                                        });
+                                                                    }
                                                                 });
 
                                                                 // Merge with existing state (don't overwrite if section was empty in CSV)
                                                                 var newState = Object.assign({}, e, {
-                                                                    mockScores: mockScores.length ? mockScores : (e.mockScores||[]),
-                                                                    subjectScores: Object.keys(subjectScores).length ? subjectScores : (e.subjectScores||{}),
-                                                                    completedTopics: Object.keys(completedTopics).length ? completedTopics : (e.completedTopics||{}),
-                                                                    revisedTopics: Object.keys(revisedTopics).length ? revisedTopics : (e.revisedTopics||{}),
-                                                                    revisionHistory: Object.keys(revisionHistory).length ? revisionHistory : (e.revisionHistory||{}),
-                                                                    studyHours: Object.keys(studyHours).length ? studyHours : (e.studyHours||{}),
-                                                                    notes: Object.keys(notes).length ? notes : (e.notes||{})
+                                                                    mockScores: mockScores.length ? mockScores : (e.mockScores || []),
+                                                                    subjectScores: Object.keys(subjectScores).length ? subjectScores : (e.subjectScores || {}),
+                                                                    completedTopics: Object.keys(completedTopics).length ? completedTopics : (e.completedTopics || {}),
+                                                                    revisedTopics: Object.keys(revisedTopics).length ? revisedTopics : (e.revisedTopics || {}),
+                                                                    revisionHistory: Object.keys(revisionHistory).length ? revisionHistory : (e.revisionHistory || {}),
+                                                                    studyHours: Object.keys(studyHours).length ? studyHours : (e.studyHours || {}),
+                                                                    notes: Object.keys(notes).length ? notes : (e.notes || {})
                                                                 });
-                                                                if(settings.streak) newState.streak = parseInt(settings.streak)||0;
-                                                                if(settings.lastStreakDate) newState.lastStreakDate = settings.lastStreakDate;
-                                                                if(settings.examDate) newState.examDate = settings.examDate;
-                                                                if(settings.weeklyHrsTarget)newState.weeklyHrsTarget=parseFloat(settings.weeklyHrsTarget)||0;
+                                                                if (settings.streak) newState.streak = parseInt(settings.streak) || 0;
+                                                                if (settings.lastStreakDate) newState.lastStreakDate = settings.lastStreakDate;
+                                                                if (settings.examDate) newState.examDate = settings.examDate;
+                                                                if (settings.weeklyHrsTarget) newState.weeklyHrsTarget = parseFloat(settings.weeklyHrsTarget) || 0;
+                                                                if (weeklySnapshots.length) newState.weeklySnapshots = weeklySnapshots;
                                                                 v(newState);
-                                                                alert('✅ Imported:\n'+mockScores.length+' mock scores\n'+Object.keys(subjectScores).length+' subjects\n'+Object.keys(completedTopics).length+' completed topics\n'+Object.keys(revisedTopics).length+' revised topics\n'+Object.keys(revisionHistory).length+' revision histories\n'+Object.keys(studyHours).length+' days of study hours');
-                                                            } catch(err){alert('Import failed: '+err.message);}
+                                                                alert('✅ Imported:\n' + mockScores.length + ' mocks\n' + weeklySnapshots.length + ' weekly snapshots\n' + Object.keys(subjectScores).length + ' subjects\n' + Object.keys(completedTopics).length + ' completed topics\n' + Object.keys(revisedTopics).length + ' revised topics\n' + Object.keys(revisionHistory).length + ' revision histories\n' + Object.keys(studyHours).length + ' days of study hours');
+                                                            } catch (err) {
+                                                                alert('Import failed: ' + err.message);
+                                                            }
                                                         };
                                                         reader.readAsText(file);
-                                                        ev.target.value='';
+                                                        ev.target.value = '';
                                                     }
                                                 })
                                             ]
@@ -11274,38 +11563,121 @@ function ce() {
                             ]
                         }),
                         (0, b.jsx)(`div`, {
-                            style:{ display:`grid`, gridTemplateColumns:`repeat(5,1fr)`, gap:10, marginBottom:16 },
-                            children: (function(){
-                                var sh = e.studyHours||{};
-                                var totalHrs = Object.values(sh).reduce(function(a,b){return a+b;},0);
-                                var today = new Date().toISOString().split('T')[0];
-                                var todayHrs = sh[today]||0;
+                            style: {
+                                display: `grid`,
+                                gridTemplateColumns: `repeat(5,1fr)`,
+                                gap: 10,
+                                marginBottom: 16
+                            },
+                            children: (function() {
+                                var sh = e.studyHours || {};
+                                var totalHrs = Object.values(sh).reduce(function(a, b) {
+                                    return a + b;
+                                }, 0);
+                                var today = (function() {
+                                    var d = new Date();
+                                    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                                })();
+                                var todayHrs = sh[today] || 0;
                                 var last7 = [];
-                                for(var d=0;d<7;d++){ var dd=new Date(Date.now()-d*864e5).toISOString().split('T')[0]; last7.push(sh[dd]||0); }
-                                var weekTotal = last7.reduce(function(a,b){return a+b;},0);
-                                var avg7 = weekTotal/7;
-                                var weeklyTarget = e.weeklyHrsTarget||0;
+                                for (var d = 0; d < 7; d++) {
+                                    var dd = (function(d) {
+                                        return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                                    })(new Date(Date.now() - d * 864e5));
+                                    last7.push(sh[dd] || 0);
+                                }
+                                var weekTotal = last7.reduce(function(a, b) {
+                                    return a + b;
+                                }, 0);
+                                var avg7 = weekTotal / 7;
+                                var weeklyTarget = e.weeklyHrsTarget || 0;
                                 var weekRemaining = Math.max(0, weeklyTarget - weekTotal);
-                                return [
-                                    { label:`Today`, val: todayHrs.toFixed(1), unit:`hrs`, grad:`linear-gradient(135deg,#3B82F6,#60A5FA)` },
-                                    { label:`This Week`, val: weekTotal.toFixed(1), unit:`hrs`, grad:`linear-gradient(135deg,#8B5CF6,#A78BFA)` },
-                                    { label:`7-Day Avg`, val: avg7.toFixed(1), unit:`hrs/day`, grad:`linear-gradient(135deg,#F97316,#FB923C)` },
-                                    { label:`Total`, val: totalHrs.toFixed(1), unit:`hrs`, grad:`linear-gradient(135deg,#059669,#34D399)` },
-                                    { label:`Streak`, val: (e.streak||0), unit:`days 🔥`, grad:`linear-gradient(135deg,#EC4899,#F9A8D4)` }
-                                ].map(function(card){
+                                return [{
+                                        label: `Today`,
+                                        val: todayHrs.toFixed(1),
+                                        unit: `hrs`,
+                                        grad: `linear-gradient(135deg,#3B82F6,#60A5FA)`
+                                    },
+                                    {
+                                        label: `This Week`,
+                                        val: weekTotal.toFixed(1),
+                                        unit: `hrs`,
+                                        grad: `linear-gradient(135deg,#8B5CF6,#A78BFA)`
+                                    },
+                                    {
+                                        label: `7-Day Avg`,
+                                        val: avg7.toFixed(1),
+                                        unit: `hrs/day`,
+                                        grad: `linear-gradient(135deg,#F97316,#FB923C)`
+                                    },
+                                    {
+                                        label: `Total`,
+                                        val: totalHrs.toFixed(1),
+                                        unit: `hrs`,
+                                        grad: `linear-gradient(135deg,#059669,#34D399)`
+                                    },
+                                    {
+                                        label: `Streak`,
+                                        val: (e.streak || 0),
+                                        unit: `days 🔥`,
+                                        grad: `linear-gradient(135deg,#EC4899,#F9A8D4)`
+                                    }
+                                ].map(function(card) {
                                     return (0, b.jsxs)(T, {
                                         T: A,
-                                        style:{ padding:0, overflow:`hidden` },
-                                        children:[
-                                            (0, b.jsx)(`div`, { style:{ height:3, background:card.grad } }),
+                                        style: {
+                                            padding: 0,
+                                            overflow: `hidden`
+                                        },
+                                        children: [
+                                            (0, b.jsx)(`div`, {
+                                                style: {
+                                                    height: 3,
+                                                    background: card.grad
+                                                }
+                                            }),
                                             (0, b.jsxs)(`div`, {
-                                                style:{ padding:`10px 12px` },
-                                                children:[
-                                                    (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, fontWeight:600, marginBottom:6 }, children:card.label }),
-                                                    (0, b.jsxs)(`div`, { style:{ display:`flex`, alignItems:`baseline`, gap:3 }, children:[
-                                                        (0, b.jsx)(`span`, { style:{ fontSize:20, fontWeight:700, backgroundImage:card.grad, WebkitBackgroundClip:`text`, WebkitTextFillColor:`transparent` }, children:card.val }),
-                                                        (0, b.jsx)(`span`, { style:{ fontSize:9, color:A.textT }, children:card.unit })
-                                                    ]})
+                                                style: {
+                                                    padding: `10px 12px`
+                                                },
+                                                children: [
+                                                    (0, b.jsx)(`div`, {
+                                                        style: {
+                                                            fontSize: 9,
+                                                            color: A.textT,
+                                                            textTransform: `uppercase`,
+                                                            letterSpacing: `0.7px`,
+                                                            fontWeight: 600,
+                                                            marginBottom: 6
+                                                        },
+                                                        children: card.label
+                                                    }),
+                                                    (0, b.jsxs)(`div`, {
+                                                        style: {
+                                                            display: `flex`,
+                                                            alignItems: `baseline`,
+                                                            gap: 3
+                                                        },
+                                                        children: [
+                                                            (0, b.jsx)(`span`, {
+                                                                style: {
+                                                                    fontSize: 20,
+                                                                    fontWeight: 700,
+                                                                    backgroundImage: card.grad,
+                                                                    WebkitBackgroundClip: `text`,
+                                                                    WebkitTextFillColor: `transparent`
+                                                                },
+                                                                children: card.val
+                                                            }),
+                                                            (0, b.jsx)(`span`, {
+                                                                style: {
+                                                                    fontSize: 9,
+                                                                    color: A.textT
+                                                                },
+                                                                children: card.unit
+                                                            })
+                                                        ]
+                                                    })
                                                 ]
                                             })
                                         ]
@@ -11314,44 +11686,122 @@ function ce() {
                             })()
                         }),
                         (0, b.jsxs)(`div`, {
-                            style:{ display:`flex`, alignItems:`center`, gap:12, flexWrap:`wrap` },
-                            children:[
+                            style: {
+                                display: `flex`,
+                                alignItems: `center`,
+                                gap: 12,
+                                flexWrap: `wrap`
+                            },
+                            children: [
                                 (0, b.jsxs)(`div`, {
-                                    style:{ display:`flex`, alignItems:`center`, gap:8, flex:1, minWidth:200 },
-                                    children:[
-                                        (0, b.jsx)(`span`, { style:{ fontSize:11, color:A.textT, whiteSpace:`nowrap` }, children:`Weekly target:` }),
-                                        (0, b.jsx)(`input`, {
-                                            type:`number`, min:`0`, max:`168`, step:`1`, placeholder:`e.g. 40`,
-                                            value: e.weeklyHrsTarget||'',
-                                            onChange: function(ev){ v(Object.assign({},e,{ weeklyHrsTarget: parseFloat(ev.target.value)||0 })); },
-                                            style:{ width:70, fontSize:12, padding:`5px 9px`, borderRadius:8, border:`1px solid ${A.inputBorder}`, background:A.inputBg, color:A.text, outline:`none` }
+                                    style: {
+                                        display: `flex`,
+                                        alignItems: `center`,
+                                        gap: 8,
+                                        flex: 1,
+                                        minWidth: 200
+                                    },
+                                    children: [
+                                        (0, b.jsx)(`span`, {
+                                            style: {
+                                                fontSize: 11,
+                                                color: A.textT,
+                                                whiteSpace: `nowrap`
+                                            },
+                                            children: `Weekly target:`
                                         }),
-                                        (0, b.jsx)(`span`, { style:{ fontSize:11, color:A.textT }, children:`hrs/week` })
+                                        (0, b.jsx)(`input`, {
+                                            type: `number`,
+                                            min: `0`,
+                                            max: `168`,
+                                            step: `1`,
+                                            placeholder: `e.g. 40`,
+                                            value: e.weeklyHrsTarget || '',
+                                            onChange: function(ev) {
+                                                v(Object.assign({}, e, {
+                                                    weeklyHrsTarget: parseFloat(ev.target.value) || 0
+                                                }));
+                                            },
+                                            style: {
+                                                width: 70,
+                                                fontSize: 12,
+                                                padding: `5px 9px`,
+                                                borderRadius: 8,
+                                                border: `1px solid ${A.inputBorder}`,
+                                                background: A.inputBg,
+                                                color: A.text,
+                                                outline: `none`
+                                            }
+                                        }),
+                                        (0, b.jsx)(`span`, {
+                                            style: {
+                                                fontSize: 11,
+                                                color: A.textT
+                                            },
+                                            children: `hrs/week`
+                                        })
                                     ]
                                 }),
-                                (function(){
-                                    var sh = e.studyHours||{};
-                                    var last7=[]; for(var d=0;d<7;d++){ var dd=new Date(Date.now()-d*864e5).toISOString().split('T')[0]; last7.push(sh[dd]||0); }
-                                    var weekTotal = last7.reduce(function(a,b){return a+b;},0);
-                                    var target = e.weeklyHrsTarget||0;
+                                (function() {
+                                    var sh = e.studyHours || {};
+                                    var last7 = [];
+                                    for (var d = 0; d < 7; d++) {
+                                        var dd = (function(d) {
+                                            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                                        })(new Date(Date.now() - d * 864e5));
+                                        last7.push(sh[dd] || 0);
+                                    }
+                                    var weekTotal = last7.reduce(function(a, b) {
+                                        return a + b;
+                                    }, 0);
+                                    var target = e.weeklyHrsTarget || 0;
                                     var remaining = Math.max(0, target - weekTotal);
-                                    var pct = target>0 ? Math.min(100, weekTotal/target*100) : 0;
-                                    var overshot = target>0 && weekTotal>=target;
+                                    var pct = target > 0 ? Math.min(100, weekTotal / target * 100) : 0;
+                                    var overshot = target > 0 && weekTotal >= target;
                                     return (0, b.jsxs)(`div`, {
-                                        style:{ flex:2, minWidth:200 },
-                                        children:[
+                                        style: {
+                                            flex: 2,
+                                            minWidth: 200
+                                        },
+                                        children: [
                                             (0, b.jsxs)(`div`, {
-                                                style:{ display:`flex`, justifyContent:`space-between`, marginBottom:5 },
-                                                children:[
-                                                    (0, b.jsx)(`span`, { style:{ fontSize:11, color:A.textT }, children: target>0 ? (overshot ? `🎉 Weekly goal met!` : `${remaining.toFixed(1)} hrs remaining this week`) : `Set a weekly target →` }),
-                                                    target>0 ? (0, b.jsxs)(`span`, { style:{ fontSize:11, fontWeight:600, color: overshot?`#34D399`:`#60A5FA` }, children:[weekTotal.toFixed(1),`/${target}h`] }) : null
+                                                style: {
+                                                    display: `flex`,
+                                                    justifyContent: `space-between`,
+                                                    marginBottom: 5
+                                                },
+                                                children: [
+                                                    (0, b.jsx)(`span`, {
+                                                        style: {
+                                                            fontSize: 11,
+                                                            color: A.textT
+                                                        },
+                                                        children: target > 0 ? (overshot ? `🎉 Weekly goal met!` : `${remaining.toFixed(1)} hrs remaining this week`) : `Set a weekly target →`
+                                                    }),
+                                                    target > 0 ? (0, b.jsxs)(`span`, {
+                                                        style: {
+                                                            fontSize: 11,
+                                                            fontWeight: 600,
+                                                            color: overshot ? `#34D399` : `#60A5FA`
+                                                        },
+                                                        children: [weekTotal.toFixed(1), `/${target}h`]
+                                                    }) : null
                                                 ]
                                             }),
-                                            target>0 ? (0, b.jsx)(`div`, {
-                                                style:{ height:6, background: m?`rgba(255,255,255,0.06)`:`rgba(0,0,0,0.04)`, borderRadius:99 },
+                                            target > 0 ? (0, b.jsx)(`div`, {
+                                                style: {
+                                                    height: 6,
+                                                    background: m ? `rgba(255,255,255,0.06)` : `rgba(0,0,0,0.04)`,
+                                                    borderRadius: 99
+                                                },
                                                 children: (0, b.jsx)(`div`, {
-                                                    className:`progress-bar`,
-                                                    style:{ height:6, width:`${pct}%`, background: overshot?`linear-gradient(135deg,#059669,#34D399)`:`linear-gradient(135deg,#3B82F6,#60A5FA)`, borderRadius:99 }
+                                                    className: `progress-bar`,
+                                                    style: {
+                                                        height: 6,
+                                                        width: `${pct}%`,
+                                                        background: overshot ? `linear-gradient(135deg,#059669,#34D399)` : `linear-gradient(135deg,#3B82F6,#60A5FA)`,
+                                                        borderRadius: 99
+                                                    }
                                                 })
                                             }) : null
                                         ]
@@ -11360,26 +11810,89 @@ function ce() {
                             ]
                         }),
                         (0, b.jsxs)(`div`, {
-                            style:{ marginTop:14 },
-                            children:[
-                                (0, b.jsx)(`div`, { style:{ fontSize:10, color:A.textT, fontWeight:600, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:8 }, children:`Last 7 days` }),
+                            style: {
+                                marginTop: 14
+                            },
+                            children: [
                                 (0, b.jsx)(`div`, {
-                                    style:{ display:`flex`, gap:5, alignItems:`flex-end`, height:60 },
-                                    children: (function(){
-                                        var sh = e.studyHours||{};
-                                        var days=[];
-                                        for(var d=6;d>=0;d--){ var dd=new Date(Date.now()-d*864e5).toISOString().split('T')[0]; days.push({date:dd,hrs:sh[dd]||0,label:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date(dd).getDay()]}); }
-                                        var maxH = Math.max(1, Math.max.apply(null,days.map(function(x){return x.hrs;})));
-                                        var todayStr = new Date().toISOString().split('T')[0];
-                                        return days.map(function(day){
-                                            var barH = Math.max(2, Math.round(day.hrs/maxH*44));
-                                            var isToday = day.date===todayStr;
+                                    style: {
+                                        fontSize: 10,
+                                        color: A.textT,
+                                        fontWeight: 600,
+                                        textTransform: `uppercase`,
+                                        letterSpacing: `0.7px`,
+                                        marginBottom: 8
+                                    },
+                                    children: `Last 7 days`
+                                }),
+                                (0, b.jsx)(`div`, {
+                                    style: {
+                                        display: `flex`,
+                                        gap: 5,
+                                        alignItems: `flex-end`,
+                                        height: 60
+                                    },
+                                    children: (function() {
+                                        var sh = e.studyHours || {};
+                                        var days = [];
+                                        for (var d = 6; d >= 0; d--) {
+                                            var dd = (function(d) {
+                                                return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                                            })(new Date(Date.now() - d * 864e5));
+                                            days.push({
+                                                date: dd,
+                                                hrs: sh[dd] || 0,
+                                                label: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(dd).getDay()]
+                                            });
+                                        }
+                                        var maxH = Math.max(1, Math.max.apply(null, days.map(function(x) {
+                                            return x.hrs;
+                                        })));
+                                        var todayStr = (function(d) {
+                                            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                                        })(new Date());
+                                        return days.map(function(day) {
+                                            var barH = Math.max(2, Math.round(day.hrs / maxH * 44));
+                                            var isToday = day.date === todayStr;
                                             return (0, b.jsxs)(`div`, {
-                                                style:{ flex:1, display:`flex`, flexDirection:`column`, alignItems:`center`, gap:3 },
-                                                children:[
-                                                    day.hrs>0 ? (0, b.jsx)(`div`, { style:{ fontSize:8, color:A.textT }, children:day.hrs.toFixed(1) }) : (0, b.jsx)(`div`, { style:{ fontSize:8, color:`transparent` }, children:`0` }),
-                                                    (0, b.jsx)(`div`, { style:{ width:`100%`, height:barH, background: isToday?`linear-gradient(to top,#8B5CF6,#A78BFA)`:`linear-gradient(to top,#3B82F6,#60A5FA)`, borderRadius:`4px 4px 2px 2px`, opacity: day.hrs===0?0.2:1 } }),
-                                                    (0, b.jsx)(`div`, { style:{ fontSize:9, color: isToday?A.text:A.textT, fontWeight: isToday?700:400 }, children:day.label })
+                                                style: {
+                                                    flex: 1,
+                                                    display: `flex`,
+                                                    flexDirection: `column`,
+                                                    alignItems: `center`,
+                                                    gap: 3
+                                                },
+                                                children: [
+                                                    day.hrs > 0 ? (0, b.jsx)(`div`, {
+                                                        style: {
+                                                            fontSize: 8,
+                                                            color: A.textT
+                                                        },
+                                                        children: day.hrs.toFixed(1)
+                                                    }) : (0, b.jsx)(`div`, {
+                                                        style: {
+                                                            fontSize: 8,
+                                                            color: `transparent`
+                                                        },
+                                                        children: `0`
+                                                    }),
+                                                    (0, b.jsx)(`div`, {
+                                                        style: {
+                                                            width: `100%`,
+                                                            height: barH,
+                                                            background: isToday ? `linear-gradient(to top,#8B5CF6,#A78BFA)` : `linear-gradient(to top,#3B82F6,#60A5FA)`,
+                                                            borderRadius: `4px 4px 2px 2px`,
+                                                            opacity: day.hrs === 0 ? 0.2 : 1
+                                                        }
+                                                    }),
+                                                    (0, b.jsx)(`div`, {
+                                                        style: {
+                                                            fontSize: 9,
+                                                            color: isToday ? A.text : A.textT,
+                                                            fontWeight: isToday ? 700 : 400
+                                                        },
+                                                        children: day.label
+                                                    })
                                                 ]
                                             }, day.date)
                                         });
@@ -11390,31 +11903,93 @@ function ce() {
                     ]
                 }), (0, b.jsxs)(T, {
                     T: A,
-                    style: { padding: `16px 20px`, marginBottom: 12 },
+                    style: {
+                        padding: `16px 20px`,
+                        marginBottom: 12
+                    },
                     children: [
                         (0, b.jsxs)(`div`, {
-                            style: { display:`flex`, alignItems:`center`, justifyContent:`space-between`, marginBottom:12 },
+                            style: {
+                                display: `flex`,
+                                alignItems: `center`,
+                                justifyContent: `space-between`,
+                                marginBottom: 12
+                            },
                             children: [
                                 (0, b.jsxs)(`div`, {
                                     children: [
-                                        (0, b.jsx)(`div`, { style:{ fontSize:13, fontWeight:700 }, children:`📋 Tomorrow's Plan` }),
-                                        (0, b.jsx)(`div`, { style:{ fontSize:10, color:A.textT, marginTop:2 }, children: (function(){ var d=new Date(); d.setDate(d.getDate()+1); return d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'}); })() })
+                                        (0, b.jsx)(`div`, {
+                                            style: {
+                                                fontSize: 13,
+                                                fontWeight: 700
+                                            },
+                                            children: `📋 Tomorrow's Plan`
+                                        }),
+                                        (0, b.jsx)(`div`, {
+                                            style: {
+                                                fontSize: 10,
+                                                color: A.textT,
+                                                marginTop: 2
+                                            },
+                                            children: (function() {
+                                                var d = new Date();
+                                                d.setDate(d.getDate() + 1);
+                                                return d.toLocaleDateString('en-GB', {
+                                                    weekday: 'long',
+                                                    day: 'numeric',
+                                                    month: 'short'
+                                                });
+                                            })()
+                                        })
                                     ]
                                 }),
                                 (0, b.jsx)(`button`, {
-                                    onClick: function(){ v(Object.assign({},e,{ tomorrowPlan:{ note:'' } })); },
-                                    style:{ fontSize:10, padding:`3px 10px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer` },
-                                    children:`Clear`
+                                    onClick: function() {
+                                        v(Object.assign({}, e, {
+                                            tomorrowPlan: {
+                                                note: ''
+                                            }
+                                        }));
+                                    },
+                                    style: {
+                                        fontSize: 10,
+                                        padding: `3px 10px`,
+                                        borderRadius: 99,
+                                        border: `1px solid ${A.border}`,
+                                        background: `transparent`,
+                                        color: A.textT,
+                                        cursor: `pointer`
+                                    },
+                                    children: `Clear`
                                 })
                             ]
                         }),
                         (0, b.jsx)(`textarea`, {
-                            placeholder:`What will you do tomorrow? Write your plan, subjects, topics, goals...`,
-                            value: (e.tomorrowPlan||{}).note||'',
-                            onChange: function(ev){
-                                v(Object.assign({},e,{ tomorrowPlan: Object.assign({},e.tomorrowPlan||{},{note:ev.target.value}) }));
+                            placeholder: `What will you do tomorrow? Write your plan, subjects, topics, goals...`,
+                            value: (e.tomorrowPlan || {}).note || '',
+                            onChange: function(ev) {
+                                v(Object.assign({}, e, {
+                                    tomorrowPlan: Object.assign({}, e.tomorrowPlan || {}, {
+                                        note: ev.target.value
+                                    })
+                                }));
                             },
-                            style:{ width:`100%`, fontSize:13, padding:`12px 14px`, borderRadius:10, border:`1px solid ${A.inputBorder}`, background:A.inputBg, color:A.text, outline:`none`, resize:`none`, minHeight:160, overflowY:`auto`, boxSizing:`border-box`, fontFamily:`inherit`, lineHeight:`22px` }
+                            style: {
+                                width: `100%`,
+                                fontSize: 13,
+                                padding: `12px 14px`,
+                                borderRadius: 10,
+                                border: `1px solid ${A.inputBorder}`,
+                                background: A.inputBg,
+                                color: A.text,
+                                outline: `none`,
+                                resize: `none`,
+                                minHeight: 160,
+                                overflowY: `auto`,
+                                boxSizing: `border-box`,
+                                fontFamily: `inherit`,
+                                lineHeight: `22px`
+                            }
                         })
                     ]
                 }), (0, b.jsx)(`div`, {
@@ -11493,97 +12068,6 @@ function ce() {
                             })]
                         }, t)
                     })
-                }), (0, b.jsxs)(T, {
-                    T: A,
-                    style: {
-                        padding: `20px 24px`
-                    },
-                    children: [(0, b.jsx)(`div`, {
-                        style: {
-                            fontSize: 13,
-                            fontWeight: 600,
-                            marginBottom: 16
-                        },
-                        children: `All Subjects`
-                    }), (0, b.jsx)(`div`, {
-                        style: {
-                            display: `grid`,
-                            gridTemplateColumns: `1fr 1fr`,
-                            gap: `10px 28px`
-                        },
-                        children: C.map(e => {
-                            let {
-                                pct: t,
-                                done: n,
-                                total: i
-                            } = le(e), o = w[e.phase];
-                            return (0, b.jsxs)(`div`, {
-                                style: {
-                                    cursor: `pointer`
-                                },
-                                onClick: () => {
-                                    a(e.id), r(`subjects`)
-                                },
-                                children: [(0, b.jsxs)(`div`, {
-                                    style: {
-                                        display: `flex`,
-                                        justifyContent: `space-between`,
-                                        marginBottom: 5,
-                                        alignItems: `center`
-                                    },
-                                    children: [(0, b.jsxs)(`div`, {
-                                        style: {
-                                            display: `flex`,
-                                            alignItems: `center`,
-                                            gap: 8
-                                        },
-                                        children: [(0, b.jsx)(`div`, {
-                                            style: {
-                                                width: 22,
-                                                height: 22,
-                                                borderRadius: 6,
-                                                background: o.bg,
-                                                display: `flex`,
-                                                alignItems: `center`,
-                                                justifyContent: `center`,
-                                                fontSize: 8,
-                                                fontWeight: 700,
-                                                color: o.color
-                                            },
-                                            children: e.icon
-                                        }), (0, b.jsx)(`span`, {
-                                            style: {
-                                                fontSize: 12,
-                                                fontWeight: 500
-                                            },
-                                            children: e.name
-                                        })]
-                                    }), (0, b.jsxs)(`span`, {
-                                        style: {
-                                            fontSize: 10,
-                                            color: A.textT
-                                        },
-                                        children: [n, `/`, i]
-                                    })]
-                                }), (0, b.jsx)(`div`, {
-                                    style: {
-                                        height: 4,
-                                        background: m ? `rgba(255,255,255,0.06)` : `rgba(0,0,0,0.04)`,
-                                        borderRadius: 99
-                                    },
-                                    children: (0, b.jsx)(`div`, {
-                                        className: `progress-bar`,
-                                        style: {
-                                            height: 4,
-                                            width: `${t}%`,
-                                            background: o.gradient,
-                                            borderRadius: 99
-                                        }
-                                    })
-                                })]
-                            }, e.id)
-                        })
-                    })]
                 })]
             }), n === `subjects` && (0, b.jsx)(`div`, {
                 className: `fade-in`,
@@ -11629,8 +12113,10 @@ function ce() {
                                 done: c,
                                 total: l
                             } = le(t), u = i === t.id,
-                            revCount = t.topics.filter(function(tp){ return (e.revisedTopics||{})[`rev::${t.id}::${tp}`]; }).length,
-                            lastSt = (e.lastStudied||{})[t.id] || null;
+                                revCount = t.topics.filter(function(tp) {
+                                    return (e.revisedTopics || {})[`rev::${t.id}::${tp}`];
+                                }).length,
+                                lastSt = (e.lastStudied || {})[t.id] || null;
                             return (0, b.jsxs)(T, {
                                 T: A,
                                 style: {
@@ -11721,10 +12207,26 @@ function ce() {
                                                 }
                                             })
                                         }), (0, b.jsxs)(`div`, {
-                                            style: { display:`flex`, gap:10, marginTop:5 },
+                                            style: {
+                                                display: `flex`,
+                                                gap: 10,
+                                                marginTop: 5
+                                            },
                                             children: [
-                                                (0, b.jsxs)(`span`, { style:{ fontSize:10, color: revCount>0?`#34D399`:A.textT }, children:[`✓ ${revCount}/${l} revised`] }),
-                                                lastSt ? (0, b.jsxs)(`span`, { style:{ fontSize:10, color:A.textT }, children:[`· last studied: ${lastSt}`] }) : null
+                                                (0, b.jsxs)(`span`, {
+                                                    style: {
+                                                        fontSize: 10,
+                                                        color: revCount > 0 ? `#34D399` : A.textT
+                                                    },
+                                                    children: [`✓ ${revCount}/${l} revised`]
+                                                }),
+                                                lastSt ? (0, b.jsxs)(`span`, {
+                                                    style: {
+                                                        fontSize: 10,
+                                                        color: A.textT
+                                                    },
+                                                    children: [`· last studied: ${lastSt}`]
+                                                }) : null
                                             ]
                                         })]
                                     }), (0, b.jsxs)(`div`, {
@@ -11788,7 +12290,7 @@ function ce() {
                                         let i = `${t.id}::${r}`,
                                             a = !!e.completedTopics[i],
                                             revKey = `rev::${t.id}::${r}`,
-                                            isRev = !!((e.revisedTopics)||{})[revKey];
+                                            isRev = !!((e.revisedTopics) || {})[revKey];
                                         return (0, b.jsxs)(`div`, {
                                             className: `check-pop`,
                                             onClick: () => y(t.id, r),
@@ -11801,57 +12303,69 @@ function ce() {
                                                 borderBottom: `1px solid ${A.border}`
                                             },
                                             children: [(0, b.jsx)(`div`, {
-                                                style: {
-                                                    width: 20,
-                                                    height: 20,
-                                                    borderRadius: 6,
-                                                    border: a ? `none` : `2px solid ${A.borderH}`,
-                                                    background: a ? n.gradient : `transparent`,
-                                                    flexShrink: 0,
-                                                    display: `flex`,
-                                                    alignItems: `center`,
-                                                    justifyContent: `center`
-                                                },
-                                                children: a && (0, b.jsx)(`svg`, {
-                                                    width: `12`,
-                                                    height: `12`,
-                                                    viewBox: `0 0 12 12`,
-                                                    children: (0, b.jsx)(`path`, {
-                                                        d: `M2.5 6l2.5 2.5L9.5 4`,
-                                                        stroke: `white`,
-                                                        strokeWidth: `2`,
-                                                        fill: `none`,
-                                                        strokeLinecap: `round`,
-                                                        strokeLinejoin: `round`
+                                                    style: {
+                                                        width: 20,
+                                                        height: 20,
+                                                        borderRadius: 6,
+                                                        border: a ? `none` : `2px solid ${A.borderH}`,
+                                                        background: a ? n.gradient : `transparent`,
+                                                        flexShrink: 0,
+                                                        display: `flex`,
+                                                        alignItems: `center`,
+                                                        justifyContent: `center`
+                                                    },
+                                                    children: a && (0, b.jsx)(`svg`, {
+                                                        width: `12`,
+                                                        height: `12`,
+                                                        viewBox: `0 0 12 12`,
+                                                        children: (0, b.jsx)(`path`, {
+                                                            d: `M2.5 6l2.5 2.5L9.5 4`,
+                                                            stroke: `white`,
+                                                            strokeWidth: `2`,
+                                                            fill: `none`,
+                                                            strokeLinecap: `round`,
+                                                            strokeLinejoin: `round`
+                                                        })
                                                     })
+                                                }), (0, b.jsx)(`span`, {
+                                                    style: {
+                                                        fontSize: 13,
+                                                        color: a ? A.textT : A.text,
+                                                        textDecoration: a ? `line-through` : `none`,
+                                                        flex: 1
+                                                    },
+                                                    children: r
+                                                }),
+                                                (0, b.jsx)(`button`, {
+                                                    onClick: function(ev) {
+                                                        ev.stopPropagation();
+                                                        var today = (function() {
+                                                            var d = new Date();
+                                                            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                                                        })();
+                                                        v(Object.assign({}, e, {
+                                                            revisedTopics: Object.assign({}, e.revisedTopics || {}, {
+                                                                [revKey]: !isRev
+                                                            }),
+                                                            lastStudied: Object.assign({}, e.lastStudied || {}, {
+                                                                [t.id]: today
+                                                            })
+                                                        }));
+                                                    },
+                                                    style: {
+                                                        fontSize: 9,
+                                                        padding: `2px 8px`,
+                                                        borderRadius: 5,
+                                                        flexShrink: 0,
+                                                        border: `1px solid ${isRev ? '#34D399' : A.border}`,
+                                                        background: isRev ? `rgba(52,211,153,0.15)` : `transparent`,
+                                                        color: isRev ? `#34D399` : A.textT,
+                                                        cursor: `pointer`,
+                                                        fontWeight: isRev ? 700 : 400
+                                                    },
+                                                    children: isRev ? `✓ Revised` : `Revise`
                                                 })
-                                            }), (0, b.jsx)(`span`, {
-                                                style: {
-                                                    fontSize: 13,
-                                                    color: a ? A.textT : A.text,
-                                                    textDecoration: a ? `line-through` : `none`,
-                                                    flex: 1
-                                                },
-                                                children: r
-                                            }),
-                                            (0, b.jsx)(`button`, {
-                                                onClick: function(ev){
-                                                    ev.stopPropagation();
-                                                    var today = new Date().toISOString().split('T')[0];
-                                                    v(Object.assign({}, e, {
-                                                        revisedTopics: Object.assign({}, e.revisedTopics||{}, { [revKey]: !isRev }),
-                                                        lastStudied: Object.assign({}, e.lastStudied||{}, { [t.id]: today })
-                                                    }));
-                                                },
-                                                style: {
-                                                    fontSize: 9, padding: `2px 8px`, borderRadius: 5, flexShrink: 0,
-                                                    border: `1px solid ${isRev ? '#34D399' : A.border}`,
-                                                    background: isRev ? `rgba(52,211,153,0.15)` : `transparent`,
-                                                    color: isRev ? `#34D399` : A.textT,
-                                                    cursor: `pointer`, fontWeight: isRev ? 700 : 400
-                                                },
-                                                children: isRev ? `✓ Revised` : `Revise`
-                                            })]
+                                            ]
                                         }, r)
                                     }), (0, b.jsxs)(`div`, {
                                         style: {
@@ -12236,326 +12750,556 @@ function ce() {
                             alignItems: `center`
                         },
                         children: [(0, b.jsx)(`input`, {
-                            type: `text`,
-                            placeholder: `Test name`,
-                            value: mockName,
-                            onChange: e => setMockName(e.target.value),
-                            style: {
-                                width: 150,
-                                fontSize: 13,
-                                padding: `8px 12px`,
-                                borderRadius: 10,
-                                border: `1px solid ${A.inputBorder}`,
-                                background: A.inputBg,
-                                color: A.text,
-                                outline: `none`
-                            }
-                        }), (0, b.jsx)(`input`, {
-                            type: `number`,
-                            min: `0`,
-                            max: `100`,
-                            step: `0.5`,
-                            placeholder: `Score / 100`,
-                            value: u,
-                            onChange: e => d(e.target.value),
-                            style: {
-                                width: 120,
-                                fontSize: 13,
-                                padding: `8px 12px`,
-                                borderRadius: 10,
-                                border: `1px solid ${A.inputBorder}`,
-                                background: A.inputBg,
-                                color: A.text,
-                                outline: `none`
-                            }
-                        }), (0, b.jsx)(`input`, {
-                            type: `date`,
-                            value: f,
-                            onChange: e => p(e.target.value),
-                            style: {
-                                fontSize: 13,
-                                padding: `8px 12px`,
-                                borderRadius: 10,
-                                border: `1px solid ${A.inputBorder}`,
-                                background: A.inputBg,
-                                color: A.text,
-                                outline: `none`
-                            }
-                        }), (0, b.jsx)(`input`, {
-                            type: `text`,
-                            placeholder: `Link (optional)`,
-                            value: mockLink,
-                            onChange: e => setMockLink(e.target.value),
-                            style: {
-                                width: 160,
-                                fontSize: 13,
-                                padding: `8px 12px`,
-                                borderRadius: 10,
-                                border: `1px solid ${A.inputBorder}`,
-                                background: A.inputBg,
-                                color: A.text,
-                                outline: `none`
-                            }
-                        }), (0, b.jsxs)(`div`, {
-                            style: { display:`flex`, flexWrap:`wrap`, gap:6, alignItems:`center`, marginTop:8, width:`100%` },
-                            children: [
-                                (0, b.jsx)(`span`, { style:{ fontSize:11, color:A.textT, marginRight:2 }, children:`Weak in:` }),
-                                C.map(function(sub){
-                                    var active = mockWeakSubs.includes(sub.id);
-                                    var ph2 = w[sub.phase];
-                                    return (0, b.jsx)(`button`, {
-                                        onClick: function(){ setMockWeakSubs(active ? mockWeakSubs.filter(function(x){ return x!==sub.id; }) : [...mockWeakSubs, sub.id]); },
-                                        style:{ fontSize:10, padding:`3px 9px`, borderRadius:99, border:`1px solid ${active?ph2.color:A.border}`, background:active?ph2.bg:`transparent`, color:active?ph2.color:A.textT, cursor:`pointer`, fontWeight:active?600:400 },
-                                        children: sub.name
-                                    }, sub.id)
-                                })
-                            ]
-                        }),
-                        (0, b.jsx)(`button`, {
-                            onClick: ce,
-                            style: {
-                                fontSize: 13,
-                                padding: `8px 20px`,
-                                borderRadius: 99,
-                                border: `none`,
-                                background: `linear-gradient(135deg, #8B5CF6, #A78BFA)`,
-                                color: `#fff`,
-                                cursor: `pointer`,
-                                fontWeight: 600,
-                                marginTop: 8
-                            },
-                            children: `Add`
-                        })]
-                    })]
-                }), e.mockScores?.length > 0 ? (0, b.jsxs)(b.Fragment, {
-                    children: [(0, b.jsx)(`div`, {
-                        style: {
-                            display: `grid`,
-                            gridTemplateColumns: `repeat(4, 1fr)`,
-                            gap: 10,
-                            marginBottom: 12
-                        },
-                        children: [{
-                            label: `Best`,
-                            val: Math.max(...e.mockScores.map(e => e.score)),
-                            grad: `linear-gradient(135deg, #059669, #34D399)`
-                        }, {
-                            label: `Average`,
-                            val: (e.mockScores.reduce((e, t) => e + t.score, 0) / e.mockScores.length).toFixed(1),
-                            grad: `linear-gradient(135deg, #8B5CF6, #A78BFA)`
-                        }, {
-                            label: `Taken`,
-                            val: e.mockScores.length,
-                            grad: `linear-gradient(135deg, #F97316, #FB923C)`
-                        }, {
-                            label: `Avg L10`,
-                            val: e.mockScores.length < 2 ? `—` : (e.mockScores.slice(-10).reduce((a, s) => a + s.score, 0) / Math.min(e.mockScores.length, 10)).toFixed(1),
-                            grad: `linear-gradient(135deg, #EC4899, #F9A8D4)`
-                        }].map(e => (0, b.jsxs)(T, {
-                            T: A,
-                            hover: !0,
-                            style: {
-                                padding: 0,
-                                overflow: `hidden`
-                            },
-                            children: [(0, b.jsx)(`div`, {
+                                type: `text`,
+                                placeholder: `Test name`,
+                                value: mockName,
+                                onChange: e => setMockName(e.target.value),
                                 style: {
-                                    height: 3,
-                                    background: e.grad
+                                    width: 150,
+                                    fontSize: 13,
+                                    padding: `8px 12px`,
+                                    borderRadius: 10,
+                                    border: `1px solid ${A.inputBorder}`,
+                                    background: A.inputBg,
+                                    color: A.text,
+                                    outline: `none`
+                                }
+                            }), (0, b.jsx)(`input`, {
+                                type: `number`,
+                                min: `0`,
+                                max: `100`,
+                                step: `0.5`,
+                                placeholder: `Score / 100`,
+                                value: u,
+                                onChange: e => d(e.target.value),
+                                style: {
+                                    width: 120,
+                                    fontSize: 13,
+                                    padding: `8px 12px`,
+                                    borderRadius: 10,
+                                    border: `1px solid ${A.inputBorder}`,
+                                    background: A.inputBg,
+                                    color: A.text,
+                                    outline: `none`
+                                }
+                            }), (0, b.jsx)(`input`, {
+                                type: `date`,
+                                value: f,
+                                onChange: e => p(e.target.value),
+                                style: {
+                                    fontSize: 13,
+                                    padding: `8px 12px`,
+                                    borderRadius: 10,
+                                    border: `1px solid ${A.inputBorder}`,
+                                    background: A.inputBg,
+                                    color: A.text,
+                                    outline: `none`
+                                }
+                            }), (0, b.jsx)(`input`, {
+                                type: `text`,
+                                placeholder: `Link (optional)`,
+                                value: mockLink,
+                                onChange: e => setMockLink(e.target.value),
+                                style: {
+                                    width: 160,
+                                    fontSize: 13,
+                                    padding: `8px 12px`,
+                                    borderRadius: 10,
+                                    border: `1px solid ${A.inputBorder}`,
+                                    background: A.inputBg,
+                                    color: A.text,
+                                    outline: `none`
                                 }
                             }), (0, b.jsxs)(`div`, {
                                 style: {
-                                    padding: `14px 16px`
+                                    display: `flex`,
+                                    flexWrap: `wrap`,
+                                    gap: 6,
+                                    alignItems: `center`,
+                                    marginTop: 8,
+                                    width: `100%`
+                                },
+                                children: [
+                                    (0, b.jsx)(`span`, {
+                                        style: {
+                                            fontSize: 11,
+                                            color: A.textT,
+                                            marginRight: 2
+                                        },
+                                        children: `Weak in:`
+                                    }),
+                                    C.map(function(sub) {
+                                        var active = mockWeakSubs.includes(sub.id);
+                                        var ph2 = w[sub.phase];
+                                        return (0, b.jsx)(`button`, {
+                                            onClick: function() {
+                                                setMockWeakSubs(active ? mockWeakSubs.filter(function(x) {
+                                                    return x !== sub.id;
+                                                }) : [...mockWeakSubs, sub.id]);
+                                            },
+                                            style: {
+                                                fontSize: 10,
+                                                padding: `3px 9px`,
+                                                borderRadius: 99,
+                                                border: `1px solid ${active?ph2.color:A.border}`,
+                                                background: active ? ph2.bg : `transparent`,
+                                                color: active ? ph2.color : A.textT,
+                                                cursor: `pointer`,
+                                                fontWeight: active ? 600 : 400
+                                            },
+                                            children: sub.name
+                                        }, sub.id)
+                                    })
+                                ]
+                            }),
+                            (0, b.jsx)(`button`, {
+                                onClick: ce,
+                                style: {
+                                    fontSize: 13,
+                                    padding: `8px 20px`,
+                                    borderRadius: 99,
+                                    border: `none`,
+                                    background: `linear-gradient(135deg, #8B5CF6, #A78BFA)`,
+                                    color: `#fff`,
+                                    cursor: `pointer`,
+                                    fontWeight: 600,
+                                    marginTop: 8
+                                },
+                                children: `Add`
+                            })
+                        ]
+                    })]
+                }), e.mockScores?.length > 0 ? (0, b.jsxs)(b.Fragment, {
+                    children: [(0, b.jsx)(`div`, {
+                            style: {
+                                display: `grid`,
+                                gridTemplateColumns: `repeat(4, 1fr)`,
+                                gap: 10,
+                                marginBottom: 12
+                            },
+                            children: [{
+                                label: `Best`,
+                                val: Math.max(...e.mockScores.map(m => m.score)),
+                                grad: `linear-gradient(135deg, #059669, #34D399)`
+                            }, {
+                                label: `Average`,
+                                val: (e.mockScores.reduce((e, t) => e + t.score, 0) / e.mockScores.length).toFixed(1),
+                                grad: `linear-gradient(135deg, #8B5CF6, #A78BFA)`
+                            }, {
+                                label: `Taken`,
+                                val: e.mockScores.length,
+                                grad: `linear-gradient(135deg, #F97316, #FB923C)`
+                            }, {
+                                label: `Avg L10`,
+                                val: e.mockScores.length < 2 ? `—` : (e.mockScores.slice(-10).reduce((a, s) => a + s.score, 0) / Math.min(e.mockScores.length, 10)).toFixed(1),
+                                grad: `linear-gradient(135deg, #EC4899, #F9A8D4)`
+                            }].map(e => (0, b.jsxs)(T, {
+                                T: A,
+                                hover: !0,
+                                style: {
+                                    padding: 0,
+                                    overflow: `hidden`
                                 },
                                 children: [(0, b.jsx)(`div`, {
                                     style: {
-                                        fontSize: 10,
-                                        color: A.textT,
-                                        textTransform: `uppercase`,
-                                        letterSpacing: `0.8px`,
-                                        fontWeight: 600,
-                                        marginBottom: 8
-                                    },
-                                    children: e.label
-                                }), (0, b.jsx)(`div`, {
+                                        height: 3,
+                                        background: e.grad
+                                    }
+                                }), (0, b.jsxs)(`div`, {
                                     style: {
-                                        fontSize: 26,
-                                        fontWeight: 700,
-                                        backgroundImage: e.grad,
-                                        WebkitBackgroundClip: `text`,
-                                        WebkitTextFillColor: `transparent`
+                                        padding: `14px 16px`
                                     },
-                                    children: e.val
-                                })]
-                            })]
-                        }, e.label))
-                    }), (0, b.jsxs)(T, {
-                        T: A,
-                        style: {
-                            padding: `20px 24px`
-                        },
-                        children: [(0, b.jsx)(`div`, {
-                            style: {
-                                fontSize: 10,
-                                fontWeight: 600,
-                                color: A.textT,
-                                textTransform: `uppercase`,
-                                letterSpacing: `0.8px`,
-                                marginBottom: 16
-                            },
-                            children: `Score Trend`
-                        }), (0, b.jsxs)(`div`, {
-                            style: { position: `relative` },
-                            children: [
-                                e.mockScores.length > 15 ? (0, b.jsx)(`div`, {
-                                    style: { fontSize: 10, color: A.textT, marginBottom: 6, textAlign: `right` },
-                                    children: `Showing all ${e.mockScores.length} mocks · scroll →`
-                                }) : null,
-                                (0, b.jsx)(`div`, {
-                                    style: {
-                                        overflowX: `auto`,
-                                        overflowY: `hidden`,
-                                        paddingBottom: 4
-                                    },
-                                    children: (0, b.jsx)(`div`, {
+                                    children: [(0, b.jsx)(`div`, {
                                         style: {
-                                            display: `flex`,
-                                            alignItems: `flex-end`,
-                                            gap: 6,
-                                            height: 160,
-                                            minWidth: `max-content`
+                                            fontSize: 10,
+                                            color: A.textT,
+                                            textTransform: `uppercase`,
+                                            letterSpacing: `0.8px`,
+                                            fontWeight: 600,
+                                            marginBottom: 8
                                         },
-                                        children: e.mockScores.map((ms, t) => {
-                                            let n = Math.max(14, Math.round(ms.score / 100 * 130)),
-                                                r = ms.score >= 80 ? `linear-gradient(to top, #059669, #34D399)` : ms.score >= 50 ? `linear-gradient(to top, #3B82F6, #60A5FA)` : `linear-gradient(to top, #EF4444, #F87171)`;
-                                            return (0, b.jsxs)(`div`, {
-                                                style: {
-                                                    width: 44,
-                                                    flexShrink: 0,
-                                                    display: `flex`,
-                                                    flexDirection: `column`,
-                                                    alignItems: `center`,
-                                                    gap: 3
-                                                },
-                                                children: [
-                                                    (0, b.jsx)(`div`, {
-                                                        style: { fontSize: 10, fontWeight: 600, color: A.textS },
-                                                        children: ms.score
-                                                    }),
-                                                    (0, b.jsx)(`div`, {
-                                                        style: {
-                                                            width: 36,
-                                                            height: n,
-                                                            background: r,
-                                                            borderRadius: `6px 6px 2px 2px`
-                                                        }
-                                                    }),
-                                                    (0, b.jsx)(`div`, {
-                                                        style: { fontSize: 9, color: A.textT, width: 44, textAlign: `center`, overflow: `hidden`, textOverflow: `ellipsis`, whiteSpace: `nowrap` },
-                                                        children: ms.date.slice(5)
-                                                    }),
-                                                    ms.name ? (0, b.jsx)(`div`, {
-                                                        style: { fontSize: 8, color: A.textT, width: 44, textAlign: `center`, overflow: `hidden`, textOverflow: `ellipsis`, whiteSpace: `nowrap`, fontStyle: `italic` },
-                                                        children: ms.name
-                                                    }) : null
-                                                ]
-                                            }, t)
+                                        children: e.label
+                                    }), (0, b.jsx)(`div`, {
+                                        style: {
+                                            fontSize: 26,
+                                            fontWeight: 700,
+                                            backgroundImage: e.grad,
+                                            WebkitBackgroundClip: `text`,
+                                            WebkitTextFillColor: `transparent`
+                                        },
+                                        children: e.val
+                                    })]
+                                })]
+                            }, e.label))
+                        }), (0, b.jsxs)(T, {
+                            T: A,
+                            style: {
+                                padding: `20px 24px`
+                            },
+                            children: [(0, b.jsx)(`div`, {
+                                style: {
+                                    fontSize: 10,
+                                    fontWeight: 600,
+                                    color: A.textT,
+                                    textTransform: `uppercase`,
+                                    letterSpacing: `0.8px`,
+                                    marginBottom: 16
+                                },
+                                children: `Score Trend`
+                            }), (0, b.jsxs)(`div`, {
+                                style: {
+                                    position: `relative`
+                                },
+                                children: [
+                                    e.mockScores.length > 15 ? (0, b.jsx)(`div`, {
+                                        style: {
+                                            fontSize: 10,
+                                            color: A.textT,
+                                            marginBottom: 6,
+                                            textAlign: `right`
+                                        },
+                                        children: `Showing all ${e.mockScores.length} mocks · scroll →`
+                                    }) : null,
+                                    (0, b.jsx)(`div`, {
+                                        style: {
+                                            overflowX: `auto`,
+                                            overflowY: `hidden`,
+                                            paddingBottom: 4
+                                        },
+                                        children: (0, b.jsx)(`div`, {
+                                            style: {
+                                                display: `flex`,
+                                                alignItems: `flex-end`,
+                                                gap: 6,
+                                                height: 160,
+                                                minWidth: `max-content`
+                                            },
+                                            children: e.mockScores.map((ms, t) => {
+                                                let n = Math.max(14, Math.round(ms.score / 100 * 130)),
+                                                    r = ms.score >= 80 ? `linear-gradient(to top, #059669, #34D399)` : ms.score >= 50 ? `linear-gradient(to top, #3B82F6, #60A5FA)` : `linear-gradient(to top, #EF4444, #F87171)`;
+                                                return (0, b.jsxs)(`div`, {
+                                                    style: {
+                                                        width: 44,
+                                                        flexShrink: 0,
+                                                        display: `flex`,
+                                                        flexDirection: `column`,
+                                                        alignItems: `center`,
+                                                        gap: 3
+                                                    },
+                                                    children: [
+                                                        (0, b.jsx)(`div`, {
+                                                            style: {
+                                                                fontSize: 10,
+                                                                fontWeight: 600,
+                                                                color: A.textS
+                                                            },
+                                                            children: ms.score
+                                                        }),
+                                                        (0, b.jsx)(`div`, {
+                                                            style: {
+                                                                width: 36,
+                                                                height: n,
+                                                                background: r,
+                                                                borderRadius: `6px 6px 2px 2px`
+                                                            }
+                                                        }),
+                                                        (0, b.jsx)(`div`, {
+                                                            style: {
+                                                                fontSize: 9,
+                                                                color: A.textT,
+                                                                width: 44,
+                                                                textAlign: `center`,
+                                                                overflow: `hidden`,
+                                                                textOverflow: `ellipsis`,
+                                                                whiteSpace: `nowrap`
+                                                            },
+                                                            children: ms.date.slice(5)
+                                                        }),
+                                                        ms.name ? (0, b.jsx)(`div`, {
+                                                            style: {
+                                                                fontSize: 8,
+                                                                color: A.textT,
+                                                                width: 44,
+                                                                textAlign: `center`,
+                                                                overflow: `hidden`,
+                                                                textOverflow: `ellipsis`,
+                                                                whiteSpace: `nowrap`,
+                                                                fontStyle: `italic`
+                                                            },
+                                                            children: ms.name
+                                                        }) : null
+                                                    ]
+                                                }, t)
+                                            })
                                         })
                                     })
-                                })
-                            ]
-                        })]
-                    }), (function(){
-                        // Build weak area frequency map
-                        var weakFreq = {};
-                        (e.mockScores||[]).forEach(function(ms){
-                            (ms.weakSubs||[]).forEach(function(sid){
-                                weakFreq[sid] = (weakFreq[sid]||0) + 1;
+                                ]
+                            })]
+                        }), (function() {
+                            // Build weak area frequency map
+                            var weakFreq = {};
+                            (e.mockScores || []).forEach(function(ms) {
+                                (ms.weakSubs || []).forEach(function(sid) {
+                                    weakFreq[sid] = (weakFreq[sid] || 0) + 1;
+                                });
                             });
-                        });
-                        var hasWeak = Object.keys(weakFreq).length > 0;
-                        if(!hasWeak) return null;
-                        var sorted = Object.entries(weakFreq).sort(function(a,b){ return b[1]-a[1]; });
-                        var maxFreq = sorted[0][1];
-                        return (0, b.jsxs)(T, {
-                            T: A,
-                            style: { padding: `16px 20px`, marginBottom: 10 },
-                            children: [
-                                (0, b.jsxs)(`div`, {
-                                    style:{ display:`flex`, alignItems:`center`, justifyContent:`space-between`, marginBottom:14 },
-                                    children:[
-                                        (0, b.jsx)(`div`, { style:{ fontSize:11, fontWeight:700 }, children:`🔥 Weak Area Trend` }),
-                                        (0, b.jsx)(`div`, { style:{ fontSize:10, color:A.textT }, children:`across ${(e.mockScores||[]).filter(function(m){ return m.weakSubs&&m.weakSubs.length; }).length} analysed mocks` })
-                                    ]
-                                }),
-                                sorted.map(function(kv){
-                                    var sid = kv[0], freq = kv[1];
-                                    var sub = C.find(function(s){ return s.id===sid; });
-                                    if(!sub) return null;
-                                    var ph3 = w[sub.phase];
-                                    var pct = Math.round(freq/maxFreq*100);
-                                    var danger = freq >= 3 ? `#EF4444` : freq === 2 ? `#F97316` : `#60A5FA`;
-                                    return (0, b.jsxs)(`div`, {
-                                        style:{ marginBottom:10 },
-                                        children:[
-                                            (0, b.jsxs)(`div`, {
-                                                style:{ display:`flex`, alignItems:`center`, justifyContent:`space-between`, marginBottom:4 },
-                                                children:[
-                                                    (0, b.jsxs)(`div`, {
-                                                        style:{ display:`flex`, alignItems:`center`, gap:8 },
-                                                        children:[
-                                                            (0, b.jsx)(`div`, { style:{ width:20, height:20, borderRadius:6, background:ph3.gradient, display:`flex`, alignItems:`center`, justifyContent:`center`, fontSize:8, fontWeight:700, color:`#fff` }, children:sub.icon }),
-                                                            (0, b.jsx)(`span`, { style:{ fontSize:12, fontWeight:600 }, children:sub.name }),
-                                                            freq >= 3 ? (0, b.jsx)(`span`, { style:{ fontSize:9, padding:`1px 7px`, borderRadius:99, background:`rgba(239,68,68,0.12)`, color:`#F87171`, fontWeight:700 }, children:`⚠ Recurring` }) : null
-                                                        ]
-                                                    }),
-                                                    (0, b.jsxs)(`span`, { style:{ fontSize:12, fontWeight:700, color:danger }, children:[freq, ` mock`, freq!==1?`s`:``] })
-                                                ]
+                            var hasWeak = Object.keys(weakFreq).length > 0;
+                            if (!hasWeak) return null;
+                            var sorted = Object.entries(weakFreq).sort(function(a, b) {
+                                return b[1] - a[1];
+                            });
+                            var maxFreq = sorted[0][1];
+                            return (0, b.jsxs)(T, {
+                                T: A,
+                                style: {
+                                    padding: `16px 20px`,
+                                    marginBottom: 10
+                                },
+                                children: [
+                                    (0, b.jsxs)(`div`, {
+                                        style: {
+                                            display: `flex`,
+                                            alignItems: `center`,
+                                            justifyContent: `space-between`,
+                                            marginBottom: 14
+                                        },
+                                        children: [
+                                            (0, b.jsx)(`div`, {
+                                                style: {
+                                                    fontSize: 11,
+                                                    fontWeight: 700
+                                                },
+                                                children: `🔥 Weak Area Trend`
                                             }),
                                             (0, b.jsx)(`div`, {
-                                                style:{ height:6, background:m?`rgba(255,255,255,0.06)`:`rgba(0,0,0,0.04)`, borderRadius:99 },
-                                                children: (0, b.jsx)(`div`, {
-                                                    style:{ height:6, width:`${pct}%`, background: freq>=3?`linear-gradient(135deg,#EF4444,#F87171)`:freq===2?`linear-gradient(135deg,#F97316,#FB923C)`:`linear-gradient(135deg,#3B82F6,#60A5FA)`, borderRadius:99, transition:`width 0.4s` }
-                                                })
+                                                style: {
+                                                    fontSize: 10,
+                                                    color: A.textT
+                                                },
+                                                children: `across ${(e.mockScores||[]).filter(function(m){ return m.weakSubs&&m.weakSubs.length; }).length} analysed mocks`
                                             })
                                         ]
-                                    }, sid)
-                                })
-                            ]
-                        });
-                    })(),
-                    (0, b.jsxs)(T, {
-                        T: A,
-                        style: { padding: `16px 20px` },
-                        children: [(0, b.jsx)(`div`, {
-                            style: { fontSize: 10, fontWeight: 600, color: A.textT, textTransform: `uppercase`, letterSpacing: `0.8px`, marginBottom: 12 },
-                            children: `All Mocks`
-                        }), e.mockScores.map((ms, midx) => (0, b.jsxs)(`div`, {
-                            style: { display: `flex`, alignItems: `center`, gap: 10, padding: `7px 0`, borderBottom: midx < e.mockScores.length - 1 ? `1px solid ${A.border}` : `none` },
-                            children: [
-                                (0, b.jsx)(`div`, { style: { minWidth:120, flex:1 }, children: ms.link ? (0, b.jsx)(`a`, { href: ms.link, target: `_blank`, rel: `noopener`, style: { fontSize: 12, color: `#A78BFA`, textDecoration: `none`, fontWeight:600 }, children: ms.name || `Mock ${midx+1}` }) : (0, b.jsx)(`span`, { style: { fontSize: 12, color: A.text, fontWeight:600 }, children: ms.name || `Mock ${midx+1}` }) }),
-                                ms.weakSubs && ms.weakSubs.length > 0 ? (0, b.jsx)(`div`, {
-                                    style:{ display:`flex`, gap:4, flexWrap:`wrap`, flex:2 },
-                                    children: ms.weakSubs.map(function(sid){
-                                        var sub = C.find(function(s){ return s.id===sid; });
-                                        if(!sub) return null;
+                                    }),
+                                    sorted.map(function(kv) {
+                                        var sid = kv[0],
+                                            freq = kv[1];
+                                        var sub = C.find(function(s) {
+                                            return s.id === sid;
+                                        });
+                                        if (!sub) return null;
                                         var ph3 = w[sub.phase];
-                                        return (0, b.jsx)(`span`, { style:{ fontSize:9, padding:`2px 8px`, borderRadius:99, background:ph3.bg, color:ph3.color, fontWeight:600, border:`1px solid ${ph3.color}40` }, children:sub.name }, sid);
+                                        var pct = Math.round(freq / maxFreq * 100);
+                                        var danger = freq >= 3 ? `#EF4444` : freq === 2 ? `#F97316` : `#60A5FA`;
+                                        return (0, b.jsxs)(`div`, {
+                                            style: {
+                                                marginBottom: 10
+                                            },
+                                            children: [
+                                                (0, b.jsxs)(`div`, {
+                                                    style: {
+                                                        display: `flex`,
+                                                        alignItems: `center`,
+                                                        justifyContent: `space-between`,
+                                                        marginBottom: 4
+                                                    },
+                                                    children: [
+                                                        (0, b.jsxs)(`div`, {
+                                                            style: {
+                                                                display: `flex`,
+                                                                alignItems: `center`,
+                                                                gap: 8
+                                                            },
+                                                            children: [
+                                                                (0, b.jsx)(`div`, {
+                                                                    style: {
+                                                                        width: 20,
+                                                                        height: 20,
+                                                                        borderRadius: 6,
+                                                                        background: ph3.gradient,
+                                                                        display: `flex`,
+                                                                        alignItems: `center`,
+                                                                        justifyContent: `center`,
+                                                                        fontSize: 8,
+                                                                        fontWeight: 700,
+                                                                        color: `#fff`
+                                                                    },
+                                                                    children: sub.icon
+                                                                }),
+                                                                (0, b.jsx)(`span`, {
+                                                                    style: {
+                                                                        fontSize: 12,
+                                                                        fontWeight: 600
+                                                                    },
+                                                                    children: sub.name
+                                                                }),
+                                                                freq >= 3 ? (0, b.jsx)(`span`, {
+                                                                    style: {
+                                                                        fontSize: 9,
+                                                                        padding: `1px 7px`,
+                                                                        borderRadius: 99,
+                                                                        background: `rgba(239,68,68,0.12)`,
+                                                                        color: `#F87171`,
+                                                                        fontWeight: 700
+                                                                    },
+                                                                    children: `⚠ Recurring`
+                                                                }) : null
+                                                            ]
+                                                        }),
+                                                        (0, b.jsxs)(`span`, {
+                                                            style: {
+                                                                fontSize: 12,
+                                                                fontWeight: 700,
+                                                                color: danger
+                                                            },
+                                                            children: [freq, ` mock`, freq !== 1 ? `s` : ``]
+                                                        })
+                                                    ]
+                                                }),
+                                                (0, b.jsx)(`div`, {
+                                                    style: {
+                                                        height: 6,
+                                                        background: m ? `rgba(255,255,255,0.06)` : `rgba(0,0,0,0.04)`,
+                                                        borderRadius: 99
+                                                    },
+                                                    children: (0, b.jsx)(`div`, {
+                                                        style: {
+                                                            height: 6,
+                                                            width: `${pct}%`,
+                                                            background: freq >= 3 ? `linear-gradient(135deg,#EF4444,#F87171)` : freq === 2 ? `linear-gradient(135deg,#F97316,#FB923C)` : `linear-gradient(135deg,#3B82F6,#60A5FA)`,
+                                                            borderRadius: 99,
+                                                            transition: `width 0.4s`
+                                                        }
+                                                    })
+                                                })
+                                            ]
+                                        }, sid)
                                     })
-                                }) : (0, b.jsx)(`span`, { style:{ fontSize:10, color:A.textT, flex:2 }, children:`—` }),
-                                (0, b.jsx)(`span`, { style: { fontSize: 12, fontWeight: 700, color: ms.score >= 80 ? `#34D399` : ms.score >= 50 ? `#60A5FA` : `#EF4444`, minWidth:60, textAlign:`right` }, children: ms.score + ` / 100` }),
-                                (0, b.jsx)(`span`, { style: { fontSize: 10, color: A.textT }, children: ms.date.slice(5) }),
-                                (0, b.jsx)(`button`, {
-                                    onClick: () => {
-                                        let updated = e.mockScores.filter((_, i) => i !== midx);
-                                        v({ ...e, mockScores: updated });
-                                    },
-                                    style: { fontSize: 10, padding: `2px 8px`, borderRadius: 6, border: `1px solid ${A.border}`, background: `transparent`, color: A.textT, cursor: `pointer` },
-                                    children: `✕`
-                                })
-                            ]
-                        }, midx))]
-                    })]
+                                ]
+                            });
+                        })(),
+                        (0, b.jsxs)(T, {
+                            T: A,
+                            style: {
+                                padding: `16px 20px`
+                            },
+                            children: [(0, b.jsx)(`div`, {
+                                style: {
+                                    fontSize: 10,
+                                    fontWeight: 600,
+                                    color: A.textT,
+                                    textTransform: `uppercase`,
+                                    letterSpacing: `0.8px`,
+                                    marginBottom: 12
+                                },
+                                children: `All Mocks`
+                            }), e.mockScores.map((ms, midx) => (0, b.jsxs)(`div`, {
+                                style: {
+                                    display: `flex`,
+                                    alignItems: `center`,
+                                    gap: 10,
+                                    padding: `7px 0`,
+                                    borderBottom: midx < e.mockScores.length - 1 ? `1px solid ${A.border}` : `none`
+                                },
+                                children: [
+                                    (0, b.jsx)(`div`, {
+                                        style: {
+                                            minWidth: 120,
+                                            flex: 1
+                                        },
+                                        children: ms.link ? (0, b.jsx)(`a`, {
+                                            href: ms.link,
+                                            target: `_blank`,
+                                            rel: `noopener`,
+                                            style: {
+                                                fontSize: 12,
+                                                color: `#A78BFA`,
+                                                textDecoration: `none`,
+                                                fontWeight: 600
+                                            },
+                                            children: ms.name || `Mock ${midx+1}`
+                                        }) : (0, b.jsx)(`span`, {
+                                            style: {
+                                                fontSize: 12,
+                                                color: A.text,
+                                                fontWeight: 600
+                                            },
+                                            children: ms.name || `Mock ${midx+1}`
+                                        })
+                                    }),
+                                    ms.weakSubs && ms.weakSubs.length > 0 ? (0, b.jsx)(`div`, {
+                                        style: {
+                                            display: `flex`,
+                                            gap: 4,
+                                            flexWrap: `wrap`,
+                                            flex: 2
+                                        },
+                                        children: ms.weakSubs.map(function(sid) {
+                                            var sub = C.find(function(s) {
+                                                return s.id === sid;
+                                            });
+                                            if (!sub) return null;
+                                            var ph3 = w[sub.phase];
+                                            return (0, b.jsx)(`span`, {
+                                                style: {
+                                                    fontSize: 9,
+                                                    padding: `2px 8px`,
+                                                    borderRadius: 99,
+                                                    background: ph3.bg,
+                                                    color: ph3.color,
+                                                    fontWeight: 600,
+                                                    border: `1px solid ${ph3.color}40`
+                                                },
+                                                children: sub.name
+                                            }, sid);
+                                        })
+                                    }) : (0, b.jsx)(`span`, {
+                                        style: {
+                                            fontSize: 10,
+                                            color: A.textT,
+                                            flex: 2
+                                        },
+                                        children: `—`
+                                    }),
+                                    (0, b.jsx)(`span`, {
+                                        style: {
+                                            fontSize: 12,
+                                            fontWeight: 700,
+                                            color: ms.score >= 80 ? `#34D399` : ms.score >= 50 ? `#60A5FA` : `#EF4444`,
+                                            minWidth: 60,
+                                            textAlign: `right`
+                                        },
+                                        children: ms.score + ` / 100`
+                                    }),
+                                    (0, b.jsx)(`span`, {
+                                        style: {
+                                            fontSize: 10,
+                                            color: A.textT
+                                        },
+                                        children: ms.date.slice(5)
+                                    }),
+                                    (0, b.jsx)(`button`, {
+                                        onClick: () => {
+                                            let updated = e.mockScores.filter((_, i) => i !== midx);
+                                            v({
+                                                ...e,
+                                                mockScores: updated
+                                            });
+                                        },
+                                        style: {
+                                            fontSize: 10,
+                                            padding: `2px 8px`,
+                                            borderRadius: 6,
+                                            border: `1px solid ${A.border}`,
+                                            background: `transparent`,
+                                            color: A.textT,
+                                            cursor: `pointer`
+                                        },
+                                        children: `✕`
+                                    })
+                                ]
+                            }, midx))]
+                        })
+                    ]
                 }) : (0, b.jsxs)(T, {
                     T: A,
                     style: {
@@ -12682,61 +13426,186 @@ function ce() {
                 className: `fade-in`,
                 children: [(0, b.jsxs)(T, {
                     T: A,
-                    style: { padding: `20px 24px`, marginBottom: 12 },
+                    style: {
+                        padding: `20px 24px`,
+                        marginBottom: 12
+                    },
                     children: [(0, b.jsx)(`div`, {
-                        style: { fontSize: 13, fontWeight: 600, marginBottom: 14 },
+                        style: {
+                            fontSize: 13,
+                            fontWeight: 600,
+                            marginBottom: 14
+                        },
                         children: `Log a subject test score`
                     }), (0, b.jsxs)(`div`, {
-                        style: { display: `flex`, gap: 8, flexWrap: `wrap`, alignItems: `center` },
+                        style: {
+                            display: `flex`,
+                            gap: 8,
+                            flexWrap: `wrap`,
+                            alignItems: `center`
+                        },
                         children: [
                             (0, b.jsx)(`input`, {
-                                type: `text`, placeholder: `Test name`,
+                                type: `text`,
+                                placeholder: `Test name`,
                                 value: e.scoreForm ? e.scoreForm.name || `` : ``,
-                                onChange: function(t) { v(Object.assign({}, e, { scoreForm: Object.assign({}, e.scoreForm, { name: t.target.value }) })); },
-                                style: { width: 140, fontSize: 13, padding: `8px 12px`, borderRadius: 10, border: `1px solid ${A.inputBorder}`, background: A.inputBg, color: A.text, outline: `none` }
+                                onChange: function(t) {
+                                    v(Object.assign({}, e, {
+                                        scoreForm: Object.assign({}, e.scoreForm, {
+                                            name: t.target.value
+                                        })
+                                    }));
+                                },
+                                style: {
+                                    width: 140,
+                                    fontSize: 13,
+                                    padding: `8px 12px`,
+                                    borderRadius: 10,
+                                    border: `1px solid ${A.inputBorder}`,
+                                    background: A.inputBg,
+                                    color: A.text,
+                                    outline: `none`
+                                }
                             }),
                             (0, b.jsx)(`input`, {
-                                type: `number`, min: `0`, placeholder: `Score`,
+                                type: `number`,
+                                min: `0`,
+                                placeholder: `Score`,
                                 value: e.scoreForm ? e.scoreForm.score || `` : ``,
-                                onChange: function(t) { v(Object.assign({}, e, { scoreForm: Object.assign({}, e.scoreForm, { score: t.target.value }) })); },
-                                style: { width: 90, fontSize: 13, padding: `8px 12px`, borderRadius: 10, border: `1px solid ${A.inputBorder}`, background: A.inputBg, color: A.text, outline: `none` }
+                                onChange: function(t) {
+                                    v(Object.assign({}, e, {
+                                        scoreForm: Object.assign({}, e.scoreForm, {
+                                            score: t.target.value
+                                        })
+                                    }));
+                                },
+                                style: {
+                                    width: 90,
+                                    fontSize: 13,
+                                    padding: `8px 12px`,
+                                    borderRadius: 10,
+                                    border: `1px solid ${A.inputBorder}`,
+                                    background: A.inputBg,
+                                    color: A.text,
+                                    outline: `none`
+                                }
                             }),
                             (0, b.jsx)(`input`, {
-                                type: `number`, min: `1`, placeholder: `Max marks`,
+                                type: `number`,
+                                min: `1`,
+                                placeholder: `Max marks`,
                                 value: e.scoreForm ? e.scoreForm.max || `` : ``,
-                                onChange: function(t) { v(Object.assign({}, e, { scoreForm: Object.assign({}, e.scoreForm, { max: t.target.value }) })); },
-                                style: { width: 100, fontSize: 13, padding: `8px 12px`, borderRadius: 10, border: `1px solid ${A.inputBorder}`, background: A.inputBg, color: A.text, outline: `none` }
+                                onChange: function(t) {
+                                    v(Object.assign({}, e, {
+                                        scoreForm: Object.assign({}, e.scoreForm, {
+                                            max: t.target.value
+                                        })
+                                    }));
+                                },
+                                style: {
+                                    width: 100,
+                                    fontSize: 13,
+                                    padding: `8px 12px`,
+                                    borderRadius: 10,
+                                    border: `1px solid ${A.inputBorder}`,
+                                    background: A.inputBg,
+                                    color: A.text,
+                                    outline: `none`
+                                }
                             }),
                             (0, b.jsx)(`input`, {
-                                type: `text`, placeholder: `Link (optional)`,
+                                type: `text`,
+                                placeholder: `Link (optional)`,
                                 value: e.scoreForm ? e.scoreForm.link || `` : ``,
-                                onChange: function(t) { v(Object.assign({}, e, { scoreForm: Object.assign({}, e.scoreForm, { link: t.target.value }) })); },
-                                style: { width: 160, fontSize: 13, padding: `8px 12px`, borderRadius: 10, border: `1px solid ${A.inputBorder}`, background: A.inputBg, color: A.text, outline: `none` }
+                                onChange: function(t) {
+                                    v(Object.assign({}, e, {
+                                        scoreForm: Object.assign({}, e.scoreForm, {
+                                            link: t.target.value
+                                        })
+                                    }));
+                                },
+                                style: {
+                                    width: 160,
+                                    fontSize: 13,
+                                    padding: `8px 12px`,
+                                    borderRadius: 10,
+                                    border: `1px solid ${A.inputBorder}`,
+                                    background: A.inputBg,
+                                    color: A.text,
+                                    outline: `none`
+                                }
                             }),
                             (0, b.jsx)(`button`, {
                                 onClick: function() {
                                     var sf = e.scoreForm || {};
                                     var sid = e.scoreSubject || C[0].id;
                                     if (!sf.name || !sf.score || !sf.max) return;
-                                    var sc = parseFloat(sf.score), mx = parseFloat(sf.max);
+                                    var sc = parseFloat(sf.score),
+                                        mx = parseFloat(sf.max);
                                     if (isNaN(sc) || isNaN(mx) || mx <= 0 || sc < 0 || sc > mx) return;
                                     var prev = (e.subjectScores || {})[sid] || [];
-                                    var dt = new Date().toISOString().split('T')[0];
-                                    v(Object.assign({}, e, { subjectScores: Object.assign({}, e.subjectScores || {}, { [sid]: [...prev, { name: sf.name, score: sc, max: mx, link: sf.link || '', date: dt }] }), scoreForm: {} }));
+                                    var dt = (function(d) {
+                                        return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                                    })(new Date());
+                                    v(Object.assign({}, e, {
+                                        subjectScores: Object.assign({}, e.subjectScores || {}, {
+                                            [sid]: [...prev, {
+                                                name: sf.name,
+                                                score: sc,
+                                                max: mx,
+                                                link: sf.link || '',
+                                                date: dt
+                                            }]
+                                        }),
+                                        scoreForm: {}
+                                    }));
                                 },
-                                style: { fontSize: 13, padding: `8px 20px`, borderRadius: 99, border: `none`, background: `linear-gradient(135deg,#8B5CF6,#A78BFA)`, color: `#fff`, cursor: `pointer`, fontWeight: 600 },
+                                style: {
+                                    fontSize: 13,
+                                    padding: `8px 20px`,
+                                    borderRadius: 99,
+                                    border: `none`,
+                                    background: `linear-gradient(135deg,#8B5CF6,#A78BFA)`,
+                                    color: `#fff`,
+                                    cursor: `pointer`,
+                                    fontWeight: 600
+                                },
                                 children: `Add`
                             })
                         ]
                     }), (0, b.jsxs)(`div`, {
-                        style: { marginTop: 14, display: `flex`, gap: 8, alignItems: `center`, flexWrap: `wrap` },
+                        style: {
+                            marginTop: 14,
+                            display: `flex`,
+                            gap: 8,
+                            alignItems: `center`,
+                            flexWrap: `wrap`
+                        },
                         children: [
-                            (0, b.jsx)(`span`, { style: { fontSize: 12, color: A.textS }, children: `Subject:` }),
+                            (0, b.jsx)(`span`, {
+                                style: {
+                                    fontSize: 12,
+                                    color: A.textS
+                                },
+                                children: `Subject:`
+                            }),
                             C.map(function(sub) {
                                 var active = (e.scoreSubject || C[0].id) === sub.id;
                                 return (0, b.jsx)(`button`, {
-                                    onClick: function() { v(Object.assign({}, e, { scoreSubject: sub.id })); },
-                                    style: { fontSize: 11, padding: `4px 12px`, borderRadius: 99, border: `1px solid ${active ? '#8B5CF6' : A.border}`, background: active ? 'rgba(139,92,246,0.15)' : 'transparent', color: active ? '#A78BFA' : A.textS, cursor: `pointer` },
+                                    onClick: function() {
+                                        v(Object.assign({}, e, {
+                                            scoreSubject: sub.id
+                                        }));
+                                    },
+                                    style: {
+                                        fontSize: 11,
+                                        padding: `4px 12px`,
+                                        borderRadius: 99,
+                                        border: `1px solid ${active ? '#8B5CF6' : A.border}`,
+                                        background: active ? 'rgba(139,92,246,0.15)' : 'transparent',
+                                        color: active ? '#A78BFA' : A.textS,
+                                        cursor: `pointer`
+                                    },
                                     children: sub.name
                                 }, sub.id)
                             })
@@ -12745,41 +13614,171 @@ function ce() {
                 }), C.map(function(sub) {
                     var entries = (e.subjectScores || {})[sub.id] || [];
                     if (!entries.length) return null;
-                    var best = Math.max.apply(null, entries.map(function(x) { return x.score/x.max*100; }));
-                    var avg = entries.reduce(function(a,x) { return a + x.score/x.max*100; }, 0) / entries.length;
+                    var best = Math.max.apply(null, entries.map(function(x) {
+                        return x.score / x.max * 100;
+                    }));
+                    var avg = entries.reduce(function(a, x) {
+                        return a + x.score / x.max * 100;
+                    }, 0) / entries.length;
                     var isWeak = avg < 50;
                     var ph = w[sub.phase];
                     return (0, b.jsxs)(T, {
                         T: A,
-                        style: { marginBottom: 10, overflow: `hidden` },
+                        style: {
+                            marginBottom: 10,
+                            overflow: `hidden`
+                        },
                         children: [
                             (0, b.jsxs)(`div`, {
-                                style: { padding: `14px 18px 10px`, display: `flex`, alignItems: `center`, gap: 10, borderBottom: `1px solid ${A.border}` },
+                                style: {
+                                    padding: `14px 18px 10px`,
+                                    display: `flex`,
+                                    alignItems: `center`,
+                                    gap: 10,
+                                    borderBottom: `1px solid ${A.border}`
+                                },
                                 children: [
-                                    (0, b.jsx)(`div`, { style: { width: 24, height: 24, borderRadius: 7, background: ph.gradient, display: `flex`, alignItems: `center`, justifyContent: `center`, fontSize: 9, fontWeight: 700, color: '#fff' }, children: sub.icon }),
-                                    (0, b.jsxs)(`span`, { style: { fontSize: 13, fontWeight: 600, flex: 1, display:`flex`, alignItems:`center`, gap:6 }, children: [sub.name, isWeak ? (0, b.jsx)(`span`, { style:{ fontSize:9, padding:`2px 7px`, borderRadius:5, background:`rgba(239,68,68,0.15)`, color:`#F87171`, fontWeight:700 }, children:`⚠ Weak <50%` }) : null] }),
-                                    (0, b.jsxs)(`span`, { style: { fontSize: 11, color: A.textT }, children: ['Best: ', (0, b.jsx)(`span`, { style: { color: best>=80?'#34D399':best>=50?'#60A5FA':'#EF4444', fontWeight: 700 }, children: best.toFixed(1) + '%' })] }),
-                                    (0, b.jsxs)(`span`, { style: { fontSize: 11, color: A.textT, marginLeft: 12 }, children: ['Avg: ', avg.toFixed(1) + '%'] })
+                                    (0, b.jsx)(`div`, {
+                                        style: {
+                                            width: 24,
+                                            height: 24,
+                                            borderRadius: 7,
+                                            background: ph.gradient,
+                                            display: `flex`,
+                                            alignItems: `center`,
+                                            justifyContent: `center`,
+                                            fontSize: 9,
+                                            fontWeight: 700,
+                                            color: '#fff'
+                                        },
+                                        children: sub.icon
+                                    }),
+                                    (0, b.jsxs)(`span`, {
+                                        style: {
+                                            fontSize: 13,
+                                            fontWeight: 600,
+                                            flex: 1,
+                                            display: `flex`,
+                                            alignItems: `center`,
+                                            gap: 6
+                                        },
+                                        children: [sub.name, isWeak ? (0, b.jsx)(`span`, {
+                                            style: {
+                                                fontSize: 9,
+                                                padding: `2px 7px`,
+                                                borderRadius: 5,
+                                                background: `rgba(239,68,68,0.15)`,
+                                                color: `#F87171`,
+                                                fontWeight: 700
+                                            },
+                                            children: `⚠ Weak <50%`
+                                        }) : null]
+                                    }),
+                                    (0, b.jsxs)(`span`, {
+                                        style: {
+                                            fontSize: 11,
+                                            color: A.textT
+                                        },
+                                        children: ['Best: ', (0, b.jsx)(`span`, {
+                                            style: {
+                                                color: best >= 80 ? '#34D399' : best >= 50 ? '#60A5FA' : '#EF4444',
+                                                fontWeight: 700
+                                            },
+                                            children: best.toFixed(1) + '%'
+                                        })]
+                                    }),
+                                    (0, b.jsxs)(`span`, {
+                                        style: {
+                                            fontSize: 11,
+                                            color: A.textT,
+                                            marginLeft: 12
+                                        },
+                                        children: ['Avg: ', avg.toFixed(1) + '%']
+                                    })
                                 ]
                             }),
                             (0, b.jsx)(`div`, {
-                                style: { padding: `10px 18px` },
+                                style: {
+                                    padding: `10px 18px`
+                                },
                                 children: entries.map(function(en, idx) {
-                                    var pct = en.score/en.max;
+                                    var pct = en.score / en.max;
                                     var col = pct >= 0.8 ? '#34D399' : pct >= 0.5 ? '#60A5FA' : '#EF4444';
                                     return (0, b.jsxs)(`div`, {
-                                        style: { display: `flex`, alignItems: `center`, gap: 10, padding: `7px 0`, borderBottom: idx < entries.length-1 ? `1px solid ${A.border}` : 'none' },
+                                        style: {
+                                            display: `flex`,
+                                            alignItems: `center`,
+                                            gap: 10,
+                                            padding: `7px 0`,
+                                            borderBottom: idx < entries.length - 1 ? `1px solid ${A.border}` : 'none'
+                                        },
                                         children: [
-                                            (0, b.jsx)(`div`, { style: { flex: 1 }, children: en.link ? (0, b.jsx)(`a`, { href: en.link, target: '_blank', rel: 'noopener', style: { fontSize: 12, color: '#A78BFA', textDecoration: 'none' }, children: en.name }) : (0, b.jsx)(`span`, { style: { fontSize: 12, color: A.text }, children: en.name }) }),
-                                            (0, b.jsxs)(`span`, { style: { fontSize: 12, fontWeight: 600, color: col }, children: [en.score, '/', en.max] }),
-                                            (0, b.jsx)(`span`, { style: { fontSize: 11, color: A.textT, minWidth: 40, textAlign: 'right' }, children: (en.score/en.max*100).toFixed(0) + '%' }),
-                                            (0, b.jsx)(`span`, { style: { fontSize: 10, color: A.textT }, children: en.date.slice(5) }),
+                                            (0, b.jsx)(`div`, {
+                                                style: {
+                                                    flex: 1
+                                                },
+                                                children: en.link ? (0, b.jsx)(`a`, {
+                                                    href: en.link,
+                                                    target: '_blank',
+                                                    rel: 'noopener',
+                                                    style: {
+                                                        fontSize: 12,
+                                                        color: '#A78BFA',
+                                                        textDecoration: 'none'
+                                                    },
+                                                    children: en.name
+                                                }) : (0, b.jsx)(`span`, {
+                                                    style: {
+                                                        fontSize: 12,
+                                                        color: A.text
+                                                    },
+                                                    children: en.name
+                                                })
+                                            }),
+                                            (0, b.jsxs)(`span`, {
+                                                style: {
+                                                    fontSize: 12,
+                                                    fontWeight: 600,
+                                                    color: col
+                                                },
+                                                children: [en.score, '/', en.max]
+                                            }),
+                                            (0, b.jsx)(`span`, {
+                                                style: {
+                                                    fontSize: 11,
+                                                    color: A.textT,
+                                                    minWidth: 40,
+                                                    textAlign: 'right'
+                                                },
+                                                children: (en.score / en.max * 100).toFixed(0) + '%'
+                                            }),
+                                            (0, b.jsx)(`span`, {
+                                                style: {
+                                                    fontSize: 10,
+                                                    color: A.textT
+                                                },
+                                                children: en.date.slice(5)
+                                            }),
                                             (0, b.jsx)(`button`, {
                                                 onClick: function() {
-                                                    var updated = entries.filter(function(_,i) { return i !== idx; });
-                                                    v(Object.assign({}, e, { subjectScores: Object.assign({}, e.subjectScores || {}, { [sub.id]: updated }) }));
+                                                    var updated = entries.filter(function(_, i) {
+                                                        return i !== idx;
+                                                    });
+                                                    v(Object.assign({}, e, {
+                                                        subjectScores: Object.assign({}, e.subjectScores || {}, {
+                                                            [sub.id]: updated
+                                                        })
+                                                    }));
                                                 },
-                                                style: { fontSize: 10, padding: '2px 8px', borderRadius: 6, border: `1px solid ${A.border}`, background: 'transparent', color: A.textT, cursor: 'pointer' },
+                                                style: {
+                                                    fontSize: 10,
+                                                    padding: '2px 8px',
+                                                    borderRadius: 6,
+                                                    border: `1px solid ${A.border}`,
+                                                    background: 'transparent',
+                                                    color: A.textT,
+                                                    cursor: 'pointer'
+                                                },
                                                 children: '✕'
                                             })
                                         ]
@@ -12788,128 +13787,367 @@ function ce() {
                             })
                         ]
                     }, sub.id)
-                }), !C.some(function(sub) { return ((e.subjectScores || {})[sub.id] || []).length > 0; }) && (0, b.jsxs)(T, {
+                }), !C.some(function(sub) {
+                    return ((e.subjectScores || {})[sub.id] || []).length > 0;
+                }) && (0, b.jsxs)(T, {
                     T: A,
-                    style: { padding: '3rem 2rem', textAlign: 'center' },
+                    style: {
+                        padding: '3rem 2rem',
+                        textAlign: 'center'
+                    },
                     children: [
-                        (0, b.jsx)(`div`, { style: { fontSize: 32, marginBottom: 12 }, children: '📈' }),
-                        (0, b.jsx)(`div`, { style: { fontSize: 14, fontWeight: 600, marginBottom: 6 }, children: 'No scores yet' }),
-                        (0, b.jsx)(`div`, { style: { fontSize: 12, color: A.textT }, children: 'Add subject test scores to track your progress per topic' })
+                        (0, b.jsx)(`div`, {
+                            style: {
+                                fontSize: 32,
+                                marginBottom: 12
+                            },
+                            children: '📈'
+                        }),
+                        (0, b.jsx)(`div`, {
+                            style: {
+                                fontSize: 14,
+                                fontWeight: 600,
+                                marginBottom: 6
+                            },
+                            children: 'No scores yet'
+                        }),
+                        (0, b.jsx)(`div`, {
+                            style: {
+                                fontSize: 12,
+                                color: A.textT
+                            },
+                            children: 'Add subject test scores to track your progress per topic'
+                        })
                     ]
                 })]
             }), n === `plan` && (0, b.jsx)(`div`, {
                 className: `fade-in`,
-                children: (function(){
-                    var today = new Date().toISOString().split('T')[0];
+                children: (function() {
+                    var today = (function() {
+                        var d = new Date();
+                        return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                    })();
                     return [
                         (0, b.jsxs)(T, {
                             T: A,
-                            style: { padding: `16px 20px`, marginBottom: 12 },
+                            style: {
+                                padding: `16px 20px`,
+                                marginBottom: 12
+                            },
                             children: [
-                                (0, b.jsx)(`div`, { style:{ fontSize:13, fontWeight:700, marginBottom:4 }, children:`📖 Revision Tracker` }),
-                                (0, b.jsx)(`div`, { style:{ fontSize:11, color:A.textT }, children:`Track revision count and schedule for each subject. Hit "Done Today" after revising.` })
+                                (0, b.jsx)(`div`, {
+                                    style: {
+                                        fontSize: 13,
+                                        fontWeight: 700,
+                                        marginBottom: 4
+                                    },
+                                    children: `📖 Revision Tracker`
+                                }),
+                                (0, b.jsx)(`div`, {
+                                    style: {
+                                        fontSize: 11,
+                                        color: A.textT
+                                    },
+                                    children: `Track revision count and schedule for each subject. Hit "Done Today" after revising.`
+                                })
                             ]
                         }),
-                        C.map(function(sub){
+                        C.map(function(sub) {
                             var ph = w[sub.phase];
-                            var revHistory = (e.revisionHistory||{})[sub.id] || [];
+                            var revHistory = (e.revisionHistory || {})[sub.id] || [];
                             var count = revHistory.length;
-                            var lastRev = count > 0 ? revHistory[revHistory.length-1] : null;
+                            var lastRev = count > 0 ? revHistory[revHistory.length - 1] : null;
                             var daysSince = lastRev ? Math.floor((new Date() - new Date(lastRev)) / 864e5) : null;
-                            var autoRevDate = lastRev ? (function(){ var d=new Date(lastRev); d.setDate(d.getDate()+7); return d.toISOString().split('T')[0]; })() : null;
-                            var nextRevDate = (e.customRevDate||{})[sub.id] || autoRevDate;
+                            var autoRevDate = lastRev ? (function() {
+                                var d = new Date(lastRev);
+                                d.setDate(d.getDate() + 7);
+                                return (function(d) {
+                                    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                                })(d);
+                            })() : null;
+                            var nextRevDate = (e.customRevDate || {})[sub.id] || autoRevDate;
                             var isOverdue = nextRevDate && today > nextRevDate;
                             var isDueToday = nextRevDate && nextRevDate === today;
                             var doneToday = lastRev === today;
-                            var completedCount = sub.topics.filter(function(tp){ return (e.completedTopics||{})[`${sub.id}::${tp}`]; }).length;
+                            var completedCount = sub.topics.filter(function(tp) {
+                                return (e.completedTopics || {})[`${sub.id}::${tp}`];
+                            }).length;
 
                             return (0, b.jsxs)(T, {
                                 T: A,
-                                style: { marginBottom: 8, border: isOverdue ? `1px solid rgba(239,68,68,0.35)` : isDueToday ? `1px solid rgba(52,211,153,0.35)` : `1px solid ${A.border}` },
+                                style: {
+                                    marginBottom: 8,
+                                    border: isOverdue ? `1px solid rgba(239,68,68,0.35)` : isDueToday ? `1px solid rgba(52,211,153,0.35)` : `1px solid ${A.border}`
+                                },
                                 children: [
                                     (0, b.jsxs)(`div`, {
-                                        style: { padding: `14px 18px`, display:`flex`, alignItems:`center`, gap:12, flexWrap:`wrap` },
+                                        style: {
+                                            padding: `14px 18px`,
+                                            display: `flex`,
+                                            alignItems: `center`,
+                                            gap: 12,
+                                            flexWrap: `wrap`
+                                        },
                                         children: [
                                             // Subject icon + name
                                             (0, b.jsxs)(`div`, {
-                                                style: { display:`flex`, alignItems:`center`, gap:10, minWidth:160, flex:1 },
+                                                style: {
+                                                    display: `flex`,
+                                                    alignItems: `center`,
+                                                    gap: 10,
+                                                    minWidth: 160,
+                                                    flex: 1
+                                                },
                                                 children: [
                                                     (0, b.jsx)(`div`, {
-                                                        style: { width:36, height:36, borderRadius:10, background:ph.gradient, display:`flex`, alignItems:`center`, justifyContent:`center`, fontSize:11, fontWeight:700, color:`#fff`, flexShrink:0 },
+                                                        style: {
+                                                            width: 36,
+                                                            height: 36,
+                                                            borderRadius: 10,
+                                                            background: ph.gradient,
+                                                            display: `flex`,
+                                                            alignItems: `center`,
+                                                            justifyContent: `center`,
+                                                            fontSize: 11,
+                                                            fontWeight: 700,
+                                                            color: `#fff`,
+                                                            flexShrink: 0
+                                                        },
                                                         children: sub.icon
                                                     }),
                                                     (0, b.jsxs)(`div`, {
                                                         children: [
-                                                            (0, b.jsx)(`div`, { style:{ fontSize:13, fontWeight:700 }, children: sub.name }),
-                                                            (0, b.jsxs)(`div`, { style:{ fontSize:10, color:A.textT, marginTop:2 }, children:[`Phase ${sub.phase} · ${completedCount}/${sub.topics.length} topics done`] })
+                                                            (0, b.jsx)(`div`, {
+                                                                style: {
+                                                                    fontSize: 13,
+                                                                    fontWeight: 700
+                                                                },
+                                                                children: sub.name
+                                                            }),
+                                                            (0, b.jsxs)(`div`, {
+                                                                style: {
+                                                                    fontSize: 10,
+                                                                    color: A.textT,
+                                                                    marginTop: 2
+                                                                },
+                                                                children: [`Phase ${sub.phase} · ${completedCount}/${sub.topics.length} topics done`]
+                                                            })
                                                         ]
                                                     })
                                                 ]
                                             }),
                                             // 4 info cards
                                             (0, b.jsxs)(`div`, {
-                                                style: { display:`grid`, gridTemplateColumns:`repeat(4,1fr)`, gap:8, flex:2, minWidth:300 },
+                                                style: {
+                                                    display: `grid`,
+                                                    gridTemplateColumns: `repeat(4,1fr)`,
+                                                    gap: 8,
+                                                    flex: 2,
+                                                    minWidth: 300
+                                                },
                                                 children: [
                                                     // Card 1: Revision count
                                                     (0, b.jsxs)(`div`, {
-                                                        style: { padding:`8px 10px`, borderRadius:10, background: m?`rgba(255,255,255,0.04)`:`rgba(0,0,0,0.03)`, border:`1px solid ${A.border}`, textAlign:`center` },
+                                                        style: {
+                                                            padding: `8px 10px`,
+                                                            borderRadius: 10,
+                                                            background: m ? `rgba(255,255,255,0.04)` : `rgba(0,0,0,0.03)`,
+                                                            border: `1px solid ${A.border}`,
+                                                            textAlign: `center`
+                                                        },
                                                         children: [
-                                                            (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:4 }, children:`Revisions` }),
-                                                            (0, b.jsxs)(`div`, { style:{ fontSize:22, fontWeight:700, backgroundImage:ph.gradient, WebkitBackgroundClip:`text`, WebkitTextFillColor:`transparent` }, children:[count] }),
-                                                            (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, marginTop:2 }, children:`times` })
+                                                            (0, b.jsx)(`div`, {
+                                                                style: {
+                                                                    fontSize: 9,
+                                                                    color: A.textT,
+                                                                    textTransform: `uppercase`,
+                                                                    letterSpacing: `0.7px`,
+                                                                    marginBottom: 4
+                                                                },
+                                                                children: `Revisions`
+                                                            }),
+                                                            (0, b.jsxs)(`div`, {
+                                                                style: {
+                                                                    fontSize: 22,
+                                                                    fontWeight: 700,
+                                                                    backgroundImage: ph.gradient,
+                                                                    WebkitBackgroundClip: `text`,
+                                                                    WebkitTextFillColor: `transparent`
+                                                                },
+                                                                children: [count]
+                                                            }),
+                                                            (0, b.jsx)(`div`, {
+                                                                style: {
+                                                                    fontSize: 9,
+                                                                    color: A.textT,
+                                                                    marginTop: 2
+                                                                },
+                                                                children: `times`
+                                                            })
                                                         ]
                                                     }),
                                                     // Card 2: Last revision
                                                     (0, b.jsxs)(`div`, {
-                                                        style: { padding:`8px 10px`, borderRadius:10, background: m?`rgba(255,255,255,0.04)`:`rgba(0,0,0,0.03)`, border:`1px solid ${A.border}`, textAlign:`center` },
+                                                        style: {
+                                                            padding: `8px 10px`,
+                                                            borderRadius: 10,
+                                                            background: m ? `rgba(255,255,255,0.04)` : `rgba(0,0,0,0.03)`,
+                                                            border: `1px solid ${A.border}`,
+                                                            textAlign: `center`
+                                                        },
                                                         children: [
-                                                            (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:4 }, children:`Last Revision` }),
-                                                            (0, b.jsx)(`div`, { style:{ fontSize:12, fontWeight:600, color: doneToday?`#34D399`:lastRev?A.text:A.textT }, children: doneToday?`Today ✓`:lastRev?lastRev:`—` }),
-                                                            daysSince !== null && !doneToday ? (0, b.jsxs)(`div`, { style:{ fontSize:9, color:A.textT, marginTop:2 }, children:[daysSince,`d ago`] }) : null
+                                                            (0, b.jsx)(`div`, {
+                                                                style: {
+                                                                    fontSize: 9,
+                                                                    color: A.textT,
+                                                                    textTransform: `uppercase`,
+                                                                    letterSpacing: `0.7px`,
+                                                                    marginBottom: 4
+                                                                },
+                                                                children: `Last Revision`
+                                                            }),
+                                                            (0, b.jsx)(`div`, {
+                                                                style: {
+                                                                    fontSize: 12,
+                                                                    fontWeight: 600,
+                                                                    color: doneToday ? `#34D399` : lastRev ? A.text : A.textT
+                                                                },
+                                                                children: doneToday ? `Today ✓` : lastRev ? lastRev : `—`
+                                                            }),
+                                                            daysSince !== null && !doneToday ? (0, b.jsxs)(`div`, {
+                                                                style: {
+                                                                    fontSize: 9,
+                                                                    color: A.textT,
+                                                                    marginTop: 2
+                                                                },
+                                                                children: [daysSince, `d ago`]
+                                                            }) : null
                                                         ]
                                                     }),
                                                     // Card 3: Next revision
                                                     (0, b.jsxs)(`div`, {
-                                                        style: { padding:`8px 10px`, borderRadius:10, background: isOverdue?`rgba(239,68,68,0.08)`:isDueToday?`rgba(52,211,153,0.08)`:m?`rgba(255,255,255,0.04)`:`rgba(0,0,0,0.03)`, border:`1px solid ${isOverdue?'rgba(239,68,68,0.3)':isDueToday?'rgba(52,211,153,0.3)':A.border}`, textAlign:`center` },
+                                                        style: {
+                                                            padding: `8px 10px`,
+                                                            borderRadius: 10,
+                                                            background: isOverdue ? `rgba(239,68,68,0.08)` : isDueToday ? `rgba(52,211,153,0.08)` : m ? `rgba(255,255,255,0.04)` : `rgba(0,0,0,0.03)`,
+                                                            border: `1px solid ${isOverdue?'rgba(239,68,68,0.3)':isDueToday?'rgba(52,211,153,0.3)':A.border}`,
+                                                            textAlign: `center`
+                                                        },
                                                         children: [
-                                                            (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:4 }, children:`Next Revision` }),
-                                                            (0, b.jsx)(`div`, { style:{ fontSize:11, fontWeight:600, color: isOverdue?`#F87171`:isDueToday?`#34D399`:nextRevDate?A.text:A.textT, marginBottom:4 }, children: isOverdue?`Overdue!`:isDueToday?`Today!`:nextRevDate?nextRevDate:`Not set` }),
-                                                            nextRevDate && !isOverdue && !isDueToday ? (0, b.jsxs)(`div`, { style:{ fontSize:9, color:A.textT, marginBottom:4 }, children:[`in ${Math.ceil((new Date(nextRevDate)-new Date())/864e5)}d`] }) : null,
-                                                            (0, b.jsx)(`input`, {
-                                                                type:`date`,
-                                                                value: (e.customRevDate||{})[sub.id] || nextRevDate || ``,
-                                                                onChange: function(ev){
-                                                                    v(Object.assign({},e,{ customRevDate: Object.assign({},e.customRevDate||{},{[sub.id]:ev.target.value}) }));
+                                                            (0, b.jsx)(`div`, {
+                                                                style: {
+                                                                    fontSize: 9,
+                                                                    color: A.textT,
+                                                                    textTransform: `uppercase`,
+                                                                    letterSpacing: `0.7px`,
+                                                                    marginBottom: 4
                                                                 },
-                                                                style:{ fontSize:9, padding:`3px 6px`, borderRadius:6, border:`1px solid ${A.inputBorder}`, background:A.inputBg, color:A.text, outline:`none`, width:`100%`, boxSizing:`border-box`, cursor:`pointer` }
+                                                                children: `Next Revision`
+                                                            }),
+                                                            (0, b.jsx)(`div`, {
+                                                                style: {
+                                                                    fontSize: 11,
+                                                                    fontWeight: 600,
+                                                                    color: isOverdue ? `#F87171` : isDueToday ? `#34D399` : nextRevDate ? A.text : A.textT,
+                                                                    marginBottom: 4
+                                                                },
+                                                                children: isOverdue ? `Overdue!` : isDueToday ? `Today!` : nextRevDate ? nextRevDate : `Not set`
+                                                            }),
+                                                            nextRevDate && !isOverdue && !isDueToday ? (0, b.jsxs)(`div`, {
+                                                                style: {
+                                                                    fontSize: 9,
+                                                                    color: A.textT,
+                                                                    marginBottom: 4
+                                                                },
+                                                                children: [`in ${Math.ceil((new Date(nextRevDate)-new Date())/864e5)}d`]
+                                                            }) : null,
+                                                            (0, b.jsx)(`input`, {
+                                                                type: `date`,
+                                                                value: (e.customRevDate || {})[sub.id] || nextRevDate || ``,
+                                                                onChange: function(ev) {
+                                                                    v(Object.assign({}, e, {
+                                                                        customRevDate: Object.assign({}, e.customRevDate || {}, {
+                                                                            [sub.id]: ev.target.value
+                                                                        })
+                                                                    }));
+                                                                },
+                                                                style: {
+                                                                    fontSize: 9,
+                                                                    padding: `3px 6px`,
+                                                                    borderRadius: 6,
+                                                                    border: `1px solid ${A.inputBorder}`,
+                                                                    background: A.inputBg,
+                                                                    color: A.text,
+                                                                    outline: `none`,
+                                                                    width: `100%`,
+                                                                    boxSizing: `border-box`,
+                                                                    cursor: `pointer`
+                                                                }
                                                             })
                                                         ]
                                                     }),
                                                     // Card 4: Done Today button
                                                     (0, b.jsxs)(`div`, {
-                                                        style: { padding:`8px 10px`, borderRadius:10, background: doneToday?`rgba(52,211,153,0.1)`:m?`rgba(255,255,255,0.04)`:`rgba(0,0,0,0.03)`, border:`1px solid ${doneToday?'rgba(52,211,153,0.4)':A.border}`, textAlign:`center`, display:`flex`, flexDirection:`column`, alignItems:`center`, justifyContent:`center`, gap:6 },
+                                                        style: {
+                                                            padding: `8px 10px`,
+                                                            borderRadius: 10,
+                                                            background: doneToday ? `rgba(52,211,153,0.1)` : m ? `rgba(255,255,255,0.04)` : `rgba(0,0,0,0.03)`,
+                                                            border: `1px solid ${doneToday?'rgba(52,211,153,0.4)':A.border}`,
+                                                            textAlign: `center`,
+                                                            display: `flex`,
+                                                            flexDirection: `column`,
+                                                            alignItems: `center`,
+                                                            justifyContent: `center`,
+                                                            gap: 6
+                                                        },
                                                         children: [
                                                             (0, b.jsx)(`button`, {
-                                                                onClick: function(){
-                                                                    if(doneToday) return;
-                                                                    var prev = (e.revisionHistory||{});
+                                                                onClick: function() {
+                                                                    if (doneToday) return;
+                                                                    var prev = (e.revisionHistory || {});
                                                                     var arr = prev[sub.id] || [];
-                                                                    v(Object.assign({},e,{
-                                                                        revisionHistory: Object.assign({},prev,{ [sub.id]: [...arr, today] }),
-                                                                        lastStudied: Object.assign({},e.lastStudied||{},{ [sub.id]: today })
+                                                                    v(Object.assign({}, e, {
+                                                                        revisionHistory: Object.assign({}, prev, {
+                                                                            [sub.id]: [...arr, today]
+                                                                        }),
+                                                                        lastStudied: Object.assign({}, e.lastStudied || {}, {
+                                                                            [sub.id]: today
+                                                                        })
                                                                     }));
                                                                 },
-                                                                style: { fontSize:11, padding:`6px 12px`, borderRadius:99, border:`none`, background: doneToday?`rgba(52,211,153,0.2)`:`linear-gradient(135deg,#8B5CF6,#A78BFA)`, color: doneToday?`#34D399`:`#fff`, cursor: doneToday?`default`:`pointer`, fontWeight:600, whiteSpace:`nowrap` },
+                                                                style: {
+                                                                    fontSize: 11,
+                                                                    padding: `6px 12px`,
+                                                                    borderRadius: 99,
+                                                                    border: `none`,
+                                                                    background: doneToday ? `rgba(52,211,153,0.2)` : `linear-gradient(135deg,#8B5CF6,#A78BFA)`,
+                                                                    color: doneToday ? `#34D399` : `#fff`,
+                                                                    cursor: doneToday ? `default` : `pointer`,
+                                                                    fontWeight: 600,
+                                                                    whiteSpace: `nowrap`
+                                                                },
                                                                 children: doneToday ? `✓ Done!` : `✓ Done Today`
                                                             }),
                                                             count > 0 ? (0, b.jsx)(`button`, {
-                                                                onClick: function(){
-                                                                    var prev = (e.revisionHistory||{});
-                                                                    var arr = (prev[sub.id]||[]).slice(0,-1);
-                                                                    v(Object.assign({},e,{ revisionHistory: Object.assign({},prev,{ [sub.id]: arr }) }));
+                                                                onClick: function() {
+                                                                    var prev = (e.revisionHistory || {});
+                                                                    var arr = (prev[sub.id] || []).slice(0, -1);
+                                                                    v(Object.assign({}, e, {
+                                                                        revisionHistory: Object.assign({}, prev, {
+                                                                            [sub.id]: arr
+                                                                        })
+                                                                    }));
                                                                 },
-                                                                style: { fontSize:9, padding:`2px 8px`, borderRadius:6, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer` },
-                                                                children:`undo last`
+                                                                style: {
+                                                                    fontSize: 9,
+                                                                    padding: `2px 8px`,
+                                                                    borderRadius: 6,
+                                                                    border: `1px solid ${A.border}`,
+                                                                    background: `transparent`,
+                                                                    color: A.textT,
+                                                                    cursor: `pointer`
+                                                                },
+                                                                children: `undo last`
                                                             }) : null
                                                         ]
                                                     })
@@ -12924,55 +14162,118 @@ function ce() {
                 })()
             }), n === `weekly` && (0, b.jsxs)(`div`, {
                 className: `fade-in`,
-                children: (function(){
+                children: (function() {
                     var snapshots = e.weeklySnapshots || [];
-                    var sh = e.studyHours||{};
+                    var sh = e.studyHours || {};
                     var today = new Date();
-                    var dayOfWeek = today.getDay();
+                    // Use local date (not UTC) to avoid timezone issues like IST being UTC+5:30
+                    function localDateStr(d) {
+                        var y = d.getFullYear(),
+                            m = String(d.getMonth() + 1).padStart(2, '0'),
+                            dd = String(d.getDate()).padStart(2, '0');
+                        return y + '-' + m + '-' + dd;
+                    }
+                    var dayOfWeek = today.getDay(); // 0=Sun,1=Mon,...,6=Sat
                     var isSunday = dayOfWeek === 0;
-                    // compute this week (Mon-Sun) dates
-                    var weekStart = new Date(today); weekStart.setDate(today.getDate() - (dayOfWeek===0?6:dayOfWeek-1));
+                    // Always start week on Monday
+                    var daysFromMon = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+                    var weekStart = new Date(today);
+                    weekStart.setDate(today.getDate() - daysFromMon);
                     var thisWeekDates = [];
-                    for(var i=0;i<7;i++){ var d=new Date(weekStart); d.setDate(weekStart.getDate()+i); thisWeekDates.push(d.toISOString().split('T')[0]); }
-                    var thisWeekHrs = thisWeekDates.reduce(function(a,d){return a+(sh[d]||0);},0);
-                    var thisWeekMocks = (e.mockScores||[]).filter(function(m){ return thisWeekDates.includes(m.date); });
-                    var thisWeekTopics = Object.entries(e.completedTopics||{}).filter(function(kv){ return kv[1]; }).length;
-                    var thisWeekRevised = Object.entries(e.revisedTopics||{}).filter(function(kv){ return kv[1]; }).length;
-                    
+                    for (var i = 0; i < 7; i++) {
+                        var d = new Date(weekStart);
+                        d.setDate(weekStart.getDate() + i);
+                        thisWeekDates.push(localDateStr(d));
+                    }
+                    var thisWeekHrs = thisWeekDates.reduce(function(a, d) {
+                        return a + (sh[d] || 0);
+                    }, 0);
+                    var thisWeekMocks = (e.mockScores || []).filter(function(m) {
+                        return thisWeekDates.includes(m.date);
+                    });
+                    var thisWeekTopics = Object.entries(e.completedTopics || {}).filter(function(kv) {
+                        return kv[1];
+                    }).length;
+                    var thisWeekRevised = Object.entries(e.revisedTopics || {}).filter(function(kv) {
+                        return kv[1];
+                    }).length;
+
                     var canGenerate = isSunday || snapshots.length === 0;
-                    
-                    var generateSnapshot = function(){
+
+                    var generateSnapshot = function() {
+                        var last7mocks = (e.mockScores || []).slice(-7);
                         var snap = {
                             weekOf: thisWeekDates[0],
                             weekEnd: thisWeekDates[6],
                             hours: parseFloat(thisWeekHrs.toFixed(1)),
                             mocks: thisWeekMocks.length,
-                            avgMock: (function(){ var last7 = (e.mockScores||[]).slice(-7); return last7.length ? parseFloat((last7.reduce(function(a,m){return a+m.score;},0)/last7.length).toFixed(1)) : null; })(),
+                            avgMock: last7mocks.length ? parseFloat((last7mocks.reduce(function(a, m) {
+                                return a + m.score;
+                            }, 0) / last7mocks.length).toFixed(1)) : null,
                             topicsTotal: thisWeekTopics,
                             revised: thisWeekRevised,
-                            streak: e.streak||0
+                            streak: e.streak || 0,
+                            weeklyHrsTarget: e.weeklyHrsTarget || 0,
+                            totalHrs: parseFloat(Object.values(e.studyHours || {}).reduce(function(a, b) {
+                                return a + b;
+                            }, 0).toFixed(1)),
+                            totalMocks: (e.mockScores || []).length,
+                            savedAt: new Date().toISOString()
                         };
-                        v(Object.assign({},e,{ weeklySnapshots: [...snapshots, snap] }));
+                        v(Object.assign({}, e, {
+                            weeklySnapshots: [...snapshots, snap]
+                        }));
                     };
-                    
+
                     return [
                         (0, b.jsxs)(T, {
                             T: A,
-                            style:{ padding:`16px 20px`, marginBottom:12 },
-                            children:[
+                            style: {
+                                padding: `16px 20px`,
+                                marginBottom: 12
+                            },
+                            children: [
                                 (0, b.jsxs)(`div`, {
-                                    style:{ display:`flex`, alignItems:`center`, justifyContent:`space-between`, flexWrap:`wrap`, gap:10 },
-                                    children:[
+                                    style: {
+                                        display: `flex`,
+                                        alignItems: `center`,
+                                        justifyContent: `space-between`,
+                                        flexWrap: `wrap`,
+                                        gap: 10
+                                    },
+                                    children: [
                                         (0, b.jsxs)(`div`, {
-                                            children:[
-                                                (0, b.jsx)(`div`, { style:{ fontSize:13, fontWeight:700, marginBottom:4 }, children:`📊 Weekly Review Summary` }),
-                                                (0, b.jsx)(`div`, { style:{ fontSize:11, color:A.textT }, children: isSunday ? `Today is Sunday — generate this week's snapshot!` : `Snapshots are generated on Sundays. Current week preview below.` })
+                                            children: [
+                                                (0, b.jsx)(`div`, {
+                                                    style: {
+                                                        fontSize: 13,
+                                                        fontWeight: 700,
+                                                        marginBottom: 4
+                                                    },
+                                                    children: `📊 Weekly Review Summary`
+                                                }),
+                                                (0, b.jsx)(`div`, {
+                                                    style: {
+                                                        fontSize: 11,
+                                                        color: A.textT
+                                                    },
+                                                    children: isSunday ? `Today is Sunday — generate this week's snapshot!` : `Snapshots are generated on Sundays. Current week preview below.`
+                                                })
                                             ]
                                         }),
                                         (0, b.jsx)(`button`, {
                                             onClick: generateSnapshot,
-                                            style:{ fontSize:12, padding:`8px 18px`, borderRadius:99, border:`none`, background:`linear-gradient(135deg,#8B5CF6,#A78BFA)`, color:`#fff`, cursor:`pointer`, fontWeight:600 },
-                                            children: isSunday ? `📸 Save this week` : `📸 Preview snapshot`
+                                            style: {
+                                                fontSize: 12,
+                                                padding: `8px 18px`,
+                                                borderRadius: 99,
+                                                border: `none`,
+                                                background: `linear-gradient(135deg,#8B5CF6,#A78BFA)`,
+                                                color: `#fff`,
+                                                cursor: `pointer`,
+                                                fontWeight: 600
+                                            },
+                                            children: isSunday ? `📸 Save this week (${snapshots.length+1})` : `📸 Preview / Save snapshot (${snapshots.length+1})`
                                         })
                                     ]
                                 })
@@ -12980,30 +14281,113 @@ function ce() {
                         }),
                         (0, b.jsxs)(T, {
                             T: A,
-                            style:{ padding:`16px 20px`, marginBottom:12 },
-                            children:[
-                                (0, b.jsx)(`div`, { style:{ fontSize:11, fontWeight:600, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:12 }, children:`This Week Preview (${thisWeekDates[0]} → ${thisWeekDates[6]})` }),
+                            style: {
+                                padding: `16px 20px`,
+                                marginBottom: 12
+                            },
+                            children: [
                                 (0, b.jsx)(`div`, {
-                                    style:{ display:`grid`, gridTemplateColumns:`repeat(4,1fr)`, gap:10 },
-                                    children: [
-                                        {label:`Hours`, val:thisWeekHrs.toFixed(1), unit:`hrs`, grad:`linear-gradient(135deg,#8B5CF6,#A78BFA)`},
-                                        {label:`Mocks`, val:thisWeekMocks.length, unit:`taken`, grad:`linear-gradient(135deg,#F97316,#FB923C)`},
-                                        {label:`Avg L7`, val: (function(){ var l7=(e.mockScores||[]).slice(-7); return l7.length?(l7.reduce(function(a,m){return a+m.score;},0)/l7.length).toFixed(1):`—`; })(), unit:`/100`, grad:`linear-gradient(135deg,#3B82F6,#60A5FA)`},
-                                        {label:`Streak`, val:(e.streak||0), unit:`days 🔥`, grad:`linear-gradient(135deg,#EC4899,#F9A8D4)`}
-                                    ].map(function(card){
+                                    style: {
+                                        fontSize: 11,
+                                        fontWeight: 600,
+                                        color: A.textT,
+                                        textTransform: `uppercase`,
+                                        letterSpacing: `0.7px`,
+                                        marginBottom: 12
+                                    },
+                                    children: `This Week Preview (${thisWeekDates[0]} → ${thisWeekDates[6]})`
+                                }),
+                                (0, b.jsx)(`div`, {
+                                    style: {
+                                        display: `grid`,
+                                        gridTemplateColumns: `repeat(4,1fr)`,
+                                        gap: 10
+                                    },
+                                    children: [{
+                                            label: `Hours`,
+                                            val: thisWeekHrs.toFixed(1),
+                                            unit: `hrs`,
+                                            grad: `linear-gradient(135deg,#8B5CF6,#A78BFA)`
+                                        },
+                                        {
+                                            label: `Mocks`,
+                                            val: thisWeekMocks.length,
+                                            unit: `taken`,
+                                            grad: `linear-gradient(135deg,#F97316,#FB923C)`
+                                        },
+                                        {
+                                            label: `Avg L7`,
+                                            val: (function() {
+                                                var l7 = (e.mockScores || []).slice(-7);
+                                                return l7.length ? (l7.reduce(function(a, m) {
+                                                    return a + m.score;
+                                                }, 0) / l7.length).toFixed(1) : `—`;
+                                            })(),
+                                            unit: `/100`,
+                                            grad: `linear-gradient(135deg,#3B82F6,#60A5FA)`
+                                        },
+                                        {
+                                            label: `Streak`,
+                                            val: (e.streak || 0),
+                                            unit: `days 🔥`,
+                                            grad: `linear-gradient(135deg,#EC4899,#F9A8D4)`
+                                        }
+                                    ].map(function(card) {
                                         return (0, b.jsxs)(T, {
                                             T: A,
-                                            style:{ padding:0, overflow:`hidden` },
-                                            children:[
-                                                (0, b.jsx)(`div`, { style:{ height:3, background:card.grad } }),
+                                            style: {
+                                                padding: 0,
+                                                overflow: `hidden`
+                                            },
+                                            children: [
+                                                (0, b.jsx)(`div`, {
+                                                    style: {
+                                                        height: 3,
+                                                        background: card.grad
+                                                    }
+                                                }),
                                                 (0, b.jsxs)(`div`, {
-                                                    style:{ padding:`10px 12px` },
-                                                    children:[
-                                                        (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, fontWeight:600, marginBottom:6 }, children:card.label }),
-                                                        (0, b.jsxs)(`div`, { style:{ display:`flex`, alignItems:`baseline`, gap:3 }, children:[
-                                                            (0, b.jsx)(`span`, { style:{ fontSize:20, fontWeight:700, backgroundImage:card.grad, WebkitBackgroundClip:`text`, WebkitTextFillColor:`transparent` }, children:card.val }),
-                                                            (0, b.jsx)(`span`, { style:{ fontSize:9, color:A.textT }, children:card.unit })
-                                                        ]})
+                                                    style: {
+                                                        padding: `10px 12px`
+                                                    },
+                                                    children: [
+                                                        (0, b.jsx)(`div`, {
+                                                            style: {
+                                                                fontSize: 9,
+                                                                color: A.textT,
+                                                                textTransform: `uppercase`,
+                                                                letterSpacing: `0.7px`,
+                                                                fontWeight: 600,
+                                                                marginBottom: 6
+                                                            },
+                                                            children: card.label
+                                                        }),
+                                                        (0, b.jsxs)(`div`, {
+                                                            style: {
+                                                                display: `flex`,
+                                                                alignItems: `baseline`,
+                                                                gap: 3
+                                                            },
+                                                            children: [
+                                                                (0, b.jsx)(`span`, {
+                                                                    style: {
+                                                                        fontSize: 20,
+                                                                        fontWeight: 700,
+                                                                        backgroundImage: card.grad,
+                                                                        WebkitBackgroundClip: `text`,
+                                                                        WebkitTextFillColor: `transparent`
+                                                                    },
+                                                                    children: card.val
+                                                                }),
+                                                                (0, b.jsx)(`span`, {
+                                                                    style: {
+                                                                        fontSize: 9,
+                                                                        color: A.textT
+                                                                    },
+                                                                    children: card.unit
+                                                                })
+                                                            ]
+                                                        })
                                                     ]
                                                 })
                                             ]
@@ -13012,27 +14396,306 @@ function ce() {
                                 })
                             ]
                         }),
+                        (function() {
+                            if (!snapshots.length) return null;
+                            if (snapshots.length < 2) return null;
+                            var maxHrs = Math.max.apply(null, snapshots.map(function(s) {
+                                return s.hours || 0;
+                            }));
+                            var maxH = 120;
+                            return (0, b.jsxs)(T, {
+                                T: A,
+                                style: {
+                                    padding: `16px 20px`,
+                                    marginBottom: 10
+                                },
+                                children: [
+                                    (0, b.jsxs)(`div`, {
+                                        style: {
+                                            display: `flex`,
+                                            alignItems: `center`,
+                                            justifyContent: `space-between`,
+                                            marginBottom: 14
+                                        },
+                                        children: [
+                                            (0, b.jsx)(`div`, {
+                                                style: {
+                                                    fontSize: 11,
+                                                    fontWeight: 700
+                                                },
+                                                children: `📊 Weekly Hours History`
+                                            }),
+                                            (0, b.jsxs)(`div`, {
+                                                style: {
+                                                    fontSize: 10,
+                                                    color: A.textT
+                                                },
+                                                children: [snapshots.length, ` weeks tracked`]
+                                            })
+                                        ]
+                                    }),
+                                    (0, b.jsx)(`div`, {
+                                        style: {
+                                            overflowX: `auto`,
+                                            paddingBottom: 4
+                                        },
+                                        children: (0, b.jsx)(`div`, {
+                                            style: {
+                                                display: `flex`,
+                                                alignItems: `flex-end`,
+                                                gap: 8,
+                                                minWidth: `max-content`,
+                                                height: maxH + 60
+                                            },
+                                            children: snapshots.map(function(snap, i) {
+                                                var hrs = snap.hours || 0;
+                                                var barH = maxHrs > 0 ? Math.max(6, Math.round(hrs / maxHrs * maxH)) : 6;
+                                                var avg = snap.avgMock;
+                                                var barColor = snap.weeklyHrsTarget > 0 ?
+                                                    (hrs >= snap.weeklyHrsTarget ? `linear-gradient(to top,#059669,#34D399)` : `linear-gradient(to top,#8B5CF6,#A78BFA)`) :
+                                                    `linear-gradient(to top,#3B82F6,#60A5FA)`;
+                                                var label = snap.weekEnd ? snap.weekEnd.slice(5) : (`W` + (i + 1));
+                                                return (0, b.jsxs)(`div`, {
+                                                    style: {
+                                                        display: `flex`,
+                                                        flexDirection: `column`,
+                                                        alignItems: `center`,
+                                                        gap: 3,
+                                                        width: 44,
+                                                        flexShrink: 0
+                                                    },
+                                                    children: [
+                                                        (0, b.jsx)(`div`, {
+                                                            style: {
+                                                                fontSize: 9,
+                                                                fontWeight: 600,
+                                                                color: A.textS
+                                                            },
+                                                            children: hrs.toFixed(1) + 'h'
+                                                        }),
+                                                        (0, b.jsx)(`div`, {
+                                                            style: {
+                                                                width: 32,
+                                                                height: barH,
+                                                                background: barColor,
+                                                                borderRadius: `5px 5px 2px 2px`,
+                                                                cursor: `default`,
+                                                                position: `relative`
+                                                            },
+                                                            title: hrs.toFixed(1) + ' hrs · ' + (snap.mocks || 0) + ' mocks' + (avg != null ? ' · avg ' + avg : '')
+                                                        }),
+                                                        snap.weeklyHrsTarget > 0 ? (0, b.jsx)(`div`, {
+                                                            style: {
+                                                                fontSize: 8,
+                                                                color: hrs >= snap.weeklyHrsTarget ? `#34D399` : `#F97316`
+                                                            },
+                                                            children: hrs >= snap.weeklyHrsTarget ? `✓` : `${((hrs/snap.weeklyHrsTarget)*100).toFixed(0)}%`
+                                                        }) : null,
+                                                        (0, b.jsx)(`div`, {
+                                                            style: {
+                                                                fontSize: 9,
+                                                                color: A.textT,
+                                                                textAlign: `center`,
+                                                                maxWidth: 44,
+                                                                overflow: `hidden`,
+                                                                textOverflow: `ellipsis`,
+                                                                whiteSpace: `nowrap`
+                                                            },
+                                                            children: label
+                                                        }),
+                                                        avg != null ? (0, b.jsx)(`div`, {
+                                                            style: {
+                                                                fontSize: 8,
+                                                                color: avg >= 80 ? `#34D399` : avg >= 50 ? `#60A5FA` : `#EF4444`,
+                                                                fontWeight: 600
+                                                            },
+                                                            children: `m:${avg}`
+                                                        }) : null
+                                                    ]
+                                                }, i)
+                                            })
+                                        })
+                                    }),
+                                    (0, b.jsxs)(`div`, {
+                                        style: {
+                                            display: `flex`,
+                                            gap: 16,
+                                            marginTop: 12,
+                                            flexWrap: `wrap`
+                                        },
+                                        children: [
+                                            (0, b.jsxs)(`div`, {
+                                                style: {
+                                                    display: `flex`,
+                                                    alignItems: `center`,
+                                                    gap: 5
+                                                },
+                                                children: [(0, b.jsx)(`div`, {
+                                                    style: {
+                                                        width: 10,
+                                                        height: 10,
+                                                        borderRadius: 3,
+                                                        background: `linear-gradient(135deg,#059669,#34D399)`
+                                                    }
+                                                }), (0, b.jsx)(`span`, {
+                                                    style: {
+                                                        fontSize: 10,
+                                                        color: A.textT
+                                                    },
+                                                    children: `Target met`
+                                                })]
+                                            }),
+                                            (0, b.jsxs)(`div`, {
+                                                style: {
+                                                    display: `flex`,
+                                                    alignItems: `center`,
+                                                    gap: 5
+                                                },
+                                                children: [(0, b.jsx)(`div`, {
+                                                    style: {
+                                                        width: 10,
+                                                        height: 10,
+                                                        borderRadius: 3,
+                                                        background: `linear-gradient(135deg,#8B5CF6,#A78BFA)`
+                                                    }
+                                                }), (0, b.jsx)(`span`, {
+                                                    style: {
+                                                        fontSize: 10,
+                                                        color: A.textT
+                                                    },
+                                                    children: `Below target`
+                                                })]
+                                            }),
+                                            (0, b.jsxs)(`div`, {
+                                                style: {
+                                                    display: `flex`,
+                                                    alignItems: `center`,
+                                                    gap: 5
+                                                },
+                                                children: [(0, b.jsx)(`div`, {
+                                                    style: {
+                                                        width: 10,
+                                                        height: 10,
+                                                        borderRadius: 3,
+                                                        background: `linear-gradient(135deg,#3B82F6,#60A5FA)`
+                                                    }
+                                                }), (0, b.jsx)(`span`, {
+                                                    style: {
+                                                        fontSize: 10,
+                                                        color: A.textT
+                                                    },
+                                                    children: `No target set`
+                                                })]
+                                            }),
+                                            (0, b.jsx)(`span`, {
+                                                style: {
+                                                    fontSize: 10,
+                                                    color: A.textT
+                                                },
+                                                children: `· m: = avg mock score`
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        })(),
                         snapshots.length > 0 ? (0, b.jsxs)(T, {
                             T: A,
-                            style:{ padding:`16px 20px` },
-                            children:[
-                                (0, b.jsx)(`div`, { style:{ fontSize:11, fontWeight:600, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:12 }, children:`Past Snapshots` }),
-                                [...snapshots].reverse().map(function(snap, idx){
+                            style: {
+                                padding: `16px 20px`
+                            },
+                            children: [
+                                (0, b.jsx)(`div`, {
+                                    style: {
+                                        fontSize: 11,
+                                        fontWeight: 600,
+                                        color: A.textT,
+                                        textTransform: `uppercase`,
+                                        letterSpacing: `0.7px`,
+                                        marginBottom: 12
+                                    },
+                                    children: `Past Snapshots`
+                                }),
+                                [...snapshots].reverse().map(function(snap, idx) {
                                     return (0, b.jsxs)(`div`, {
-                                        style:{ padding:`12px 0`, borderBottom: idx < snapshots.length-1 ? `1px solid ${A.border}` : `none`, display:`flex`, flexWrap:`wrap`, gap:16, alignItems:`center` },
-                                        children:[
-                                            (0, b.jsxs)(`div`, { style:{ minWidth:140 }, children:[
-                                                (0, b.jsxs)(`div`, { style:{ fontSize:12, fontWeight:600 }, children:[`Week of ${snap.weekOf}`] }),
-                                                (0, b.jsxs)(`div`, { style:{ fontSize:10, color:A.textT, marginTop:2 }, children:[snap.weekOf, ` → `, snap.weekEnd] })
-                                            ]}),
-                                            (0, b.jsxs)(`span`, { style:{ fontSize:11, color:`#A78BFA` }, children:[`⏱ `, snap.hours, `h`] }),
-                                            (0, b.jsxs)(`span`, { style:{ fontSize:11, color:`#60A5FA` }, children:[`📝 `, snap.mocks, ` mock${snap.mocks!==1?'s':''}`] }),
-                                            snap.avgMock !== null ? (0, b.jsxs)(`span`, { style:{ fontSize:11, color: snap.avgMock>=80?`#34D399`:snap.avgMock>=50?`#60A5FA`:`#EF4444` }, children:[`avg `, snap.avgMock] }) : null,
-                                            (0, b.jsxs)(`span`, { style:{ fontSize:11, color:`#FB923C` }, children:[`🔥 `, snap.streak, `d streak`] }),
+                                        style: {
+                                            padding: `12px 0`,
+                                            borderBottom: idx < snapshots.length - 1 ? `1px solid ${A.border}` : `none`,
+                                            display: `flex`,
+                                            flexWrap: `wrap`,
+                                            gap: 16,
+                                            alignItems: `center`
+                                        },
+                                        children: [
+                                            (0, b.jsxs)(`div`, {
+                                                style: {
+                                                    minWidth: 140
+                                                },
+                                                children: [
+                                                    (0, b.jsxs)(`div`, {
+                                                        style: {
+                                                            fontSize: 12,
+                                                            fontWeight: 600
+                                                        },
+                                                        children: [`Week of ${snap.weekOf}`]
+                                                    }),
+                                                    (0, b.jsxs)(`div`, {
+                                                        style: {
+                                                            fontSize: 10,
+                                                            color: A.textT,
+                                                            marginTop: 2
+                                                        },
+                                                        children: [snap.weekOf, ` → `, snap.weekEnd]
+                                                    })
+                                                ]
+                                            }),
+                                            (0, b.jsxs)(`span`, {
+                                                style: {
+                                                    fontSize: 11,
+                                                    color: `#A78BFA`
+                                                },
+                                                children: [`⏱ `, snap.hours, `h`]
+                                            }),
+                                            (0, b.jsxs)(`span`, {
+                                                style: {
+                                                    fontSize: 11,
+                                                    color: `#60A5FA`
+                                                },
+                                                children: [`📝 `, snap.mocks, ` mock${snap.mocks!==1?'s':''}`]
+                                            }),
+                                            snap.avgMock !== null ? (0, b.jsxs)(`span`, {
+                                                style: {
+                                                    fontSize: 11,
+                                                    color: snap.avgMock >= 80 ? `#34D399` : snap.avgMock >= 50 ? `#60A5FA` : `#EF4444`
+                                                },
+                                                children: [`avg `, snap.avgMock]
+                                            }) : null,
+                                            (0, b.jsxs)(`span`, {
+                                                style: {
+                                                    fontSize: 11,
+                                                    color: `#FB923C`
+                                                },
+                                                children: [`🔥 `, snap.streak, `d streak`]
+                                            }),
                                             (0, b.jsx)(`button`, {
-                                                onClick: function(){ v(Object.assign({},e,{ weeklySnapshots: snapshots.filter(function(_,i){ return i !== (snapshots.length-1-idx); }) })); },
-                                                style:{ fontSize:10, padding:`2px 8px`, borderRadius:6, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer`, marginLeft:`auto` },
-                                                children:`✕`
+                                                onClick: function() {
+                                                    v(Object.assign({}, e, {
+                                                        weeklySnapshots: snapshots.filter(function(_, i) {
+                                                            return i !== (snapshots.length - 1 - idx);
+                                                        })
+                                                    }));
+                                                },
+                                                style: {
+                                                    fontSize: 10,
+                                                    padding: `2px 8px`,
+                                                    borderRadius: 6,
+                                                    border: `1px solid ${A.border}`,
+                                                    background: `transparent`,
+                                                    color: A.textT,
+                                                    cursor: `pointer`,
+                                                    marginLeft: `auto`
+                                                },
+                                                children: `✕`
                                             })
                                         ]
                                     }, snap.weekOf)
