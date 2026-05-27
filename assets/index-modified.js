@@ -10137,7 +10137,7 @@ function ce() {
                 }(undefined))
             } catch {}
         })();
-        let e = setInterval(() => l(e => (e + 1) % ee.length), 5e3);
+        let e = setInterval(() => l(e => (e + 1) % ee.length), 120e3);
         return () => clearInterval(e)
     }, []), (0, x.useEffect)(() => {
         document.body.style.background = m ? `#09090b` : `#fafaf9`
@@ -10168,7 +10168,7 @@ function ce() {
                     name: mockName,
                     link: mockLink,
                     weakSubs: mockWeakSubs
-                }].sort((e, t) => new Date(e.date) - new Date(t.date))
+                }].sort((e, t) => (e.date||'').localeCompare(t.date||''))
             }), d(``), setMockName(``), setMockLink(``), setMockWeakSubs([]))
         },
         le = t => {
@@ -10466,7 +10466,7 @@ function ce() {
                 let t = g ? C.find(subj2 => subj2.id === g) : null,
                     n = t ? le(t) : null,
                     i = t ? w[t.phase] : null,
-                    a = g ? te[g] : null;
+                    a = g && te ? te[g] || null : null;
                 return (0, b.jsxs)(`div`, {
                     className: `fade-in`,
                     children: [(0, b.jsxs)(`div`, {
@@ -11094,7 +11094,16 @@ function ce() {
                                                 var today = (function(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); })();
                                                 var prevH = e.studyHours||{};
                                                 var newVal = Math.max(0, (prevH[today]||0) - h);
-                                                v(Object.assign({},e,{ studyHours: Object.assign({},prevH,{[today]:newVal}) }));
+                                                var newState2 = Object.assign({},e,{ studyHours: Object.assign({},prevH,{[today]:newVal}) });
+                                                // If today's hours drop to 0, undo streak increment for today
+                                                if(newVal === 0 && e.lastStreakDate === today){
+                                                    // Revert streak to previous value (subtract 1, min 0)
+                                                    newState2.streak = Math.max(0, (e.streak||1) - 1);
+                                                    // Revert lastStreakDate to yesterday if streak > 0
+                                                    var localFn2 = function(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+                                                    newState2.lastStreakDate = newState2.streak > 0 ? localFn2(new Date(Date.now()-864e5)) : '';
+                                                }
+                                                v(newState2);
                                                 setHoursInput('');
                                             },
                                             style:{ fontSize:12, padding:`7px 14px`, borderRadius:99, border:`1px solid #F97316`, background:`transparent`, color:`#F97316`, cursor:`pointer`, fontWeight:600, whiteSpace:`nowrap` },
@@ -11286,7 +11295,7 @@ function ce() {
                                                                             var dup = merged.find(function(x){ return x.date===m.date && x.score===m.score && x.name===m.name; });
                                                                             if(!dup) merged.push(m);
                                                                         });
-                                                                        return merged.sort(function(a,b){ return new Date(a.date)-new Date(b.date); });
+                                                                        return merged.sort(function(a,b){ return (a.date||'').localeCompare(b.date||''); });
                                                                     })(),
                                                                     subjectScores: (function(){
                                                                         if(!Object.keys(subjectScores).length) return e.subjectScores||{};
@@ -11317,6 +11326,7 @@ function ce() {
                                                                 if(settings.streak) newState.streak = parseInt(settings.streak)||0;
                                                                 if(settings.lastStreakDate) newState.lastStreakDate = settings.lastStreakDate;
                                                                 if(settings.examDate) newState.examDate = settings.examDate;
+                                                                if(settings.weeklyHrsTarget) newState.weeklyHrsTarget = parseFloat(settings.weeklyHrsTarget)||0;
                                                                 if(settings.weeklyHrsTarget)newState.weeklyHrsTarget=parseFloat(settings.weeklyHrsTarget)||0;
                                                                 if(weeklySnapshots.length){
                                                                 var existingSnaps = e.weeklySnapshots||[];
@@ -11359,7 +11369,14 @@ function ce() {
                                     { label:`This Week`, val: weekTotal.toFixed(1), unit:`hrs`, grad:`linear-gradient(135deg,#8B5CF6,#A78BFA)` },
                                     { label:`7-Day Avg`, val: avg7.toFixed(1), unit:`hrs/day`, grad:`linear-gradient(135deg,#F97316,#FB923C)` },
                                     { label:`Total`, val: totalHrs.toFixed(1), unit:`hrs`, grad:`linear-gradient(135deg,#059669,#34D399)` },
-                                    { label:`Streak`, val: (e.streak||0), unit:`days 🔥`, grad:`linear-gradient(135deg,#EC4899,#F9A8D4)` }
+                                    { label:`Streak`, val: (e.streak||0), unit: (function(){
+                                        var localFn3 = function(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+                                        var todayStr = localFn3(new Date());
+                                        var yesterdayStr = localFn3(new Date(Date.now()-864e5));
+                                        if((e.streak||0) > 0 && e.lastStreakDate === yesterdayStr) return `days 🔥 ⚠ log today!`;
+                                        if((e.streak||0) > 0 && e.lastStreakDate === todayStr) return `days 🔥`;
+                                        return `days 🔥`;
+                                    })(), grad:`linear-gradient(135deg,#EC4899,#F9A8D4)` }
                                 ].map(function(card){
                                     return (0, b.jsxs)(T, {
                                         T: A,
@@ -11461,7 +11478,7 @@ function ce() {
                     style: { padding: `16px 20px`, marginBottom: 12 },
                     children: [
                         (0, b.jsxs)(`div`, {
-                            style: { display:`flex`, alignItems:`center`, justifyContent:`space-between`, marginBottom:12 },
+                            style: { display:`flex`, alignItems:`center`, justifyContent:`space-between`, marginBottom:10 },
                             children: [
                                 (0, b.jsxs)(`div`, {
                                     children: [
@@ -11469,23 +11486,97 @@ function ce() {
                                         (0, b.jsx)(`div`, { style:{ fontSize:10, color:A.textT, marginTop:2 }, children: (function(){ var d=new Date(); d.setDate(d.getDate()+1); return d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'}); })() })
                                     ]
                                 }),
-                                (0, b.jsx)(`button`, {
-                                    onClick: function(){ v(Object.assign({},e,{ tomorrowPlan:{ note:'' } })); },
-                                    style:{ fontSize:10, padding:`3px 10px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer` },
-                                    children:`Clear`
+                                (0, b.jsxs)(`div`, {
+                                    style:{ display:`flex`, gap:6, alignItems:`center` },
+                                    children:[
+                                        (0, b.jsx)(`span`, { style:{ fontSize:10, color:A.textT }, children:`Cmd/Ctrl+B = ✅ Done  ·  Cmd/Ctrl+⇧+B = undo` }),
+                                        (0, b.jsx)(`button`, {
+                                            onClick: function(){ v(Object.assign({},e,{ tomorrowPlan:{ note:'' } })); if(window.__tmrwEl){ window.__tmrwEl.innerHTML=''; } window.__tmrwEl=null; window.__tmrwMounted=false; },
+                                            style:{ fontSize:10, padding:`3px 10px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer` },
+                                            children:`Clear`
+                                        })
+                                    ]
                                 })
                             ]
                         }),
-                        (0, b.jsx)(`textarea`, {
-                            placeholder:`What will you do tomorrow? Write your plan, subjects, topics, goals...`,
-                            value: (e.tomorrowPlan||{}).note||'',
-                            onChange: function(ev){
-                                v(Object.assign({},e,{ tomorrowPlan: Object.assign({},e.tomorrowPlan||{},{note:ev.target.value}) }));
+                        (0, b.jsx)(`div`, {
+                            ref: function(el){
+                                if(!el){
+                                    // Unmount: save whatever is in the editor to React state before leaving
+                                    if(window.__tmrwEl && window.__tmrwHtml !== undefined){
+                                        v(Object.assign({},e,{ tomorrowPlan: Object.assign({},e.tomorrowPlan||{},{note:window.__tmrwHtml}) }));
+                                    }
+                                    window.__tmrwEl = null;
+                                    window.__tmrwHtml = undefined;
+                                    return;
+                                }
+                                // Mount: set innerHTML from state only if different (avoids cursor reset)
+                                var savedNote = (e.tomorrowPlan||{}).note||'';
+                                if(el.innerHTML !== savedNote){
+                                    el.innerHTML = savedNote;
+                                }
+                                window.__tmrwEl = el;
+                                window.__tmrwHtml = savedNote;
                             },
-                            style:{ width:`100%`, fontSize:13, padding:`12px 14px`, borderRadius:10, border:`1px solid ${A.inputBorder}`, background:A.inputBg, color:A.text, outline:`none`, resize:`none`, minHeight:160, overflowY:`auto`, boxSizing:`border-box`, fontFamily:`inherit`, lineHeight:`22px` }
+                            contentEditable: true,
+                            suppressContentEditableWarning: true,
+                            onInput: function(ev){
+                                // Track latest html in memory - NO React state update = no re-render = no cursor jump
+                                var html = ev.currentTarget.innerHTML;
+                                window.__tmrwHtml = html;
+                                // Persist to storage directly so reload always has latest
+                                try {
+                                    var snap = JSON.parse(JSON.stringify(e));
+                                    snap.tomorrowPlan = Object.assign({}, snap.tomorrowPlan||{}, {note: html});
+                                    window.storage.set('gate2027_tracker_v7', JSON.stringify(snap));
+                                } catch(err){}
+                            },
+                            onKeyDown: function(ev){
+                                // Cmd/Ctrl+B: bold green | Cmd/Ctrl+Shift+B: remove formatting
+                                if((ev.metaKey||ev.ctrlKey) && ev.key==='b'){
+                                    ev.preventDefault();
+                                    var sel = window.getSelection();
+                                    if(sel && !sel.isCollapsed){
+                                        var range = sel.getRangeAt(0);
+                                        var selectedText = range.toString();
+                                        if(ev.shiftKey){
+                                            // Remove formatting - replace with plain text
+                                            range.deleteContents();
+                                            var txt = document.createTextNode(selectedText);
+                                            range.insertNode(txt);
+                                            sel.removeAllRanges();
+                                            var nr2 = document.createRange();
+                                            nr2.setStartAfter(txt);
+                                            nr2.collapse(true);
+                                            sel.addRange(nr2);
+                                        } else {
+                                            // Apply bold green
+                                            var span = document.createElement('span');
+                                            span.style.color = '#34D399';
+                                            span.style.fontWeight = '700';
+                                            span.textContent = selectedText;
+                                            range.deleteContents();
+                                            range.insertNode(span);
+                                            sel.removeAllRanges();
+                                            var nr = document.createRange();
+                                            nr.setStartAfter(span);
+                                            nr.collapse(true);
+                                            sel.addRange(nr);
+                                        }
+                                    }
+                                }
+                            },
+                            style:{
+                                width:`100%`, fontSize:15, padding:`12px 14px`,
+                                borderRadius:10, border:`1px solid ${A.inputBorder}`,
+                                background:A.inputBg, color:A.text, outline:`none`,
+                                minHeight:160, maxHeight:320, overflowY:`auto`,
+                                boxSizing:`border-box`, fontFamily:`inherit`,
+                                lineHeight:`24px`, wordBreak:`break-word`
+                            }
                         })
                     ]
-                }), (0, b.jsx)(`div`, {
+                }),, (0, b.jsx)(`div`, {
                     style: {
                         display: `grid`,
                         gridTemplateColumns: `repeat(3, 1fr)`,
@@ -12749,7 +12840,7 @@ function ce() {
                                         children: [
                                             (0, b.jsx)(`div`, { style: { flex: 1 }, children: en.link ? (0, b.jsx)(`a`, { href: en.link, target: '_blank', rel: 'noopener', style: { fontSize: 12, color: '#A78BFA', textDecoration: 'none' }, children: en.name }) : (0, b.jsx)(`span`, { style: { fontSize: 12, color: A.text }, children: en.name }) }),
                                             (0, b.jsxs)(`span`, { style: { fontSize: 12, fontWeight: 600, color: col }, children: [en.score, '/', en.max] }),
-                                            (0, b.jsx)(`span`, { style: { fontSize: 11, color: A.textT, minWidth: 40, textAlign: 'right' }, children: (en.score/en.max*100).toFixed(0) + '%' }),
+                                            (0, b.jsx)(`span`, { style: { fontSize: 11, color: A.textT, minWidth: 40, textAlign: 'right' }, children: en.max > 0 ? (en.score/en.max*100).toFixed(0) + '%' : 'N/A' }),
                                             (0, b.jsx)(`span`, { style: { fontSize: 10, color: A.textT }, children: en.date.slice(5) }),
                                             (0, b.jsx)(`button`, {
                                                 onClick: function() {
@@ -12882,8 +12973,11 @@ function ce() {
                                                             count > 0 ? (0, b.jsx)(`button`, {
                                                                 onClick: function(){
                                                                     var prev = (e.revisionHistory||{});
-                                                                    var arr = (prev[sub.id]||[]).slice(0,-1);
-                                                                    v(Object.assign({},e,{ revisionHistory: Object.assign({},prev,{ [sub.id]: arr }) }));
+                                                                    var arr = prev[sub.id]||[];
+                                                                    var lastEntry = arr[arr.length-1];
+                                                                    if(!lastEntry) return;
+                                                                    if(!window.confirm('Remove last revision for ' + sub.name + ' on ' + lastEntry + '?')) return;
+                                                                    v(Object.assign({},e,{ revisionHistory: Object.assign({},prev,{ [sub.id]: arr.slice(0,-1) }) }));
                                                                 },
                                                                 style: { fontSize:9, padding:`2px 8px`, borderRadius:6, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer` },
                                                                 children:`undo last`
@@ -12916,8 +13010,8 @@ function ce() {
                     for(var i=0;i<7;i++){ var d=new Date(weekStart); d.setDate(weekStart.getDate()+i); thisWeekDates.push(localDateStr(d)); }
                     var thisWeekHrs = thisWeekDates.reduce(function(a,d){return a+(sh[d]||0);},0);
                     var thisWeekMocks = (e.mockScores||[]).filter(function(m){ return thisWeekDates.includes(m.date); });
-                    var thisWeekTopics = Object.entries(e.completedTopics||{}).filter(function(kv){ return kv[1]; }).length;
-                    var thisWeekRevised = Object.entries(e.revisedTopics||{}).filter(function(kv){ return kv[1]; }).length;
+                    var thisWeekTopics = Object.entries(e.completedTopics||{}).filter(function(kv){ return kv[1]; }).length; // total completed
+                    var thisWeekRevised = Object.entries(e.revisedTopics||{}).filter(function(kv){ return kv[1]; }).length; // total revised
                     
                     var canGenerate = isSunday || snapshots.length === 0;
                     
@@ -13022,8 +13116,9 @@ function ce() {
                                         style:{ overflowX:`auto`, paddingBottom:4 },
                                         children: (0, b.jsx)(`div`, {
                                             style:{ display:`flex`, alignItems:`flex-end`, gap:8, minWidth:`max-content`, height: maxH+60 },
-                                            children: snapshots.map(function(snap, i){
+                                            children: snapshots.filter(function(snap){ return (snap.hours||0) > 0; }).map(function(snap, i){
                                                 var hrs = snap.hours || 0;
+                                                if(hrs === 0) return null; // skip empty bars
                                                 var barH = maxHrs > 0 ? Math.max(6, Math.round(hrs / maxHrs * maxH)) : 6;
                                                 var avg = snap.avgMock;
                                                 var barColor = snap.weeklyHrsTarget > 0
@@ -13078,6 +13173,8 @@ function ce() {
                                             (0, b.jsxs)(`span`, { style:{ fontSize:11, color:`#60A5FA` }, children:[`📝 `, snap.mocks, ` mock${snap.mocks!==1?'s':''}`] }),
                                             snap.avgMock !== null ? (0, b.jsxs)(`span`, { style:{ fontSize:11, color: snap.avgMock>=80?`#34D399`:snap.avgMock>=50?`#60A5FA`:`#EF4444` }, children:[`avg `, snap.avgMock] }) : null,
                                             (0, b.jsxs)(`span`, { style:{ fontSize:11, color:`#FB923C` }, children:[`🔥 `, snap.streak, `d streak`] }),
+                                            snap.topicsTotal ? (0, b.jsxs)(`span`, { style:{fontSize:11,color:A.textT}, children:[`📚 `, snap.topicsTotal, ` done`] }) : null,
+                                            snap.revised ? (0, b.jsxs)(`span`, { style:{fontSize:11,color:A.textT}, children:[`✓ `, snap.revised, ` revised`] }) : null,
                                             (0, b.jsx)(`button`, {
                                                 onClick: function(){ v(Object.assign({},e,{ weeklySnapshots: snapshots.filter(function(_,i){ return i !== (snapshots.length-1-idx); }) })); },
                                                 style:{ fontSize:10, padding:`2px 8px`, borderRadius:6, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer`, marginLeft:`auto` },
