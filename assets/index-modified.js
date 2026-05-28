@@ -10123,16 +10123,16 @@ function ce() {
         weeklySnapshots: [],
         revisionHistory: {},
         customRevDate: {},
-        tomorrowPlan: { note: '' },
+        tomorrowPlan: { items: [] },
         weeklyPlan: {},
         weeklySnapshots: []
-    }), [n, r] = (0, x.useState)(`roadmap`), [i, a] = (0, x.useState)(null), [o, s] = (0, x.useState)(`os`), [c, l] = (0, x.useState)(0), [u, d] = (0, x.useState)(``), [f, p] = (0, x.useState)(new Date().toISOString().split(`T`)[0]), [m, h] = (0, x.useState)(!0), [g, _] = (0, x.useState)(null), [J, Q] = (0, x.useState)(``), [mockName, setMockName] = (0, x.useState)(``), [mockLink, setMockLink] = (0, x.useState)(``), [hoursInput, setHoursInput] = (0, x.useState)(``), [mockWeakSubs, setMockWeakSubs] = (0, x.useState)([]);
+    }), [n, r] = (0, x.useState)(`roadmap`), [i, a] = (0, x.useState)(null), [o, s] = (0, x.useState)(`os`), [c, l] = (0, x.useState)(0), [u, d] = (0, x.useState)(``), [f, p] = (0, x.useState)(new Date().toISOString().split(`T`)[0]), [m, h] = (0, x.useState)(!0), [g, _] = (0, x.useState)(null), [J, Q] = (0, x.useState)(``), [mockName, setMockName] = (0, x.useState)(``), [mockLink, setMockLink] = (0, x.useState)(``), [hoursInput, setHoursInput] = (0, x.useState)(``), [mockWeakSubs, setMockWeakSubs] = (0, x.useState)([]), [tmrwInput, setTmrwInput] = (0, x.useState)(``);
     (0, x.useRef)({}), (0, x.useEffect)(() => {
         (async () => {
             try {
                 let e = await window.storage.get(ie);
                 e && t(function(loaded){
-                    var defaults = { completedTopics:{}, notes:{}, mockScores:[], subjectScores:{}, revisedTopics:{}, lastStudied:{}, streak:0, lastStreakDate:'', studyHours:{}, examDate:'2027-02-01', weeklyPlan:{}, weeklySnapshots:[], revisionHistory:{}, customRevDate:{}, weeklyHrsTarget:0, tomorrowPlan:{note:''} };
+                    var defaults = { completedTopics:{}, notes:{}, mockScores:[], subjectScores:{}, revisedTopics:{}, lastStudied:{}, streak:0, lastStreakDate:'', studyHours:{}, examDate:'2027-02-01', weeklyPlan:{}, weeklySnapshots:[], revisionHistory:{}, customRevDate:{}, weeklyHrsTarget:0, tomorrowPlan:{items:[]} };
                     return Object.assign({}, defaults, JSON.parse(e.value));
                 }(undefined))
             } catch {}
@@ -11478,103 +11478,82 @@ function ce() {
                     style: { padding: `16px 20px`, marginBottom: 12 },
                     children: [
                         (0, b.jsxs)(`div`, {
-                            style: { display:`flex`, alignItems:`center`, justifyContent:`space-between`, marginBottom:10 },
+                            style: { display:`flex`, alignItems:`center`, justifyContent:`space-between`, marginBottom:14 },
                             children: [
                                 (0, b.jsxs)(`div`, {
                                     children: [
                                         (0, b.jsx)(`div`, { style:{ fontSize:13, fontWeight:700 }, children:`📋 Tomorrow's Plan` }),
-                                        (0, b.jsx)(`div`, { style:{ fontSize:10, color:A.textT, marginTop:2 }, children: (function(){ var d=new Date(); d.setDate(d.getDate()+1); return d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'}); })() })
+                                        null
                                     ]
                                 }),
-                                (0, b.jsxs)(`div`, {
-                                    style:{ display:`flex`, gap:6, alignItems:`center` },
-                                    children:[
-                                        (0, b.jsx)(`span`, { style:{ fontSize:10, color:A.textT }, children:`Cmd/Ctrl+B = ✅ Done  ·  Cmd/Ctrl+⇧+B = undo` }),
-                                        (0, b.jsx)(`button`, {
-                                            onClick: function(){ v(Object.assign({},e,{ tomorrowPlan:{ note:'' } })); if(window.__tmrwEl){ window.__tmrwEl.innerHTML=''; } window.__tmrwEl=null; window.__tmrwMounted=false; },
-                                            style:{ fontSize:10, padding:`3px 10px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer` },
-                                            children:`Clear`
-                                        })
-                                    ]
+                                (e.tomorrowPlan&&(e.tomorrowPlan.items||[]).length>0) ? (0, b.jsxs)(`span`, {
+                                    style:{ fontSize:10, color:A.textT },
+                                    children: [(e.tomorrowPlan.items||[]).filter(function(i){return i.done;}).length, `/`, (e.tomorrowPlan.items||[]).length, ` done`]
+                                }) : null
+                            ]
+                        }),
+                        (0, b.jsxs)(`div`, {
+                            style:{ display:`flex`, gap:8, marginBottom:12 },
+                            children:[
+                                (0, b.jsx)(`input`, {
+                                    type:`text`,
+                                    placeholder:`Add a task for tomorrow...`,
+                                    value: tmrwInput,
+                                    onChange: function(ev){ setTmrwInput(ev.target.value); },
+                                    onKeyDown: function(ev){
+                                        if(ev.key==='Enter' && tmrwInput.trim()){
+                                            var items = (e.tomorrowPlan||{}).items||[];
+                                            v(Object.assign({},e,{ tomorrowPlan:{ items:[...items,{id:Date.now(),text:tmrwInput.trim(),done:false}] } }));
+                                            setTmrwInput('');
+                                        }
+                                    },
+                                    style:{ flex:1, fontSize:13, padding:`8px 12px`, borderRadius:10, border:`1px solid ${A.inputBorder}`, background:A.inputBg, color:A.text, outline:`none` }
+                                }),
+                                (0, b.jsx)(`button`, {
+                                    onClick: function(){
+                                        if(!tmrwInput.trim()) return;
+                                        var items = (e.tomorrowPlan||{}).items||[];
+                                        v(Object.assign({},e,{ tomorrowPlan:{ items:[...items,{id:Date.now(),text:tmrwInput.trim(),done:false}] } }));
+                                        setTmrwInput('');
+                                    },
+                                    style:{ fontSize:12, padding:`8px 16px`, borderRadius:99, border:`none`, background:`linear-gradient(135deg,#8B5CF6,#A78BFA)`, color:`#fff`, cursor:`pointer`, fontWeight:600, whiteSpace:`nowrap` },
+                                    children:`+ Add`
                                 })
                             ]
                         }),
-                        (0, b.jsx)(`div`, {
-                            ref: function(el){
-                                if(!el){
-                                    // Unmount: save whatever is in the editor to React state before leaving
-                                    if(window.__tmrwEl && window.__tmrwHtml !== undefined){
-                                        v(Object.assign({},e,{ tomorrowPlan: Object.assign({},e.tomorrowPlan||{},{note:window.__tmrwHtml}) }));
-                                    }
-                                    window.__tmrwEl = null;
-                                    window.__tmrwHtml = undefined;
-                                    return;
-                                }
-                                // Mount: set innerHTML from state only if different (avoids cursor reset)
-                                var savedNote = (e.tomorrowPlan||{}).note||'';
-                                if(el.innerHTML !== savedNote){
-                                    el.innerHTML = savedNote;
-                                }
-                                window.__tmrwEl = el;
-                                window.__tmrwHtml = savedNote;
-                            },
-                            contentEditable: true,
-                            suppressContentEditableWarning: true,
-                            onInput: function(ev){
-                                // Track latest html in memory - NO React state update = no re-render = no cursor jump
-                                var html = ev.currentTarget.innerHTML;
-                                window.__tmrwHtml = html;
-                                // Persist to storage directly so reload always has latest
-                                try {
-                                    var snap = JSON.parse(JSON.stringify(e));
-                                    snap.tomorrowPlan = Object.assign({}, snap.tomorrowPlan||{}, {note: html});
-                                    window.storage.set('gate2027_tracker_v7', JSON.stringify(snap));
-                                } catch(err){}
-                            },
-                            onKeyDown: function(ev){
-                                // Cmd/Ctrl+B: bold green | Cmd/Ctrl+Shift+B: remove formatting
-                                if((ev.metaKey||ev.ctrlKey) && ev.key==='b'){
-                                    ev.preventDefault();
-                                    var sel = window.getSelection();
-                                    if(sel && !sel.isCollapsed){
-                                        var range = sel.getRangeAt(0);
-                                        var selectedText = range.toString();
-                                        if(ev.shiftKey){
-                                            // Remove formatting - replace with plain text
-                                            range.deleteContents();
-                                            var txt = document.createTextNode(selectedText);
-                                            range.insertNode(txt);
-                                            sel.removeAllRanges();
-                                            var nr2 = document.createRange();
-                                            nr2.setStartAfter(txt);
-                                            nr2.collapse(true);
-                                            sel.addRange(nr2);
-                                        } else {
-                                            // Apply bold green
-                                            var span = document.createElement('span');
-                                            span.style.color = '#34D399';
-                                            span.style.fontWeight = '700';
-                                            span.textContent = selectedText;
-                                            range.deleteContents();
-                                            range.insertNode(span);
-                                            sel.removeAllRanges();
-                                            var nr = document.createRange();
-                                            nr.setStartAfter(span);
-                                            nr.collapse(true);
-                                            sel.addRange(nr);
-                                        }
-                                    }
-                                }
-                            },
-                            style:{
-                                width:`100%`, fontSize:15, padding:`12px 14px`,
-                                borderRadius:10, border:`1px solid ${A.inputBorder}`,
-                                background:A.inputBg, color:A.text, outline:`none`,
-                                minHeight:160, maxHeight:320, overflowY:`auto`,
-                                boxSizing:`border-box`, fontFamily:`inherit`,
-                                lineHeight:`24px`, wordBreak:`break-word`
-                            }
-                        })
+                        (e.tomorrowPlan&&(e.tomorrowPlan.items||[]).length>0) ? (0, b.jsx)(`div`, {
+                            style:{ display:`flex`, flexDirection:`column`, gap:6 },
+                            children: (e.tomorrowPlan.items||[]).map(function(item){
+                                return (0, b.jsxs)(`div`, {
+                                    style:{ display:`flex`, alignItems:`center`, gap:10, padding:`8px 12px`, borderRadius:10, background:item.done?(m?`rgba(52,211,153,0.08)`:`rgba(52,211,153,0.06)`):(m?`rgba(255,255,255,0.03)`:`rgba(0,0,0,0.02)`), border:`1px solid ${item.done?`rgba(52,211,153,0.3)`:A.border}` },
+                                    children:[
+                                        (0, b.jsx)(`div`, {
+                                            onClick: function(){
+                                                var toggled = (e.tomorrowPlan.items||[]).map(function(x){ return x.id===item.id ? Object.assign({},x,{done:!x.done}) : x; });
+                                                // Move done items to end, undone items to their natural position
+                                                var undone = toggled.filter(function(x){ return !x.done; });
+                                                var done = toggled.filter(function(x){ return x.done; });
+                                                v(Object.assign({},e,{ tomorrowPlan:{ items:[...undone,...done] } }));
+                                            },
+                                            style:{ width:18, height:18, borderRadius:5, border:`2px solid ${item.done?`#34D399`:A.borderH}`, background:item.done?`#34D399`:`transparent`, flexShrink:0, cursor:`pointer`, display:`flex`, alignItems:`center`, justifyContent:`center` },
+                                            children: item.done ? (0, b.jsx)(`svg`, { width:`10`, height:`10`, viewBox:`0 0 10 10`, children: (0, b.jsx)(`path`, { d:`M2 5l2.5 2.5L8 3`, stroke:`white`, strokeWidth:`2`, fill:`none`, strokeLinecap:`round`, strokeLinejoin:`round` }) }) : null
+                                        }),
+                                        (0, b.jsx)(`span`, {
+                                            style:{ flex:1, fontSize:13, color:item.done?A.textT:A.text, textDecoration:item.done?`line-through`:`none` },
+                                            children: item.text
+                                        }),
+                                        (0, b.jsx)(`button`, {
+                                            onClick: function(){
+                                                var items = (e.tomorrowPlan.items||[]).filter(function(x){ return x.id!==item.id; });
+                                                v(Object.assign({},e,{ tomorrowPlan:{ items:items } }));
+                                            },
+                                            style:{ fontSize:11, padding:`2px 8px`, borderRadius:6, border:`1px solid ${A.border}`, background:`transparent`, color:A.textT, cursor:`pointer` },
+                                            children:`✕`
+                                        })
+                                    ]
+                                }, item.id)
+                            })
+                        }) : (0, b.jsx)(`div`, { style:{ fontSize:12, color:A.textT, textAlign:`center`, padding:`12px 0` }, children:`No tasks yet — add something to prep for tomorrow` })
                     ]
                 }),, (0, b.jsx)(`div`, {
                     style: {
