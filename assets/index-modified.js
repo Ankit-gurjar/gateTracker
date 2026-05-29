@@ -10228,7 +10228,7 @@ function ce() {
             [`Resources`, `resources`, `M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253`],
             [`Mocks`, `mocks`, `M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z`],
             [`Scores`, `scores`, `M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z`],
-            [`Plan`, `plan`, `M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z`],
+            [`Revise`, `plan`, `M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z`],
             [`Weekly`, `weekly`, `M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z`],
             [`Tips`, `tips`, `M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z`],
             [`Notes`, `notes`, `M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z`]
@@ -10322,6 +10322,7 @@ function ce() {
                         justifyContent: `center`,
                         fontSize: 18
                     },
+                    title: m ? `Switch to light mode` : `Switch to dark mode`,
                     children: m ? `☀️` : `🌙`
                 })]
             }), (0, b.jsx)(`div`, {
@@ -10993,9 +10994,9 @@ function ce() {
                         sub: `${D}/${E} topics`,
                         grad: `linear-gradient(135deg, #8B5CF6, #A78BFA)`
                     }, {
-                        label: `Days Left`,
-                        val: de,
-                        sub: `${Math.floor(de/7)} weeks`,
+                        label: `Time Left`,
+                        val: (function(){ var m=Math.floor(de/30), w=Math.floor((de%30)/7), d=de%7; var parts=[]; if(m>0) parts.push(m+'mo'); if(w>0) parts.push(w+'w'); if(d>0||parts.length===0) parts.push(d+'d'); return parts.join(' '); })(),
+                        sub: de + ` days · ${Math.floor(de/7)} weeks`,
                         grad: `linear-gradient(135deg, #3B82F6, #60A5FA)`
                     }, {
                         label: `Latest Mock`,
@@ -11175,7 +11176,7 @@ function ce() {
                                                 var a=document.createElement('a'); a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv); a.download='gate_tracker_export.csv'; a.click();
                                             },
                                             style:{ fontSize:12, padding:`7px 14px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textS, cursor:`pointer`, whiteSpace:`nowrap` },
-                                            children:`↓ Export CSV`
+                                            children:`↓ Export all data`
                                         }),
                                         (0, b.jsxs)(`label`, {
                                             style:{ fontSize:12, padding:`7px 14px`, borderRadius:99, border:`1px solid ${A.border}`, background:`transparent`, color:A.textS, cursor:`pointer`, whiteSpace:`nowrap`, display:`inline-flex`, alignItems:`center`, gap:4 },
@@ -11365,17 +11366,17 @@ function ce() {
                                 var weeklyTarget = e.weeklyHrsTarget||0;
                                 var weekRemaining = Math.max(0, weeklyTarget - weekTotal);
                                 return [
-                                    { label:`Today`, val: todayHrs.toFixed(1), unit:`hrs`, grad:`linear-gradient(135deg,#3B82F6,#60A5FA)` },
+                                    { label:`Today`, val: todayHrs > 0 ? todayHrs.toFixed(1) : `—`, unit:`hrs`, grad:`linear-gradient(135deg,#3B82F6,#60A5FA)` },
                                     { label:`This Week`, val: weekTotal.toFixed(1), unit:`hrs`, grad:`linear-gradient(135deg,#8B5CF6,#A78BFA)` },
                                     { label:`7-Day Avg`, val: avg7.toFixed(1), unit:`hrs/day`, grad:`linear-gradient(135deg,#F97316,#FB923C)` },
                                     { label:`Total`, val: totalHrs.toFixed(1), unit:`hrs`, grad:`linear-gradient(135deg,#059669,#34D399)` },
-                                    { label:`Streak`, val: (e.streak||0), unit: (function(){
+                                    { label:`Streak`, val: (e.streak||0) || '—', unit: (function(){
                                         var localFn3 = function(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
                                         var todayStr = localFn3(new Date());
                                         var yesterdayStr = localFn3(new Date(Date.now()-864e5));
                                         if((e.streak||0) > 0 && e.lastStreakDate === yesterdayStr) return `days 🔥 ⚠ log today!`;
                                         if((e.streak||0) > 0 && e.lastStreakDate === todayStr) return `days 🔥`;
-                                        return `days 🔥`;
+                                        return (e.streak||0) === 0 ? `— start today!` : `days 🔥`;
                                     })(), grad:`linear-gradient(135deg,#EC4899,#F9A8D4)` }
                                 ].map(function(card){
                                     return (0, b.jsxs)(T, {
@@ -11770,7 +11771,7 @@ function ce() {
                                         }), (0, b.jsxs)(`div`, {
                                             style: { display:`flex`, gap:10, marginTop:5 },
                                             children: [
-                                                (0, b.jsxs)(`span`, { style:{ fontSize:10, color: revCount>0?`#34D399`:A.textT }, children:[`✓ ${revCount}/${l} revised`] }),
+                                                (0, b.jsxs)(`span`, { style:{ fontSize:10, color: revCount>0?`#34D399`:A.textT }, children:[revCount>0?`✓ ${revCount}/${l} revised`:`0/${l} revised`] }),
                                                 lastSt ? (0, b.jsxs)(`span`, { style:{ fontSize:10, color:A.textT }, children:[`· last studied: ${lastSt}`] }) : null
                                             ]
                                         })]
@@ -12288,7 +12289,8 @@ function ce() {
                             value: mockName,
                             onChange: e => setMockName(e.target.value),
                             style: {
-                                width: 150,
+                                width: 140,
+                                minWidth: 100,
                                 fontSize: 13,
                                 padding: `8px 12px`,
                                 borderRadius: 10,
@@ -12395,7 +12397,7 @@ function ce() {
                             val: e.mockScores.length,
                             grad: `linear-gradient(135deg, #F97316, #FB923C)`
                         }, {
-                            label: `Avg L10`,
+                            label: `Avg L`+(Math.min(10, (e.mockScores||[]).length)),
                             val: e.mockScores.length < 2 ? `—` : (e.mockScores.slice(-10).reduce((a, s) => a + s.score, 0) / Math.min(e.mockScores.length, 10)).toFixed(1),
                             grad: `linear-gradient(135deg, #EC4899, #F9A8D4)`
                         }].map(e => (0, b.jsxs)(T, {
@@ -12776,7 +12778,7 @@ function ce() {
                             })
                         ]
                     }), (0, b.jsxs)(`div`, {
-                        style: { marginTop: 14, display: `flex`, gap: 8, alignItems: `center`, flexWrap: `wrap` },
+                        style: { marginTop: 14, display: `flex`, gap: 8, alignItems: `center`, flexWrap: `wrap`, maxHeight: 80, overflowY: `auto` },
                         children: [
                             (0, b.jsx)(`span`, { style: { fontSize: 12, color: A.textS }, children: `Subject:` }),
                             C.map(function(sub) {
@@ -12902,7 +12904,7 @@ function ce() {
                                                         style: { padding:`8px 10px`, borderRadius:10, background: m?`rgba(255,255,255,0.04)`:`rgba(0,0,0,0.03)`, border:`1px solid ${A.border}`, textAlign:`center` },
                                                         children: [
                                                             (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, textTransform:`uppercase`, letterSpacing:`0.7px`, marginBottom:4 }, children:`Revisions` }),
-                                                            (0, b.jsxs)(`div`, { style:{ fontSize:22, fontWeight:700, backgroundImage:ph.gradient, WebkitBackgroundClip:`text`, WebkitTextFillColor:`transparent` }, children:[count] }),
+                                                            (0, b.jsxs)(`div`, { style:{ fontSize:22, fontWeight:700, backgroundImage:ph.gradient, WebkitBackgroundClip:`text`, WebkitTextFillColor:`transparent` }, children:[count||'—'] }),
                                                             (0, b.jsx)(`div`, { style:{ fontSize:9, color:A.textT, marginTop:2 }, children:`times` })
                                                         ]
                                                     }),
@@ -13033,9 +13035,9 @@ function ce() {
                                             ]
                                         }),
                                         (0, b.jsx)(`button`, {
-                                            onClick: generateSnapshot,
-                                            style:{ fontSize:12, padding:`8px 18px`, borderRadius:99, border:`none`, background:`linear-gradient(135deg,#8B5CF6,#A78BFA)`, color:`#fff`, cursor:`pointer`, fontWeight:600 },
-                                            children: (function(){ var exists = snapshots.find(function(s){ return s.weekOf===thisWeekDates[0]; }); return exists ? `🔄 Update this week's snapshot` : (isSunday ? `📸 Save this week (${snapshots.length+1})` : `📸 Save snapshot (${snapshots.length+1})`); })()
+                                            onClick: function(){ var noHrs = thisWeekHrs===0 && !snapshots.find(function(s){return s.weekOf===thisWeekDates[0];}); if(noHrs) return; generateSnapshot(); },
+                                            style:{ fontSize:12, padding:`8px 18px`, borderRadius:99, border:`none`, background:`linear-gradient(135deg,#8B5CF6,#A78BFA)`, color:`#fff`, cursor:`pointer`, fontWeight:600, opacity: (thisWeekHrs===0&&!snapshots.find(function(s){return s.weekOf===thisWeekDates[0];})) ? 0.5 : 1 },
+                                            children: (function(){ var exists = snapshots.find(function(s){ return s.weekOf===thisWeekDates[0]; }); if(exists) return `🔄 Update snapshot`; return isSunday ? `📸 Save this week (${snapshots.length+1})` : `📸 Save snapshot (${snapshots.length+1})`; })()
                                         })
                                     ]
                                 })
@@ -13174,7 +13176,7 @@ function ce() {
                         color: A.textS,
                         marginBottom: 14
                     },
-                    children: `Your subject-wise notes`
+                    children: `Your subject-wise notes — auto-saved`
                 }), C.map(t => {
                     let n = w[t.phase];
                     return (0, b.jsxs)(T, {
