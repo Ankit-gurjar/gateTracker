@@ -10981,7 +10981,43 @@ function ce() {
                 })
             })(), n === `dashboard` && (0, b.jsxs)(`div`, {
                 className: `fade-in`,
-                children: [(0, b.jsx)(`div`, {
+                children: [(function(){
+                    var localFnD = function(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+                    var todayD = localFnD(new Date());
+                    // Find subjects due for revision today
+                    var dueToday = C.filter(function(sub){
+                        var customDate = (e.customRevDate||{})[sub.id];
+                        var revHistory = (e.revisionHistory||{})[sub.id]||[];
+                        var lastRev = revHistory.length ? revHistory[revHistory.length-1] : null;
+                        var autoDate = lastRev ? localFnD(new Date(new Date(lastRev).getTime()+7*864e5)) : null;
+                        var nextRev = customDate || autoDate;
+                        return nextRev && nextRev <= todayD;
+                    });
+                    if(!dueToday.length) return null;
+                    return (0, b.jsxs)(`div`, {
+                        style:{ padding:`12px 16px`, borderRadius:12, background:`rgba(239,68,68,0.08)`, border:`1px solid rgba(239,68,68,0.25)`, marginBottom:14, display:`flex`, alignItems:`flex-start`, gap:10 },
+                        children:[
+                            (0, b.jsx)(`div`, { style:{ fontSize:18, flexShrink:0 }, children:`🔔` }),
+                            (0, b.jsxs)(`div`, {
+                                style:{ flex:1 },
+                                children:[
+                                    (0, b.jsx)(`div`, { style:{ fontSize:12, fontWeight:700, color:`#F87171`, marginBottom:6 }, children:`Revision due today!` }),
+                                    (0, b.jsx)(`div`, {
+                                        style:{ display:`flex`, gap:6, flexWrap:`wrap` },
+                                        children: dueToday.map(function(sub){
+                                            var ph2 = w[sub.phase];
+                                            return (0, b.jsxs)(`span`, {
+                                                style:{ fontSize:11, padding:`3px 10px`, borderRadius:99, background:ph2.bg, color:ph2.color, fontWeight:600, border:`1px solid ${ph2.color}33` },
+                                                children:[sub.icon, ` `, sub.name]
+                                            }, sub.id)
+                                        })
+                                    })
+                                ]
+                            })
+                        ]
+                    });
+                })(),
+                (0, b.jsx)(`div`, {
                     style: {
                         display: `grid`,
                         gridTemplateColumns: `repeat(4, 1fr)`,
@@ -10995,7 +11031,24 @@ function ce() {
                         grad: `linear-gradient(135deg, #8B5CF6, #A78BFA)`
                     }, {
                         label: `Time Left`,
-                        val: (function(){ var m=Math.floor(de/30), w=Math.floor((de%30)/7), d=de%7; var parts=[]; if(m>0) parts.push(m+'mo'); if(w>0) parts.push(w+'w'); if(d>0||parts.length===0) parts.push(d+'d'); return parts.join(' '); })(),
+                        val: (function(){
+    var now = new Date();
+    var exam = new Date(e.examDate||'2027-02-01');
+    var m = (exam.getFullYear()-now.getFullYear())*12 + (exam.getMonth()-now.getMonth());
+    // Adjust if day of month hasn't been reached yet
+    if(exam.getDate() < now.getDate()) m--;
+    if(m < 0) m = 0;
+    // Remaining days after full months
+    var afterMonths = new Date(now.getFullYear(), now.getMonth()+m, now.getDate());
+    var remDays = Math.max(0, Math.round((exam - afterMonths)/864e5));
+    var w = Math.floor(remDays/7);
+    var d = remDays%7;
+    var parts = [];
+    if(m>0) parts.push(m+'mo');
+    if(w>0) parts.push(w+'w');
+    if(d>0||parts.length===0) parts.push(d+'d');
+    return parts.join(' ');
+})(),
                         sub: de + ` days · ${Math.floor(de/7)} weeks`,
                         grad: `linear-gradient(135deg, #3B82F6, #60A5FA)`
                     }, {
@@ -11484,7 +11537,38 @@ function ce() {
                                 (0, b.jsxs)(`div`, {
                                     children: [
                                         (0, b.jsx)(`div`, { style:{ fontSize:13, fontWeight:700 }, children:`📋 Tomorrow's Plan` }),
-                                        null
+                                        (function(){
+                                            var localFnT = function(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+                                            var todayT = localFnT(new Date());
+                                            var dueSubjects = C.filter(function(sub){
+                                                var customDate = (e.customRevDate||{})[sub.id];
+                                                var revHistory = (e.revisionHistory||{})[sub.id]||[];
+                                                var lastRev = revHistory.length ? revHistory[revHistory.length-1] : null;
+                                                var autoDate = lastRev ? localFnT(new Date(new Date(lastRev).getTime()+7*864e5)) : null;
+                                                var nextRev = customDate || autoDate;
+                                                return nextRev && nextRev <= todayT;
+                                            });
+                                            if(!dueSubjects.length) return null;
+                                            return (0, b.jsxs)(`div`, {
+                                                style:{ display:`flex`, flexWrap:`wrap`, gap:4, marginTop:5 },
+                                                children:[
+                                                    (0, b.jsx)(`span`, { style:{ fontSize:10, color:`#F87171` }, children:`📌 Due today: ` }),
+                                                    dueSubjects.map(function(sub){
+                                                        var ph2 = w[sub.phase];
+                                                        var alreadyInPlan = (e.tomorrowPlan&&e.tomorrowPlan.items||[]).some(function(it){ return it.text===sub.name; });
+                                                        return (0, b.jsxs)(`button`, {
+                                                            onClick: function(){
+                                                                if(alreadyInPlan) return;
+                                                                var items = (e.tomorrowPlan||{}).items||[];
+                                                                v(Object.assign({},e,{ tomorrowPlan:{ items:[...items,{id:Date.now(),text:sub.name+' revision',done:false}] } }));
+                                                            },
+                                                            style:{ fontSize:10, padding:`2px 8px`, borderRadius:99, border:`1px solid ${alreadyInPlan?'#34D399':ph2.color}`, background:alreadyInPlan?`rgba(52,211,153,0.1)`:ph2.bg, color:alreadyInPlan?`#34D399`:ph2.color, cursor:alreadyInPlan?`default`:`pointer`, fontWeight:600 },
+                                                            children: alreadyInPlan ? `✓ ${sub.name}` : `+ ${sub.name}`
+                                                        }, sub.id)
+                                                    })
+                                                ]
+                                            });
+                                        })()
                                     ]
                                 }),
                                 (e.tomorrowPlan&&(e.tomorrowPlan.items||[]).length>0) ? (0, b.jsxs)(`span`, {
